@@ -261,8 +261,8 @@ function input_img( input_img_base64, this_img_id ){
 
 if (_reply_textarea.val()) {_reply_textarea_top_btn.append('&emsp;之前上传的图片可能已丢失，请重新上传。')};
 //#1是用来调试的，点击 textarea 模拟显示上传的字符串
-    _reply_textarea.click(function(){//#1
-//    _reply_textarea.parent().submit(function(){
+//    _reply_textarea.click(function(){//#1
+    _reply_textarea.parent().submit(function(){
         _reply_textarea.val(function(i,origText){
             var patt_emoticon_name = RegExp("\\[:(.+?):\\]", "g");
             origText = origText.replace(patt_emoticon_name, function(i,k){return img_list[k]});
