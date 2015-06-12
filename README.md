@@ -87,6 +87,3 @@ Chrome 插件：[v2ex plus](https://chrome.google.com/webstore/detail/limfkkkgjb
 
 生活愉快~
 
-PS:
->* 刚刚发现的 bug 在节点页面，预览按钮出现在不该出现的地方，吃饱饭回来再修复，又得麻烦 ldong 了。
->* 插件刚刚上传可能还无法下载
