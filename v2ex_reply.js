@@ -207,6 +207,7 @@ function input_img( input_img_base64, this_img_id ){
     var img_id = 1;
 
     //从剪切板上传
+    //只要粘贴就触发，不管在什么地方粘贴
     document.body.addEventListener("paste", function(e) {
         for (var i = 0; i < e.clipboardData.items.length; i++) {
             var this_item = e.clipboardData.items[i];
