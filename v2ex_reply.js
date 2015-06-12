@@ -80,7 +80,7 @@ function input_img( input_img_base64, this_img_id ){
 //——————————————————————————————————会话详情——————————————————————————————————
 
     var page_current_num = ~~($('.page_current').text()) || '1';
-    var _key_user = $('.header small a').text();
+    var _key_user = $('.header small a:first-of-type').text();
     var _reply_user_name_list = Array();
     var _reply_content_list = Array();
     var r_i = 1;
@@ -175,7 +175,7 @@ function input_img( input_img_base64, this_img_id ){
     _reply_textarea.attr('placeholder', '你可以在文本框内直接粘贴图片\n类似于 [:微笑:] 的图片标签可以优雅的移动');
 
     var _reply_textarea_top_btn = _reply_textarea.parents('.box').children('.cell:first-of-type');
-    _reply_textarea_top_btn.append("<span class='inputBTN1'>表情</span> <span class='inputBTN2'>插入图片</span><input type='file' style='display: none' id='imgUpload' />");
+    _reply_textarea_top_btn.append("<span class='inputBTN1'> › 表情</span> <span class='inputBTN2'> › 插入图片</span><input type='file' style='display: none' id='imgUpload' />");
 
 //————————————————表情功能————————————————
 

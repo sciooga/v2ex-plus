@@ -25,7 +25,7 @@
                 var data = data.substr(data.indexOf("header"));
                 var data = data.substring(data.indexOf("<div class=\"topic_content\">"), data.indexOf("<div class=\"topic_buttons\">"))
                 _this.addClass('btn_id'+btn_id);
-                _previewWindow.html(data+"<p class='previewWindowEnd'><span class='endDetail' key='"+ _href +"'>详细</span><span class='endSlide' onclick='$(\".btn_id"+ btn_id +"\").click();$(\"html, body\").animate({scrollTop: ($(\".btn_id"+ btn_id++ +"\").offset().top-200)}, 600);'>收起</span></p>");
+                _previewWindow.html(data+"<p class='previewWindowEnd'><span class='endDetail item_node' key='"+ _href +"'>详细</span><span class='endSlide item_node' onclick='$(\".btn_id"+ btn_id +"\").click();$(\"html, body\").animate({scrollTop: ($(\".btn_id"+ btn_id++ +"\").offset().top-200)}, 600);'>收起</span></p>");
                 var _next_cell = _previewWindow.next();
                 _next_cell.css('borderTop', _next_cell.css('borderBottom'));
                 _this.text('收起');
