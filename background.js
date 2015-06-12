@@ -45,7 +45,7 @@ chrome.alarms.onAlarm.addListener(checkMsg);
 function checkMsg(){
     $.get("https://www.v2ex.com/settings",function(data,status){
         if(status == 'success'){
-            var sign = RegExp("([0-9]*?) 条未读提醒").exec(data);
+            var sign = RegExp("([0-9]*?) (条未读提醒|unread)").exec(data);
             sign = sign != null && sign[1] || '未登录';
             if ( sign == '未登录' ){
                 alert('请登录 v2ex 账号以便获取新消息提醒，否则每5分钟将弹出此提示。');
