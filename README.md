@@ -85,6 +85,7 @@ Chrome 插件：[v2ex plus](https://chrome.google.com/webstore/detail/v2ex-plus/
 反馈： [点击(sciooga#gmail)](mailto:sciooga@gmail.com)
 
 请求：如果有设计师同学已经看不下插件 logo 了，麻烦出手吧！
+感谢设计师 [Sheep](http://sheephe.com) 画了新图标，很赞！
 
 对本插件满意，可以送我一本书，支付宝二维码：
 
