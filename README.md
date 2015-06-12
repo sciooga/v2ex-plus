@@ -73,7 +73,7 @@
 --------------------------------------
 由于我是大一学生，没有信用卡，感谢 [ldong](https://github.com/ldong) 帮我发布插件。
 
-Chrome 插件：[v2ex plus](https://chrome.google.com/webstore/detail/limfkkkgjbcfmfhkclkohdhddfngakhb/publish-accepted)
+Chrome 插件：[v2ex plus](https://chrome.google.com/webstore/detail/v2ex-plus/limfkkkgjbcfmfhkclkohdhddfngakhb)
 
 开源 ：[♥ Github](https://github.com/sciooga/v2ex-plus)
 
