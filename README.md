@@ -77,7 +77,7 @@ Chrome 插件：[v2ex plus](https://chrome.google.com/webstore/detail/limfkkkgjb
 
 开源 ：[♥ Github](https://github.com/sciooga/v2ex-plus)
 
-反馈： 在这个主题内回复 或 [点击(sciooga#gmail)](mailto:sciooga@gmail.com)
+反馈： [点击(sciooga#gmail)](mailto:sciooga@gmail.com)
 
 请求：如果有设计师同学已经看不下插件 logo 了，麻烦出手吧！
 
