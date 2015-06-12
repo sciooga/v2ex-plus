@@ -28,10 +28,12 @@ function related_reply( reply_content, _reply_user_name, _reply_at_name ){
 }
 
 //同一帖子翻页跳过主题
-var _t_num = RegExp("/t/([0-9]{6})");
+var _t_num = RegExp("/t/(\\d+)");
 var _history_t_num = _t_num.exec(document.referrer);
 _history_t_num = _history_t_num!=null && _history_t_num[1] || 'none';
 var _current_t_num = _t_num.exec(window.location.href)[1] || ' none ';
+alert(_history_t_num)
+alert(_current_t_num)
 if ( _history_t_num == _current_t_num ){
     $('html, body').animate({scrollTop: ($('.topic_buttons').offset().top)}, 300);
 }
