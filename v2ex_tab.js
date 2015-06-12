@@ -1,7 +1,7 @@
 //$(document).ready(function(){
 
     var i = 0;
-    $('div#Main div:nth-of-type(2) div').each(function(){
+    $('div#Main div:nth-of-type(2) .cell').each(function(){
         var _this = $(this);
         //由于上面是对 box 内所有 div 操作（省事），所有在节点内（/go/*）会产生两个 preview 所以需要一个判断。
         _this.find('.preview').length>0 || _this.find('.fade').append("<span class='preview'>预览</span>");
