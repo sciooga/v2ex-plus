@@ -27,7 +27,7 @@ div.previewWindow div.subtle
 
 p.previewWindowEnd
 {
-    margin: 0px;
+    margin: 10px 0px 0px;
     padding: 2px;
     color: #778087;
     text-align: right;
@@ -38,7 +38,7 @@ p.previewWindowEnd
 
 p.previewWindowEnd span
 {
-    margin-right: 40px;
+    margin-right: 6px;
     margin-bottom: 0px;
     cursor: pointer;
 }
