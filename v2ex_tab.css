@@ -1,0 +1,44 @@
+span.preview
+{
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+div.previewWindow
+{
+    display: none;
+    width: 660px;
+    border: 1px solid #e2e2e2;
+    border-radius: 16px;
+    margin: 10px auto;
+    padding: 20px 4px;
+    text-align: left;
+}
+
+div.previewWindow div.subtle
+{
+    margin-top: 8px;
+    padding: 0px;
+    outline: 4px solid #fffff9;
+    border-top: 4px solid #fffff9;
+    border-left: none;
+    border-bottom: 4px solid #fffff9;
+}
+
+p.previewWindowEnd
+{
+    position: relative;
+    top: 14px;
+    margin: 0px;
+    color: #778087;
+    text-align: right;
+    font-size: 14px;
+    line-height: 1.6;
+    border-top: 1px solid #e2e2e2;
+}
+
+p.previewWindowEnd span
+{
+    margin-right: 40px;
+    cursor: pointer;
+}

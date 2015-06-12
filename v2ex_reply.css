@@ -1,0 +1,134 @@
+span.replyDetailBTN
+{
+    cursor: pointer;
+    margin-left: 6px;
+}
+
+div.replyDetail
+{
+    display: none;
+    width: 660px;
+    margin: 0px;
+    padding: 10px 10px 20px;
+    shadow-box: 1px 1px 1px #000;
+    color: #000;
+    background-color: #eee;
+    font-size: 14px;
+    line-height: 1.6;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+div.replyDetail div div
+{
+    text-align: left;
+    display: inline-block;
+    overflow:hidden;
+    margin-top: 10px;
+    padding: 10px 10px 2px;
+    max-width: 480px;
+    border-radius: 10px;
+    background-color: #fffff9;
+}
+
+div.replyDetail div div img
+{
+    max-width: 400px !important;
+}
+
+p.bubbleName, p.bubbleTitle
+{
+    color: gray;
+    margin: 2px 0px 0px;
+    padding:0px 10px;
+    font-size: 14px;
+    line-height: 1.6;
+    border-top: 1px solid #e2e2e2;
+}
+
+span.replyDetailEnd
+{
+    display: inline-block;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.unrelated div
+{
+    opacity: 0.4;
+    transition: all .8s cubic-bezier(.4,.2,.3,1);
+}
+
+.unrelated div:hover
+{
+    opacity: 1;
+}
+
+.unrelated .unrelatedTip:before
+{
+    content: "可能是无关内容";
+}
+
+span[class^="inputBTN"]
+{
+    margin-left:6px;
+    cursor: pointer;
+}
+
+span[class^="inputBTN"]:hover
+{
+    border-bottom: 1px solid;
+}
+
+.emoticon ul
+{
+    margin: 0px;
+}
+
+.emoticon ul li
+{
+    display: inline-block;
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+    margin: 6px 3px 0px;
+}
+
+.uploadImage
+{
+    text-align: left;
+}
+
+.uploadImage > div
+{
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    margin: 10px 8px;
+    border-radius: 10px;
+    text-align: center;
+    border: 2px solid #fffff9;
+    background-color: #e2e2e2;
+    transition: all 1s cubic-bezier(.4,.2,.3,1);
+}
+
+.uploadImage > div > div
+{
+    margin: 10px auto 0px;
+    width: 130px;
+    height: 110px;
+}
+
+.uploadImage img
+{
+    margin: auto;
+    max-width: 130px;
+    max-height: 110px;
+    min-width: 80px;
+    min-height: 60px;
+}
+
+.uploadImage span
+{
+    font-size: 12px;
+    line-height: 30px;
+}
