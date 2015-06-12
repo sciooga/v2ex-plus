@@ -79,7 +79,7 @@ function input_img( input_img_base64, this_img_id ){
 
 //——————————————————————————————————会话详情——————————————————————————————————
 
-    var page_current_num = ~~($('.page_current').text());
+    var page_current_num = ~~($('.page_current').text()) || '1';
     var _key_user = $('.header small a').text();
     var _reply_user_name_list = Array();
     var _reply_content_list = Array();
