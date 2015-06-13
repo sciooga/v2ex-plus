@@ -7,12 +7,11 @@ span.preview
 div.previewWindow
 {
     display: none;
-    width: 660px;
-    border: 1px solid #e2e2e2;
-    //border-radius: 16px;
-    margin: 10px auto;
-    padding: 20px 4px 0px;
+    width: 604px;
+    margin: 0;
+    padding: 20px 10px 10px 66px;
     text-align: left;
+    background-color: #eeeeee;
 }
 
 div.previewWindow div.subtle
@@ -28,7 +27,7 @@ div.previewWindow div.subtle
 p.previewWindowEnd
 {
     margin: 10px 0px 0px;
-    padding: 2px;
+    padding: 10px 2px 0 2px;
     color: #778087;
     text-align: right;
     font-size: 14px;
