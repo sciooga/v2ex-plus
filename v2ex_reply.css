@@ -9,13 +9,35 @@ div.replyDetail
     display: none;
     width: 660px;
     margin: 0px;
-    padding: 10px 10px 20px;
+    padding: 10px;
     shadow-box: 1px 1px 1px #000;
     color: #000;
     background-color: #eee;
     font-size: 14px;
     line-height: 1.6;
     border-bottom: 1px solid #e2e2e2;
+}
+
+div.smartMode
+{
+    text-align: right;
+    margin-top: 6px;
+}
+
+div.smartMode span
+{
+    font-size: 13px;
+    line-height: 13px;
+    padding: 5px 8px 5px 8px;
+    margin-right: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.checked
+{
+    background-color: #334;
+    color: #fff;
 }
 
 div.replyDetail div div
@@ -48,8 +70,14 @@ p.bubbleName, p.bubbleTitle
 span.replyDetailEnd
 {
     display: inline-block;
-    padding: 8px;
+    font-size: 100%;
+    margin-top: 12px;
     cursor: pointer;
+}
+
+.unrelated
+{
+    display: none;
 }
 
 .unrelated div
@@ -96,6 +124,8 @@ span[class^="inputBTN"]:hover
 .uploadImage
 {
     text-align: left;
+    display: none;
+    padding-top: 8px;
 }
 
 .uploadImage > div

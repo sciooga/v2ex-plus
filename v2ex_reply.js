@@ -77,7 +77,6 @@ function input_img( input_img_base64, this_img_id ){
 
 //$(document).ready(function(){//取消注释开启延迟加载（注意上下括号都要取消注释）
 
-//——————————————————————————————————会话详情——————————————————————————————————
 
     var page_current_num = ~~($('.page_current').text()) || '1';
     var _key_user = $('.header small a:first-of-type').text();
@@ -100,9 +99,8 @@ function input_img( input_img_base64, this_img_id ){
 
         _reply_user_name_list[r_i] = _reply_user_name;
         _reply_content_list[r_i++] = _reply_content;
-        if( _reply_at_name ){
-            _this.find('.sep5').before("<span class='replyDetailBTN fade small'>会话详情</span>");
-        }
+        var btn_name = _reply_at_name && '会话详情' || '所有回复';
+        _this.find('.sep5').before("<span class='replyDetailBTN fade small'>"+ btn_name +"</span>");
     });
 
     $('#onlyKeyUser').click(function(){
@@ -116,19 +114,30 @@ function input_img( input_img_base64, this_img_id ){
         }
     });
 
+//——————————————————————————————————会话详情 所有回复——————————————————————————————————
+
     var btn_id = 0;
     $('.replyDetailBTN').click(function(){
         var _this = $(this);
         var _cell = _this.parents("div[id^=r_]");//由于最后一条回复 class 为 inner 所以还是匹配 id 完整些
         var _reply_content = _cell.find('.reply_content').html();
+        var btn_name = _this.text();
 
-        if (_this.text() == '会话详情'){
+//————————————————会话详情功能————————————————
+
+        if ( btn_name == '会话详情'){
             _this.text('加载中...');
             _cell.after("<div class='replyDetail'></div>");
 
             var _replyDetail = _cell.next('.replyDetail');
             var _reply_user_name = _cell.find('strong a').text();
             var _reply_at_name_list = get_at_name_list( _reply_content );
+
+            _replyDetail.append("<div class='smartMode'><span class='checked'>智能模式</span></div>");
+            $('.smartMode').click(function(){
+                $(this).children('span').toggleClass('checked');
+                $(this).siblings('.unrelated').slideToggle(300);
+            });
 
             for (var i=1; _reply_at_name_list[i]; ++i) {
                 r_i = 1;
@@ -138,26 +147,81 @@ function input_img( input_img_base64, this_img_id ){
                     if ( _reply_user_name_list[r_i] == _reply_user_name ){
                         var _bubble = "<div class='rightBubble";
                         !related_reply( _reply_content_list[r_i], _reply_user_name, _reply_at_name_list[i] ) && (_bubble+=' unrelated');
-                        _bubble += "' style='text-align: right;'><div>"+ _reply_content_list[r_i] +"<p class='bubbleName' style='text-align:right;'><span class='unrelatedTip'><span>&emsp;回复于"+ (r_i+(page_current_num-1)*100) +"层&emsp;"+ _reply_user_name +"</p></div></div>";
+                        _bubble += "' style='text-align: right;'>\
+                                <div>\
+                                    "+ _reply_content_list[r_i] +"\
+                                    <p class='bubbleName' style='text-align:right;'>\
+                                        <span class='unrelatedTip'><span>&emsp;回复于"+ (r_i+(page_current_num-1)*100) +"层&emsp;"+ _reply_user_name +"\
+                                    </p>\
+                                </div></div>";
                         _replyDetail.append( _bubble );
 
                     }else if( _reply_user_name_list[r_i] == _reply_at_name_list[i] ){
                         var _bubble = "<div class='leftBubble";
                         !related_reply( _reply_content_list[r_i], _reply_user_name, _reply_at_name_list[i] ) && (_bubble+=' unrelated');
-                        _bubble += "' style='text-align: left;'><div>"+ _reply_content_list[r_i] +"<p class='bubbleName' style=''>"+ _reply_at_name_list[i] +"&emsp;回复于"+ (r_i+(page_current_num-1)*100) +"层&emsp;<span class='unrelatedTip'><span></p></div></div>";
+                        _bubble += "' style='text-align: left;'>\
+                                <div>\
+                                    "+ _reply_content_list[r_i] +"\
+                                    <p class='bubbleName' style=''>\
+                                        "+ _reply_at_name_list[i] +"&emsp;回复于"+ (r_i+(page_current_num-1)*100) +"层&emsp;<span class='unrelatedTip'><span>\
+                                    </p>\
+                                </div></div>";
                         _replyDetail.append( _bubble );
                     }
 
-                r_i++;
+                ++r_i;
                 }
             }
             _this.addClass('btn_id'+btn_id);
-            _replyDetail.append("<p class='bubbleName' style='margin-top: 20px;'><span class='replyDetailEnd' onclick='$(\".btn_id"+ btn_id +"\").click();$(\"html, body\").animate({scrollTop: ($(\".btn_id"+ btn_id++ +"\").offset().top-200)}, 600);'>收起会话</span></p>");
+            _replyDetail.append("<p class='bubbleName' style='margin-top: 20px;'><span class='replyDetailEnd item_node' \
+                                        onclick='$(\".btn_id"+ btn_id +"\").click();$(\"html, body\").animate({scrollTop: ($(\".btn_id"+ btn_id++ +"\").offset().top-200)}, 600);'>\
+                                        收起会话\
+                                 </span></p>");
             _this.text('收起会话');
             _replyDetail.slideDown(800);
 
+//————————————————会话详情功能————————————————
+
+//————————————————所有回复功能————————————————
+
+        }else if( btn_name == '所有回复' ){
+            _this.text('加载中...');
+            _cell.after("<div class='replyDetail'></div>");
+
+            var _replyDetail = _cell.next('.replyDetail');
+            var _reply_user_name = _cell.find('strong a').text();
+
+            r_i = 1;
+            while ( _reply_user_name_list[r_i] ){
+
+                if ( _reply_user_name_list[r_i] == _reply_user_name ){
+                    var _bubble = "<div class='rightBubble' style='text-align: right;'>\
+                                        <div>\
+                                            "+ _reply_content_list[r_i] +"\
+                                            <p class='bubbleName' style='text-align:right;'>\
+                                                <span class='unrelatedTip'><span>&emsp;回复于"+ (r_i+(page_current_num-1)*100) +"层&emsp;"+ _reply_user_name +"\
+                                            </p>\
+                                        </div>\
+                                   </div>";
+                    _replyDetail.append( _bubble );
+                }
+            ++r_i;
+            }
+
+            _this.addClass('btn_id'+btn_id);
+            _replyDetail.append("<p class='bubbleName' style='margin-top: 20px;'>\
+                                    <span class='replyDetailEnd item_node' \
+                                        onclick='$(\".btn_id"+ btn_id +"\").click();$(\"html, body\").animate({scrollTop: ($(\".btn_id"+ btn_id++ +"\").offset().top-200)}, 600);'>\
+                                        收起回复\
+                                    </span>\
+                                 </p>");
+            _this.text('收起回复');
+            _replyDetail.slideDown(800);
+
+//————————————————所有回复功能————————————————
+
         }else{
-            _this.text('会话详情');
+            btn_name=='收起会话' && _this.text('会话详情') || _this.text('所有回复');
             var _replyDetail = _cell.next('.replyDetail');
             setTimeout(function(){
                 _replyDetail.remove();
@@ -166,7 +230,7 @@ function input_img( input_img_base64, this_img_id ){
         }
     });
 
-//——————————————————————————————————会话详情——————————————————————————————————
+//——————————————————————————————————会话详情 所有回复——————————————————————————————————
 
 
 //——————————————————————————————————图片功能——————————————————————————————————
@@ -181,7 +245,7 @@ function input_img( input_img_base64, this_img_id ){
 
     _reply_textarea_top_btn.before(emoticon_list);
     var _emoticon = $(".emoticon");
-    _reply_textarea_top_btn.after("<div class = 'uploadImage' style='display: none;padding-top: 8px;'></div>")
+    _reply_textarea_top_btn.after("<div class = 'uploadImage'></div>")
     var _upload_image = $('.uploadImage');
 
     $('.inputBTN1').click(function(){
@@ -209,7 +273,7 @@ function input_img( input_img_base64, this_img_id ){
     //从剪切板上传
     //只要粘贴就触发，不管在什么地方粘贴
     document.body.addEventListener("paste", function(e) {
-        for (var i = 0; i < e.clipboardData.items.length; i++) {
+        for (var i = 0; i < e.clipboardData.items.length; ++i) {
             var this_item = e.clipboardData.items[i];
             if ( this_item.kind == "file" && /image\/\w+/.test(this_item.type) ) {
                 var imageFile = this_item.getAsFile();
@@ -228,8 +292,10 @@ function input_img( input_img_base64, this_img_id ){
         }
     });
 
+//————————————————上传图片————————————————
 
-    //选择图片上传
+//————————————————选择图片上传————————————————
+
     var _upload_img_btn = $('.inputBTN2');
     var _imgUpload = $('#imgUpload');
     _upload_img_btn.click(function(){
@@ -254,8 +320,7 @@ function input_img( input_img_base64, this_img_id ){
         }
     });
 
-//————————————————上传图片————————————————
-
+//————————————————选择图片上传————————————————
 
 //————————————————替换图片标签————————————————
 

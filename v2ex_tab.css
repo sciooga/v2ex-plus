@@ -9,26 +9,25 @@ div.previewWindow
     display: none;
     width: 660px;
     border: 1px solid #e2e2e2;
-    //border-radius: 16px;
+    border-radius: 3px;
     margin: 10px auto;
-    padding: 20px 4px 0px;
+    padding: 12px 5px 0px;
     text-align: left;
 }
 
 div.previewWindow div.subtle
 {
-    margin-top: 8px;
+    margin-top: 16px;
     padding: 0px;
-    outline: 4px solid #fffff9;
-    border-top: 4px solid #fffff9;
     border-left: none;
-    border-bottom: 4px solid #fffff9;
+    border-bottom: none;
+    background: transparent;
 }
 
 p.previewWindowEnd
 {
-    margin: 10px 0px 0px;
-    padding: 2px;
+    margin: 12px 0px 0px;
+    padding: 6px 0px 7px;
     color: #778087;
     text-align: right;
     font-size: 14px;
