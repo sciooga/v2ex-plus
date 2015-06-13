@@ -132,7 +132,7 @@ function input_img( input_img_base64, this_img_id ){
 
             for (var i=1; _reply_at_name_list[i]; ++i) {
                 r_i = 1;
-                _replyDetail.append("<p class='bubbleTitle' style='margin-top: 20px;padding-top: 20px;'>本页内 "+ _reply_user_name +" 与 "+ _reply_at_name_list[i] +" 的会话：</p>");
+                _replyDetail.append("<p class='bubbleTitle'>本页内 "+ _reply_user_name +" 与 "+ _reply_at_name_list[i] +" 的会话：</p>");
                 while ( _reply_user_name_list[r_i] ){
 
                     if ( _reply_user_name_list[r_i] == _reply_user_name ){
@@ -152,7 +152,7 @@ function input_img( input_img_base64, this_img_id ){
                 }
             }
             _this.addClass('btn_id'+btn_id);
-            _replyDetail.append("<p class='bubbleName' style='margin-top: 20px;'><span class='replyDetailEnd' onclick='$(\".btn_id"+ btn_id +"\").click();$(\"html, body\").animate({scrollTop: ($(\".btn_id"+ btn_id++ +"\").offset().top-200)}, 600);'>收起会话</span></p>");
+            _replyDetail.append("<p class='bubbleName' style='margin-top: 20px; text-align: right; padding: 10px 4px 5px;'><span class='replyDetailEnd item_node' onclick='$(\".btn_id"+ btn_id +"\").click();$(\"html, body\").animate({scrollTop: ($(\".btn_id"+ btn_id++ +"\").offset().top-200)}, 600);'>收起会话</span></p>");
             _this.text('收起会话');
             _replyDetail.slideDown(800);
 

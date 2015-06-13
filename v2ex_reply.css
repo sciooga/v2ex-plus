@@ -9,7 +9,7 @@ div.replyDetail
     display: none;
     width: 660px;
     margin: 0px;
-    padding: 10px 10px 20px;
+    padding: 10px 10px 0 10px;
     shadow-box: 1px 1px 1px #000;
     color: #000;
     background-color: #eee;
@@ -43,6 +43,24 @@ p.bubbleName, p.bubbleTitle
     font-size: 14px;
     line-height: 1.6;
     border-top: 1px solid #e2e2e2;
+}
+
+p.bubbleName
+{
+    margin-toP: 5px;
+    padding-top: 5px;
+    font-size: 12px;
+    color: #999;
+}
+.unrelated p.bubbleName{
+    color: #333;
+}
+p.bubbleTitle
+{
+    border-top: none;
+    border-bottom: 1px solid #e2e2e2!important;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 span.replyDetailEnd
