@@ -1,24 +1,25 @@
 {
   "name": "v2ex plus",
-  "version": "0.1",
+  "version": "0.4",
   "manifest_version": 2,
   "description": "可能是 v2ex 最好用的增强插件",
   "background": {
-    "scripts": ["jquery191.js", "background.js"]
+    "scripts": ["jquery191.js", "cookie.js", "background.js"]
   },
   "permissions": [
     "alarms",
+    "notifications",
     "*://*.v2ex.com/*",
     "*://*.weibo.com/*"
   ],
   "content_scripts": [
     {
-      "matches": ["*://www.v2ex.com/", "*://www.v2ex.com/?tab=*", "*://www.v2ex.com/go/*", "*://www.v2ex.com/recent*"],
+      "matches": ["*://*.v2ex.com/", "*://*.v2ex.com/?tab=*", "*://*.v2ex.com/go/*", "*://*.v2ex.com/recent*"],
       "css": ["v2ex_tab.css"],
       "js": ["jquery191.js", "v2ex_tab.js"]
     },
     {
-      "matches": ["*://www.v2ex.com/t/*"],
+      "matches": ["*://*.v2ex.com/t/*"],
       "css": ["v2ex_reply.css"],
       "js": ["jquery191.js", "emoticon.js", "v2ex_reply.js"]
     }

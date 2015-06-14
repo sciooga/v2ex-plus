@@ -40,7 +40,10 @@ if ( _history_t_num == _current_t_num ){
 function input_img( input_img_base64, this_img_id ){
 
     _upload_image.fadeIn(1000);
-    _upload_image.append("<div class='imgId"+ this_img_id +"'><div><img src='"+ input_img_base64 +"' alt='上传图片'/></div><span>上传中</span></div>");
+    _upload_image.append("<div class='imgId"+ this_img_id +"'>\
+                                <div><img src='"+ input_img_base64 +"' alt='上传图片'/></div>\
+                                <span>上传中</span>\
+                          </div>");
     input_img_base64 = RegExp("base64,(.*)").exec(input_img_base64)[1];
 
     chrome.runtime.sendMessage({img_base64: input_img_base64}, function(response) {
@@ -49,22 +52,22 @@ function input_img( input_img_base64, this_img_id ){
             alert('仍有图片在上传中，请稍等...');
             _img_preview.find('span').text('请重新上传');
         }else{
-            _upload_img_btn.text('正在上传');
+            _upload_img_btn.text(' › 正在上传');
             //哎，下下策，谁有更好的办法一定要告诉我
             var get_img_id = setInterval(function(){
                 chrome.runtime.sendMessage({get_img_id: 't'}, function(response) {
                     if ( response.img_id == '失败' ){
-                        alert('微博图片上传失败，可能是未登录微博');
+                        alert('图片上传失败，可能是未登录微博/imgur');
                         window.clearInterval( get_img_id );
                         _img_preview.find('span').text('请重新上传');
-                        _upload_img_btn.text('插入图片');
+                        _upload_img_btn.text(' › 插入图片');
                     }else if( response.img_id != '上传中' ){
                         window.clearInterval( get_img_id );
-                        img_list['图片'+this_img_id] = ' http://ww2.sinaimg.cn/large/'+ response.img_id +'.jpg ';
+                        img_list['图片'+this_img_id] = response.img_id;
                         _reply_textarea.val(function(i,origText){
                             return origText + "[:图片"+ this_img_id +":]";
                         });
-                        _upload_img_btn.text('插入图片');
+                        _upload_img_btn.text(' › 插入图片');
                         _img_preview.find('span').text('[:图片'+ this_img_id +':]');
                         _img_preview.css({'background': 'rgba(246, 246, 246, 0.5)','borderColor': '#A4FF94'});
                     }
@@ -174,7 +177,8 @@ function input_img( input_img_base64, this_img_id ){
             }
             _this.addClass('btn_id'+btn_id);
             _replyDetail.append("<p class='bubbleName' style='margin-top: 20px;'><span class='replyDetailEnd item_node' \
-                                        onclick='$(\".btn_id"+ btn_id +"\").click();$(\"html, body\").animate({scrollTop: ($(\".btn_id"+ btn_id++ +"\").offset().top-200)}, 600);'>\
+                                        onclick='$(\".btn_id"+ btn_id +"\").click();\
+                                                 $(\"html, body\").animate({scrollTop: ($(\".btn_id"+ btn_id++ +"\").offset().top-200)}, 600);'>\
                                         收起会话\
                                  </span></p>");
             _this.text('收起会话');
@@ -239,7 +243,7 @@ function input_img( input_img_base64, this_img_id ){
     _reply_textarea.attr('placeholder', '你可以在文本框内直接粘贴图片\n类似于 [:微笑:] 的图片标签可以优雅的移动');
 
     var _reply_textarea_top_btn = _reply_textarea.parents('.box').children('.cell:first-of-type');
-    _reply_textarea_top_btn.append("<span class='inputBTN1'> › 表情</span> <span class='inputBTN2'> › 插入图片</span><input type='file' style='display: none' id='imgUpload' />");
+    _reply_textarea_top_btn.append("<span class='inputBTN1'> › 表情</span><span class='inputBTN2'> › 插入图片</span><input type='file' style='display: none' id='imgUpload' />");
 
 //————————————————表情功能————————————————
 
@@ -326,13 +330,17 @@ function input_img( input_img_base64, this_img_id ){
 
 if (_reply_textarea.val()) {_reply_textarea_top_btn.append('&emsp;之前上传的图片可能已丢失，请重新上传。')};
 //#1是用来调试的，点击 textarea 模拟显示上传的字符串
-//    _reply_textarea.click(function(){//#1
-    _reply_textarea.parent().submit(function(){
-        _reply_textarea.val(function(i,origText){
-            var patt_emoticon_name = RegExp("\\[:(.+?):\\]", "g");
-            origText = origText.replace(patt_emoticon_name, function(i,k){return img_list[k]});
-            return origText;
-        });
+//    _reply_textarea.click(function( e ){//#1
+    _reply_textarea.parent().submit(function( e ){
+        if ( _upload_img_btn.text().indexOf('正在上传') == -1 ){
+            _reply_textarea.val(function(i,origText){
+                var patt_emoticon_name = RegExp("\\[:(.+?):\\]", "g");
+                origText = origText.replace(patt_emoticon_name, function(i,k){return img_list[k]});
+                return origText;
+            });
+        }else{
+            confirm('仍有图片未上传完成，确定要直接回复？\n未上传的图片将不被发送') || e.preventDefault();
+        }
     });
 
 //————————————————替换图片标签————————————————

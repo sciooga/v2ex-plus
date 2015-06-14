@@ -1,7 +1,11 @@
+getCookie('imageHosting') || setCookie('imageHosting', 'weibo');
+
+
 var img_status = '空闲';
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if ( request.img_base64 ){
+        var imageHosting = getCookie('imageHosting');
         if ( img_status != '空闲'){
             sendResponse({upload_status: '上传中'});//让他稍等
         }else{
@@ -11,15 +15,36 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         img_status = '上传中';
         var xhr = new XMLHttpRequest();
         var data = new FormData();
-        var _response = '';
-        data.append('b64_data', request.img_base64);
+        var _response = '',
+
+        //——————————设置微博或 imgur 的信息——————————
+
+        post_url = 'http://picupload.service.weibo.com/interface/pic_upload.php?\
+                    &mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog',
+        patt_id = "pid\":\"(.*?)\"",
+        url_start = ' http://ww2.sinaimg.cn/large/',
+        url_end = '.jpg ';
+
+        if ( imageHosting == 'weibo' ){
+            data.append('b64_data', request.img_base64);
+        }else{
+            data.append('sid', 'kargufejcrsbae23rgsiniaaj4');//注意！sid 可能会失效！
+            data.append('base64s[]', request.img_base64);
+            post_url = 'http://imgur.com/upload';
+            patt_id = "hash\":\"(.*?)\"";
+            url_start = ' https://i.imgur.com/';
+            url_end = '.png ';
+        }
+
+        //——————————微博或 imgur 的信息完成——————————
+
         xhr.onreadystatechange = function(){
             if (xhr.readyState === 4) {
                 if (xhr.status === 200 ){
                     _response =  xhr.responseText;
-                    _response = RegExp("pid\":\"(.*?)\"").exec( _response );
+                    _response = RegExp( patt_id ).exec( _response );
                     _response = _response != null && _response[1] || '失败';//以防 API 更改
-                    img_status = _response;
+                    img_status = url_start + _response + url_end;
                     console.log( "成功返回："+_response );// 返回成功数据
                 }else{
                     img_status = '失败';
@@ -28,8 +53,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             }
         };
         //参数 url、nick、logo用于水印内容
-        xhr.open('POST', 'http://picupload.service.weibo.com/interface/pic_upload.php?\
-                          &mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog');
+        xhr.open('POST', post_url);
         xhr.send(data);
     }else if ( request.get_img_id ){//收到图片状态询问
         sendResponse({img_id: img_status});
@@ -51,6 +75,12 @@ function checkMsg(){
                 alert('请登录 v2ex 账号以便获取新消息提醒，否则每5分钟将弹出此提示。');
             }else if( sign!='0') {
                 chrome.browserAction.setIcon({path: 'icon/icon38_msg.png'});
+                chrome.notifications.create({
+                                type       : 'basic',
+                                iconUrl    : 'icon/icon38_msg.png',
+                                title      : 'v2ex plus 提醒您',
+                                message    : '您有 V2EX 的未读新消息，点击查看。',
+                });
             }else{
                 chrome.browserAction.setIcon({path: 'icon/icon38.png'});
             }
@@ -59,8 +89,10 @@ function checkMsg(){
         }
     });
 }
-
-chrome.browserAction.onClicked.addListener(function(){
+//清除通知图标，打开通知地址
+function clean_msg(){
     chrome.browserAction.setIcon({path: 'icon/icon38.png'});
     window.open("https://www.v2ex.com/notifications");
-});
+}
+chrome.browserAction.onClicked.addListener( clean_msg );
+chrome.notifications.onClicked.addListener( clean_msg );

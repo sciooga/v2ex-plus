@@ -2,7 +2,9 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>v2ex plus - 帮助</title>
+    <title>v2ex plus - 选项与帮助</title>
+    <script type="text/javascript" language="javascript" charset="UTF-8" src="cookie.js"></script>
+    <script type="text/javascript" language="javascript" charset="UTF-8" src="options.js"></script>
     <style type="text/css">
     li{
         margin: 20px;
@@ -21,22 +23,30 @@
         margin-bottom:10px;
     }
     div.a{
+        margin-top: 20px;
         margin-left:20px;
     }
     </style>
 </head>
 <body style="background:#f6f6f6; color:#778087; font-family:sans-serif; font-size:120%;">
-    <div style="position: fixed; width:300px; padding:16px; background:#f0f0f0; border-radius:16px;">
+    <div style="position: fixed; top:20px; width:300px; padding:16px; background:#f0f0f0; border-radius:16px;">
         这是一个用于 v2ex 论坛的扩展程序，使用前最好登录 v2ex 以接收新消息提醒，登录新浪微博以使用插入图片、粘贴图片功能。
         <br/><br/>感谢： <a href="https://github.com/ldong">ldong</a> 帮忙发布。
         <br/><br/>感谢： <a href="http://sheephe.com/">Sheep</a> 设计图标。
         <br/><br/>反馈问题请 <a href="mailto:sciooga@gmail.com">点击<br/>(sciooga@gmail.com)</a>
         <br/><br/>源码请见： <a href="https://github.com/sciooga/v2ex-plus"> ♥ Github</a>
-        <br/><br/>对扩展满意，可以送我一本书，支付宝二维码：
+        <br/><br/>对扩展满意，可以送我一本书。<br/>支付宝：sciooga@gmail.com
         <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et1dvnmdxvj206x06xaar.jpg" alt="支付宝二维码"/>
         <br/><br/>生活愉悦~
     </div>
     <div style="margin: 100px auto; padding-left:100px; width:800px;">
+        <h1>选项：</h1>
+        <ul>
+            <li><form name="imageHostings">
+                图床设置：&emsp;&emsp;&emsp;&emsp;<input type="radio" name="imageHosting" value="weibo" disabled="disabled" />微博图床
+                        &emsp;&emsp;&emsp;&emsp;<input type="radio" name="imageHosting" value="imgur" disabled="disabled" />imgur
+            </form></li>
+        </ul>
         <h1>功能介绍：</h1>
         <ul>
             <li>
@@ -71,19 +81,19 @@
             </li>
             <li>
                 <div class="q">插入图片：</div>
-                <div class="a">在回复文本框上，新增了一个“插入图片”按钮，点击可选择插入的图片文件，你也可以直接选中文本框黏贴图片。
+                <div class="a">在回复文本框上，新增了一个“插入图片”按钮，点击可选择插入的图片文件，您也可以直接选中文本框黏贴图片。
                     <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et1cgbhhvsj208a05y3yp.jpg" alt="插入图片功能介绍"/>
                 </div>
             </li>
             <li>
                 <div class="q">消息提醒：</div>
-                <div class="a">在浏览器右上角有一个可以隐藏的图标，每5分钟检查一次新消息，当收到新消息时图标显示如下：
+                <div class="a">在浏览器右上角有一个可以隐藏的图标，每5分钟检查一次新消息，当收到新消息时 Chrome 的通知中心会提示您，同时图标显示如下：
                     <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et1cmil973j200u00u0nn.jpg" alt="消息提醒功能介绍"/>
                 </div>
             </li>
             <li>
                 <div class="q">跳过主题：</div>
-                <div class="a">当你在同一主题内翻页将跳过主题内容直接到回复列表。
+                <div class="a">当您在同一主题内翻页将跳过主题内容直接到回复列表。
                 </div>
             </li>
         </ul>
@@ -105,18 +115,35 @@
                 </div>
             </li>
             <li>
+                <div class="q">为什么一直提醒我有新消息？</div>
+                <div class="a">只要您没有查看新消息，v2ex plus 将会每5分钟提醒您一次。
+                </div>
+            </li>
+            <li>
+                <div class="q">为什么我有时收不到 Chrome 通知中心的提醒？</div>
+                <div class="a">1. 请确保 Chrome 的通知中心设置中已经勾选 v2ex plus。
+                            <br/>2. 请确保系统通知中心不处于免打扰模式。
+                            <br/>3. Chrome for Mac 下，当屏幕正显示处于全屏状态的 Chrome 时，Chrome 将无法弹出通知，这是一个已知的待修复的BUG，此时您应该留意来自右上角图标的提示。
+                </div>
+            </li>
+            <li>
+                <div class="q">我该如何选择图床？</div>
+                <div class="a">如果您从来没听说过 imgur，请选择微博图床，其他情况仍然推荐没有被特殊照顾的微博图床。
+                </div>
+            </li>
+            <li>
                 <div class="q">上传的图片是上传到哪里？</div>
-                <div class="a">图片上传至微博图床，但并不会像“围脖是个好图床”一样以用户（@围脖是个好图床1 ……）发表图片的方式获得图片链接，所以在图片发送出去前，只有你和微博服务器知道图片内容。
+                <div class="a">图片上传至微博图床或 imgur，两者都需要登录对应账号但不会像“围脖是个好图床”一样以用户（@围脖是个好图床1 ……）发表图片的方式获得图片链接，所以在图片发送前，只有您和服务器知道图片内容，如果您使用微博图床扩展不会使用您的微博账号发布任何微博。
                 </div>
             </li>
             <li>
                 <div class="q">为什么有时我查看了新消息，但图标任然提示有未读消息？</div>
-                <div class="a">如果你需要查看消息后图标立即更改，请点击图标查看消息，否则图标最长需要5分钟才能有反应。
+                <div class="a">如果您需要查看消息后图标立即更改，请点击图标或通知查看消息，否则图标最长需要5分钟才能有反应。
                 </div>
             </li>
             <li>
                 <div class="q">什么是会话详情的智能模式？</div>
-                <div class="a">扩展程序会智能判断对话内的每条回复，不相关的将被隐藏，你也可以选择关闭此功能，每个会话详情默认打开。
+                <div class="a">扩展程序会智能判断对话内的每条回复，不相关的将被隐藏，您也可以选择关闭此功能，每个会话详情默认打开。
                 </div>
             </li>
         </ul>
@@ -126,7 +153,10 @@
                 收藏节点新帖提醒
             </li>
             <li>
-                将新消息提醒方式改为通知
+                图片实时显示在文本框内以编辑
+            </li>
+            <li>
+                快捷回复误触发判断
             </li>
             <li>
                 扩展内私信
@@ -145,6 +175,36 @@
             </li>
             <li>
                 签到
+            </li>
+        </ul>
+        <h1>更新日志：</h1>
+        <ul>
+            <li>
+                <div class="q">0.4版：</div>
+                <div class="a">
+                    增加了对 Chrome 通知中心的支持。<br/>
+                    会话详情加入智能模式。<br/>新增所有回复功能。<br/>
+                    增加对 imgur 的支持，图床在本页选择切换。<br/>
+                    增加对 v2ex 裸域的支持。<br/>
+                    图片上传未完成时误点击回复将弹出提示。<br/>
+                    改进部分 css。
+                </div>
+            </li>
+            <li>
+                <div class="q">0.3版：</div>
+                <div class="a">
+                    修复部分文字错误。<br/>
+                    增加对英文版 v2ex 的支持。<br/>
+                    改进部分 css。
+                </div>
+            </li>
+            <li>
+                <div class="q">0.2版：</div>
+                <div class="a">
+                    加入了新设计的图标。<br/>
+                    关闭了误开启的调试模式。<br/>
+                    改进了部分 css。
+                </div>
             </li>
         </ul>
     </div>
