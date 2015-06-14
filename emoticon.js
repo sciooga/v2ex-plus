@@ -38,9 +38,9 @@ img_list = {
                 '愤怒':   ' http://ww2.sinaimg.cn/bmiddle/62e721e4gw1et02eo1b16j200k00k0sh.jpg ',
                 '亲亲':   ' http://ww2.sinaimg.cn/bmiddle/62e721e4gw1et02eoymtjj200k00k3y9.jpg ',
                 '飞吻':   ' http://ww4.sinaimg.cn/bmiddle/62e721e4gw1et02eq4hnmj200k00k3y9.jpg ',
-                '渴望':   ' http://ww2.sinaimg.cn/bmiddle/62e721e4gw1et02g2x7kkj200k00k3y9.jpg ',
-                '开心':   ' http://ww4.sinaimg.cn/bmiddle/62e721e4gw1et02g3v99xj200k00k3y9.jpg ',
-                '挖鼻':   ' http://ww3.sinaimg.cn/bmiddle/62e721e4gw1et02g4qahwj200k00k3y9.jpg ',
+                '渴望':   ' http://ww2.sinaimg.cn/large/62e721e4gw1et47fjhc9dg200m00mjr9.gif ',
+                '开心':   ' http://ww2.sinaimg.cn/large/62e721e4gw1et47k3zwnqg200m00m0sj.gif ',
+                '挖鼻':   ' http://ww2.sinaimg.cn/large/62e721e4gw1et47itgo0hg200m00mglg.gif ',
                 'doge':   ' http://ww4.sinaimg.cn/bmiddle/62e721e4gw1et02g5wksrj200k00k3y9.jpg ',
 };
 
