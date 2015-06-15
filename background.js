@@ -5,7 +5,6 @@ var img_status = '空闲';
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if ( request.img_base64 ){
-        var imageHosting = getCookie('imageHosting');
         if ( img_status != '空闲'){
             sendResponse({upload_status: '上传中'});//让他稍等
         }else{
@@ -25,10 +24,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         url_start = ' http://ww2.sinaimg.cn/large/',
         url_end = '.jpg ';
 
-        if ( imageHosting == 'weibo' ){
+        if ( getCookie('imageHosting') == 'weibo' ){
             data.append('b64_data', request.img_base64);
         }else{
-            data.append('sid', 'kargufejcrsbae23rgsiniaaj4');//注意！sid 可能会失效！
             data.append('base64s[]', request.img_base64);
             post_url = 'http://imgur.com/upload';
             patt_id = "hash\":\"(.*?)\"";

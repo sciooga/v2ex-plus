@@ -56,7 +56,7 @@ function input_img( input_img_base64, this_img_id ){
             //哎，下下策，谁有更好的办法一定要告诉我
             var get_img_id = setInterval(function(){
                 chrome.runtime.sendMessage({get_img_id: 't'}, function(response) {
-                    if ( response.img_id == '失败' ){
+                    if ( response.img_id.indexOf('失败') != -1 ){
                         alert('图片上传失败，可能是未登录微博/imgur');
                         window.clearInterval( get_img_id );
                         _img_preview.find('span').text('请重新上传');
@@ -196,6 +196,7 @@ function input_img( input_img_base64, this_img_id ){
             var _reply_user_name = _cell.find('strong a').text();
 
             r_i = 1;
+            _replyDetail.append("<p class='bubbleTitle' style='margin-top: 20px;padding-top: 20px;'>本页内 "+ _reply_user_name +" 的所有回复：</p>");
             while ( _reply_user_name_list[r_i] ){
 
                 if ( _reply_user_name_list[r_i] == _reply_user_name ){

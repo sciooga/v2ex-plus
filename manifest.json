@@ -10,6 +10,7 @@
     "alarms",
     "notifications",
     "*://*.v2ex.com/*",
+    "*://*.imgur.com/*",
     "*://*.weibo.com/*"
   ],
   "content_scripts": [
