@@ -2,7 +2,7 @@
   "name": "v2ex plus",
   "version": "0.4",
   "manifest_version": 2,
-  "description": "可能是 v2ex 最好用的增强插件",
+  "description": "可能是 v2ex 最好用的增强扩展",
   "background": {
     "scripts": ["jquery191.js", "cookie.js", "background.js"]
   },
