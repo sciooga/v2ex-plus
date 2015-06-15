@@ -34,6 +34,12 @@ div.smartMode span
     cursor: pointer;
 }
 
+div.smartMode span:hover
+{
+    background-color: #667;
+    color: #fff;
+}
+
 .checked
 {
     background-color: #334;
@@ -70,7 +76,7 @@ p.bubbleName, p.bubbleTitle
 span.replyDetailEnd
 {
     display: inline-block;
-    font-size: 100%;
+    font-size: 12px;
     margin-top: 12px;
     cursor: pointer;
 }

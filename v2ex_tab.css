@@ -4,6 +4,11 @@ span.preview
     cursor: pointer;
 }
 
+span.preview:hover
+{
+    border-bottom: 1px solid;
+}
+
 div.previewWindow
 {
     display: none;
