@@ -1,0 +1,68 @@
+#imgFun
+{
+    z-index: 100;
+    position: fixed;
+    top: 10%;
+    left: 6px;
+    color: #999;
+    transition: left .8s;
+}
+
+#imgFunBtn
+{
+    display: inline-block;
+    float: right;
+    margin-top: 200px;
+    margin-left: -8px;
+    line-height: 56px;
+    width: 30px;
+    height: 60px;
+    border-radius: 12px;
+    background: #fff;
+    cursor: pointer;
+}
+
+#imgManage
+{
+    display: inline-block;
+    width: 200px;
+    padding: 10px 0px;
+    height: 600px;
+    text-align: center;
+    background: #f9f9f9;
+    overflow: auto;
+}
+
+#imgManage > div
+{
+    width: 150px;
+    height: 150px;
+    margin: 10px auto;
+    border-radius: 10px;
+    border: 2px solid #fffff9;
+    background-color: #e2e2e2;
+    transition: all 1s cubic-bezier(.4,.2,.3,1);
+}
+
+#imgManage > div > div
+{
+    margin: 10px auto 0px;
+    width: 130px;
+    height: 110px;
+}
+
+#imgManage img
+{
+    margin: auto;
+    max-width: 130px;
+    max-height: 110px;
+    min-width: 80px;
+    min-height: 60px;
+}
+
+#imgManage input
+{
+    font-size: 12px;
+    margin-top: 2px;
+    width: 130px;
+}

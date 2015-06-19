@@ -1,6 +1,5 @@
 span.preview
 {
-    margin-left: 10px;
     cursor: pointer;
 }
 
@@ -32,7 +31,7 @@ div.previewWindow div.subtle
 p.previewWindowEnd
 {
     margin: 12px 0px 0px;
-    padding: 6px 0px 7px;
+    padding: 6px 0px 2px;
     color: #778087;
     text-align: right;
     font-size: 14px;

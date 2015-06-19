@@ -9,6 +9,8 @@
   "permissions": [
     "alarms",
     "notifications",
+    "webRequest",
+    "webRequestBlocking",
     "*://*.v2ex.com/*",
     "*://*.imgur.com/*",
     "*://*.weibo.com/*"
@@ -23,6 +25,11 @@
       "matches": ["*://*.v2ex.com/t/*"],
       "css": ["v2ex_reply.css"],
       "js": ["jquery191.js", "emoticon.js", "v2ex_reply.js"]
+    },
+    {
+      "matches": ["*://*.v2ex.com/new/*"],
+      "css": ["v2ex_new.css"],
+      "js": ["jquery191.js", "emoticon.js", "v2ex_new.js"]
     }
   ],
   "browser_action": {

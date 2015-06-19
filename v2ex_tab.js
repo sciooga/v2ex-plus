@@ -1,10 +1,11 @@
-//$(document).ready(function(){
+
+//——————————————————————————————————预览功能——————————————————————————————————
 
     var i = 0;
-    $('div#Main div:nth-of-type(2) .cell').each(function(){
+    $('div#Main > div:nth-of-type(2) .cell').each(function(){
         var _this = $(this);
         //由于上面是对 box 内所有 div 操作（省事），所有在节点内（/go/*）会产生两个 preview 所以需要一个判断。
-        _this.find('.preview').length>0 || _this.find('.fade').append("<span class='preview'>预览</span>");
+        _this.find('.preview').length>0 || _this.find('.fade').append(" &nbsp;•&nbsp; <span class='preview'>预览</span>");
     });
 
     i = 0;
@@ -26,8 +27,8 @@
                 var data = data.substring(data.indexOf("<div class=\"topic_content\">"), data.indexOf("<div class=\"topic_buttons\">"))
                 _this.addClass('btn_id'+btn_id);
                 _previewWindow.html(data+"<p class='previewWindowEnd'>\
-                                            <span class='endDetail item_node' key='"+ _href +"'>详细</span>\
-                                            <span class='endSlide item_node' onclick='\
+                                            <a class='item_node' href='"+ _href +"'>详细</a>\
+                                            <span class='item_node' onclick='\
                                                 $(\".btn_id"+ btn_id +"\").click();$(\"html, body\").animate({scrollTop: ($(\".btn_id"+ btn_id++ +"\").offset().top-200)}, 600);'>收起\
                                             </span>\
                                           </p>");
@@ -35,10 +36,6 @@
                 _next_cell.css('borderTop', _next_cell.css('borderBottom'));
                 _this.text('收起');
                 _previewWindow.slideDown(800);
-
-                $('.endDetail').click(function(){
-                    window.location.href = $(this).attr('key');
-                });
 
             });
         }else{
@@ -52,4 +49,15 @@
         }
     });
 
-//});
+//——————————————————————————————————预览功能——————————————————————————————————
+
+
+//——————————————————————————————————一键领取登陆奖励——————————————————————————————————
+
+    var _mission_btn = $('div#Rightbar > div:nth-of-type(4) a');
+    if ( _mission_btn.text() == '领取今日的登录奖励' ){
+        _mission_btn.attr('href', "/mission/daily/redeem" + RegExp("/signout(\\?once=\\d+)").exec($('div#Top').html())[1]);
+        _mission_btn.html('一键领取今日的登录奖励 by vPlus<br/>Take your passion and make it come true. ')
+    }
+
+//——————————————————————————————————一键领取登陆奖励——————————————————————————————————

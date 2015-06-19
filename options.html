@@ -13,38 +13,47 @@
         list-style-type: none;
     }
     a{
-        color:#778087;
+        color: #778087;
     }
     img{
         display: block;
         margin-top: 10px;
+        max-width: 660px;
     }
     div.q{
-        margin-bottom:10px;
+        margin-bottom: 6px;
     }
     div.a{
-        margin-top: 20px;
-        margin-left:20px;
+        margin-left: 26px;
     }
     </style>
 </head>
-<body style="background:#f6f6f6; color:#778087; font-family:sans-serif; font-size:120%;">
-    <div style="position: fixed; top:20px; width:300px; padding:16px; background:#f0f0f0; border-radius:16px;">
+<body style="background:#f6f6f6; color:#778087; font-family:sans-serif; font-size:100%; line-height: 1.6;">
+    <div style="position: fixed; top:60px; width:280px; padding:16px; background:#f0f0f0; border-radius:16px;">
         这是一个用于 v2ex 论坛的扩展程序，使用前最好登录 v2ex 以接收新消息提醒，登录新浪微博以使用插入图片、粘贴图片功能。
-        <br/><br/>感谢： <a href="https://github.com/ldong">ldong</a> 帮忙发布。
-        <br/><br/>感谢： <a href="http://sheephe.com/">Sheep</a> 设计图标。
-        <br/><br/>反馈问题请 <a href="mailto:sciooga@gmail.com">点击<br/>(sciooga@gmail.com)</a>
-        <br/><br/>源码请见： <a href="https://github.com/sciooga/v2ex-plus"> ♥ Github</a>
-        <br/><br/>对扩展满意，可以送我一本书。<br/>支付宝：sciooga@gmail.com
+        <br/>感谢： <a href="https://github.com/ldong">ldong</a> 帮忙发布。
+        <br/>感谢： <a href="http://sheephe.com/">Sheep</a> 设计图标。
+        <br/>反馈问题请 <a href="mailto:sciooga@gmail.com">点击<br/>(sciooga@gmail.com)</a>
+        <br/>源码请见： <a href="https://github.com/sciooga/v2ex-plus"> ♥ Github</a>
+        <br/>对扩展满意，可以送我一本书。<br/>支付宝：sciooga@gmail.com
         <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et1dvnmdxvj206x06xaar.jpg" alt="支付宝二维码"/>
-        <br/><br/>生活愉悦~
+        <br/>感谢<a href="#thk">所有捐助者</a>，共收到捐款11.94元: )
+        <br/>生活愉悦~
     </div>
-    <div style="margin: 100px auto; padding-left:100px; width:800px;">
+    <div style="margin: 60px auto; padding-left:200px; width:800px;">
         <h1>选项：</h1>
         <ul>
-            <li><form name="imageHostings">
+            <li><form name="newMsgSelect">
+                消息提醒：&emsp;&emsp;&emsp;&emsp;<input type="radio" name="newMsg" value="" disabled="disabled" />开启
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="newMsg" value="f" disabled="disabled" />关闭
+            </form></li>
+            <li><form name="imageHostingSelect">
                 图床设置：&emsp;&emsp;&emsp;&emsp;<input type="radio" name="imageHosting" value="weibo" disabled="disabled" />微博图床
                         &emsp;&emsp;&emsp;&emsp;<input type="radio" name="imageHosting" value="imgur" disabled="disabled" />imgur
+            </form></li>
+            <li><form name="autoMissionSelect">
+                自动签到：&emsp;&emsp;&emsp;&emsp;<input type="radio" name="autoMission" value="t" disabled="disabled" />开启
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="autoMission" value="" disabled="disabled" />关闭
             </form></li>
         </ul>
         <h1>功能介绍：</h1>
@@ -52,43 +61,73 @@
             <li>
                 <div class="q">主题预览：</div>
                 <div class="a">在主题列表页面，每个主题新增了一个”预览“按钮，点击可预览主题，若无主题则预览标题详情。
-                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et1butjcfwj20c501wmx9.jpg" alt="预览功能介绍"/>
+                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et9s1bu8enj20iu01v74e.jpg" alt="预览功能介绍"/>
                 </div>
             </li>
             <li>
                 <div class="q">只看楼主：</div>
                 <div class="a">在主题页面，主题功能栏新增了一个“只看楼主”按钮，点击只看本页楼主的回复。
-                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et1bzs0geuj20iv00ujrf.jpg" alt="只看楼主功能介绍"/>
+                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et9s3l466zj20in00qq2x.jpg" alt="只看楼主功能介绍"/>
                 </div>
             </li>
             <li>
                 <div class="q">突出楼主：</div>
                 <div class="a">回复列表中，楼主的回复背景颜色更为显眼(偏橙色)。
-                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et1myq67z3j20iy020jrn.jpg" alt="突出楼主功能介绍"/>
+                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et9s701pbmj20ir03rdfx.jpg" alt="突出楼主功能介绍"/>
                 </div>
             </li>
             <li>
                 <div class="q">会话详情/所有回复：</div>
                 <div class="a">在主题页面，回复新增了一个“会话详情”/“所有回复”按钮，点击查看本页内此用户与其回复内@的用户的会话详情/所有回复。
-                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et1c8r9wtrj209c01x0sq.jpg" alt="会话详情功能介绍"/>
+                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et9s996xnoj208201udfo.jpg" alt="会话详情功能介绍"/>
+                </div>
+            </li>
+            <li>
+                <div class="q">快速查看最近一条回复：</div>
+                <div class="a">将鼠标悬浮于回复内的“@某用户”可快速显示该用户本页内最近一条回复。
+                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et9sbfhws6j20iu03q0sv.jpg" alt="会话详情功能介绍"/>
                 </div>
             </li>
             <li>
                 <div class="q">插入表情：</div>
                 <div class="a">在回复文本框上，新增了一个“表情”按钮，点击可选择表情。
-                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et1cetj47qj209e05s74h.jpg" alt="插入表情功能介绍"/>
+                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et9sdkmqf1j207p05sq34.jpg" alt="插入表情功能介绍"/>
                 </div>
             </li>
             <li>
                 <div class="q">插入图片：</div>
-                <div class="a">在回复文本框上，新增了一个“插入图片”按钮，点击可选择插入的图片文件，您也可以直接选中文本框黏贴图片。
-                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et1cgbhhvsj208a05y3yp.jpg" alt="插入图片功能介绍"/>
+                <div class="a">在回复文本框上，新增了一个“插入图片”按钮，点击可选择插入的图片文件，您也可以直接粘贴截图。
+                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et9se8z51mj208405t0sx.jpg" alt="插入图片功能介绍"/>
+                </div>
+            </li>
+            <li>
+                <div class="q">新建主题获取图片链接：</div>
+                <div class="a">在新建主题页面内，左侧添加一个弹出式图片管理窗口，可以粘贴截图/上传图片获取图片链接。
+                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et9tfwqwo6j20iu03s74h.jpg" alt="插入图片功能介绍"/>
                 </div>
             </li>
             <li>
                 <div class="q">消息提醒：</div>
                 <div class="a">在浏览器右上角有一个可以隐藏的图标，每5分钟检查一次新消息，当收到新消息时 Chrome 的通知中心会提示您，同时图标显示如下：
-                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et1cmil973j200u00u0nn.jpg" alt="消息提醒功能介绍"/>
+                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et9sjnmvf2j2012012a9t.jpg" alt="消息提醒功能介绍"/>
+                </div>
+            </li>
+            <li>
+                <div class="q">一键签到：</div>
+                <div class="a">当您今日的登录奖励未领取时，您将不必来回跳转领取登录奖励，一键且优雅。
+                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et9skrq2rhj208502bdft.jpg" alt="一键签到功能介绍"/>
+                </div>
+            </li>
+            <li>
+                <div class="q">自动签到：</div>
+                <div class="a">您可以在本页内开启自动签到功能，领取成功后您将获得来自 Chrome 通知中心的通知。
+                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et9su62o7xj20a0028q2z.jpg" alt="自动签到功能介绍"/>
+                </div>
+            </li>
+            <li>
+                <div class="q">旋转图片：</div>
+                <div class="a">当鼠标悬浮于回复内的图片时，右上角添加了两个功能键用以旋转一些不方便欣赏的图片。
+                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et9swpspfjj20go0afn04.jpg" alt="旋转图片功能介绍"/>
                 </div>
             </li>
             <li>
@@ -142,6 +181,11 @@
                 </div>
             </li>
             <li>
+                <div class="q">新建主题中想复制图片链接为什么一下选中一下不选中？</div>
+                <div class="a">您只需将鼠标悬浮于链接即自动全选，无需单击直接复制。
+                </div>
+            </li>
+            <li>
                 <div class="q">为什么有时我查看了新消息，但图标任然提示有未读消息？</div>
                 <div class="a">如果您需要查看消息后图标立即更改，请点击图标或通知查看消息，否则图标最长需要5分钟才能有反应。
                 </div>
@@ -151,42 +195,55 @@
                 <div class="a">扩展程序会智能判断对话内的每条回复，不相关的将被隐藏，您也可以选择关闭此功能，每个会话详情默认打开。
                 </div>
             </li>
+            <li>
+                <div class="q">为什么很久都没自动签到？</div>
+                <div class="a">开启了自动签到后每小时触发一次，您不必特别留意，签到成功后 Chrome 通知中心会提醒您。每天（ UTC 时间）成功签到一个账号后，扩展将停止每小时的签到检测，切换账号请手动签到或关闭自动签到后再打开。
+                </div>
+            </li>
+            <li>
+                <div class="q">自动签到和一键签到冲突吗？</div>
+                <div class="a">不冲突。
+                </div>
+            </li>
+            <li>
+                <div class="q">为什么偶尔无法显示旋转图片的按钮？</div>
+                <div class="a">为了美观屏蔽宽度小于 100px 或高度小于 30px 的图片的旋转功能。
+                </div>
+            </li>
         </ul>
         <h1>可能增加的功能：</h1>
         <ul>
             <li>
-                收藏节点新帖提醒
-            </li>
-            <li>
-                图片实时显示在文本框内以编辑
-            </li>
-            <li>
-                快捷回复误触发判断
-            </li>
-            <li>
-                扩展内私信
-            </li>
-            <li>
-                关注了某位用户的也关注了某位用户
-            </li>
-            <li>
-                收藏了某节点的也收藏了某节点
-            </li>
-            <li>
-                Block 了某位用户的也 block 了某位用户
-            </li>
-            <li>
-                自定义表情
-            </li>
-            <li>
-                签到
-            </li>
-            <li>
+                收藏节点新帖提醒<br/>
+                图片实时显示在文本框内以编辑<br/>
+                快捷回复误触发判断<br/>
+                扩展内私信<br/>
+                关注了某位用户的也关注了某位用户<br/>
+                收藏了某节点的也收藏了某节点<br/>
+                Block 了某位用户的也 block 了某位用户<br/>
+                自定义表情<br/>
                 若您有任何期待的功能都可以给我发邮件
             </li>
         </ul>
         <h1>更新日志：</h1>
         <ul>
+            <li>
+                <div class="q">0.5版：</div>
+                <div class="a">
+                    增加一键领取今日的登录奖励。<br/>
+                    增加自动领取今日的登录奖励。<br/>
+                    增加消息通知开关。<br/>
+                    更智能的会话详情智能模式。<br/>
+                    新建主题页面支持粘贴截图/上传图片功能。<br/>
+                    增加旋转图片的功能。<br/>
+                    增加鼠标移动至被@用户快捷显示其最近一条回复的功能。<br/>
+                    将“所有回复/会话详情”移入“隐藏、感谢回复者”之后。<br/>
+                    所有回复按钮只显示在用户的第二条及之后的回复。<br/>
+                    按钮样式加入一些必要的反馈。<br/>
+                    预览模式的详情按钮支持 command/ctrl 点击新窗口打开。<br/>
+                    改进部分 css。
+                </div>
+            </li>
             <li>
                 <div class="q">0.4版：</div>
                 <div class="a">
@@ -214,6 +271,16 @@
                     加入了新设计的图标。<br/>
                     关闭了误开启的调试模式。<br/>
                     改进了部分 css。
+                </div>
+            </li>
+        </ul>
+        <h1>所有捐助者：</h1><a name="thk"></a>
+        <ul>
+            <li>
+                <div class="q">感谢以下捐助者对本拓展的支持，祝各位生活愉快、幸福美好~</div>
+                <div class="a">
+                    匿名&emsp;&emsp;*熠<br/>
+                    更新于v0.5
                 </div>
             </li>
         </ul>
