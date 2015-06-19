@@ -67,19 +67,6 @@ function input_img( input_img_base64, this_img_id ){
     });
 }
 
-//获取最近一条回复
-function close_reply(no, name){
-    var r = Array();
-    for (var i=no; i; --i){
-        if ( _reply_user_name_list[i] == name ){
-                r['reply_content'] = _reply_content_list[i];
-                r['reply_no'] = i;
-            break;
-        }
-    }
-    return r;
-}
-
     //————————————————同一帖子翻页跳过主题————————————————
 
     var _t_num = RegExp("/t/(\\d+)");
