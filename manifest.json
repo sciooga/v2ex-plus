@@ -1,6 +1,6 @@
 {
   "name": "v2ex plus",
-  "version": "0.4",
+  "version": "0.6",
   "manifest_version": 2,
   "description": "可能是 v2ex 最好用的增强扩展",
   "background": {
@@ -19,17 +19,17 @@
     {
       "matches": ["*://*.v2ex.com/", "*://*.v2ex.com/?tab=*", "*://*.v2ex.com/go/*", "*://*.v2ex.com/recent*"],
       "css": ["v2ex_tab.css"],
-      "js": ["jquery191.js", "v2ex_tab.js"]
+      "js": ["jquery191.js", "v2ex_tab.js", "user_info.js"]
     },
     {
       "matches": ["*://*.v2ex.com/t/*"],
       "css": ["v2ex_reply.css"],
-      "js": ["jquery191.js", "emoticon.js", "v2ex_reply.js"]
+      "js": ["jquery191.js", "emoticon.js", "v2ex_reply.js", "user_info.js"]
     },
     {
       "matches": ["*://*.v2ex.com/new/*"],
       "css": ["v2ex_new.css"],
-      "js": ["jquery191.js", "emoticon.js", "v2ex_new.js"]
+      "js": ["jquery191.js", "v2ex_new.js"]
     }
   ],
   "browser_action": {
@@ -40,5 +40,6 @@
     "16": "icon/icon16.png",
     "48": "icon/icon48.png",
     "128": "icon/icon128.png"
-  }
+  },
+  "web_accessible_resources": ["img/user_info_background.gif", "img/loading.gif"]
 }

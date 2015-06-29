@@ -1,3 +1,22 @@
+//倒三角图片
+var triangle_img = 'data:img/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAGCAYAAAD37n+BAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ\
+                    bWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdp\
+                    bj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6\
+                    eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0\
+                    NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJo\
+                    dHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlw\
+                    dGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAv\
+                    IiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RS\
+                    ZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpD\
+                    cmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFu\
+                    Y2VJRD0ieG1wLmlpZDo4Qzg5NDBERjEzNjgxMUU1QjFBNEJEQUY2OUQ1QUI3OSIgeG1wTU06RG9j\
+                    dW1lbnRJRD0ieG1wLmRpZDo4Qzg5NDBFMDEzNjgxMUU1QjFBNEJEQUY2OUQ1QUI3OSI+IDx4bXBN\
+                    TTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjhDODk0MEREMTM2ODExRTVC\
+                    MUE0QkRBRjY5RDVBQjc5IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjhDODk0MERFMTM2ODEx\
+                    RTVCMUE0QkRBRjY5RDVBQjc5Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4\
+                    bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+1nLxGAAAADtJREFUeNqMy8EOACAIAlD6c/6cys3m\
+                    aC056AEeJFH9EOugifYGCX6IuavghVg3DhzR+xHqDu2fTAEGABzG2i3onabOAAAAAElFTkSuQmCC'
+
 //获取被@的用户，列表开始于 index 1
 function get_at_name_list( str ){
     var name_list = Array();
@@ -69,7 +88,7 @@ function input_img( input_img_base64, this_img_id ){
 
     //————————————————同一帖子翻页跳过主题————————————————
 
-    var _t_num = RegExp("/t/(\\d+)");
+    var _t_num = RegExp("/t/([0-9]+)");
     var _history_t_num = _t_num.exec(document.referrer);
     _history_t_num = _history_t_num!=null && _history_t_num[1] || 'none';
     var _current_t_num = _t_num.exec(window.location.href)[1] || ' none ';
@@ -88,6 +107,8 @@ function input_img( input_img_base64, this_img_id ){
     var _reply_user_name_list = Array();
     var _reply_content_list = Array();
     var r_i = 1;
+    var keyReplyColor;
+
     $('.topic_buttons').append(" &nbsp;<a href='#;' id='onlyKeyUser' class='tb'>只看楼主</a>");
 
     $('div[id^=r_]').each(function(){
@@ -97,7 +118,7 @@ function input_img( input_img_base64, this_img_id ){
         var _reply_at_name = RegExp("<a href=\"/member/(.*?)\">").exec(_reply_content);
 
         if ( _key_user == _reply_user_name ){
-            _this.css('backgroundColor', 'rgba(255,255,249,0.4)');//设置楼主回复背景颜色
+            _this.addClass('keyUser');
         }else{
             _this.addClass('normalUser');
         }
@@ -137,6 +158,13 @@ function input_img( input_img_base64, this_img_id ){
         }
     });
 
+    chrome.runtime.sendMessage({get_keyReplyColor: 't'}, function(response) {
+        keyReplyColor = response.keyReplyColor || '255,255,249';
+        keyReplyColor += ',';
+        keyReplyColor += response.keyReplyA || '0.4';
+        $('.keyUser').css('backgroundColor', 'rgba('+ keyReplyColor +')');//设置楼主回复背景颜色
+    });
+
     //————————————————基本信息的获取及初始化————————————————
 
 
@@ -146,6 +174,7 @@ function input_img( input_img_base64, this_img_id ){
     $('.replyDetailBTN').click(function(){
         var _this = $(this);
         var _cell = _this.parents("div[id^=r_]");//由于最后一条回复 class 为 inner 所以还是匹配 id 完整些
+        var _reply_user_name = _cell.find('strong a').text();
         var _reply_content = _cell.find('.reply_content').html();
         var btn_name = _this.text();
         _this.css('visibility', 'visible');
@@ -157,7 +186,6 @@ function input_img( input_img_base64, this_img_id ){
             _cell.after("<div class='replyDetail'></div>");
 
             var _replyDetail = _cell.next('.replyDetail');
-            var _reply_user_name = _cell.find('strong a').text();
             var _reply_at_name_list = get_at_name_list( _reply_content );
 
             _replyDetail.append("<div class='smartMode' onclick=\"$(this).children('span').toggleClass('checked');$(this).siblings('.unrelated').slideToggle(300);\"><span class='checked'>智能模式</span></div>");
@@ -220,7 +248,6 @@ function input_img( input_img_base64, this_img_id ){
             _cell.after("<div class='replyDetail'></div>");
 
             var _replyDetail = _cell.next('.replyDetail');
-            var _reply_user_name = _cell.find('strong a').text();
 
             r_i = 1;
             _replyDetail.append("<p class='bubbleTitle' style='margin-top: 20px;padding-top: 20px;'>本页内 "+ _reply_user_name +" 的所有回复：</p>");
@@ -270,35 +297,38 @@ function input_img( input_img_base64, this_img_id ){
     //————————————————快速查看最近一条回复————————————————
 
     $('body').append("<div id='foMouse'><div id='closeReply'></div></div>");
+    var _fo_mouse = $('#foMouse');
     var _close_reply = $('#closeReply');
     var _reply_link = $('div[id^=r_] .reply_content a');
+    var display_foMouse;
     _reply_link.mouseenter(function(){
         var _this = $(this);
         var _no = ~~(_this.closest('td').find('.no').text()) - page_previous_num*100;
         var _hover_at_name = RegExp("/member/(.+)").exec( _this.attr('href') );
         if ( _hover_at_name != null ){
-            _close_reply.html( "<div style='padding-bottom:6px;'>"+ (1+page_previous_num*100) + '层至'+ (_no+page_previous_num*100) +'层间未发现该用户的回复</div>' );
-            for (var i=_no; i; --i){
-                if ( _reply_user_name_list[i] == _hover_at_name[1] ){
-                    _close_reply.html( _reply_content_list[i] + "<p class='bubbleName' style='text-align:right; padding-right:0px;'>\
-                                        "+ _reply_user_name_list[i] +"&emsp;回复于"+ (i+page_previous_num*100) +"层&emsp;\
-                                    </p>" );
-                    break;
+            display_foMouse = setTimeout(function(){
+                _close_reply.html( "<div style='padding-bottom:6px;'>" + (1+page_previous_num*100) + '层至' + (_no+page_previous_num*100) + "层间未发现该用户的回复</div>" + "<img class='triangle' src='"+ triangle_img +"' />" );
+                for (var i=_no; i; --i){
+                    if ( _reply_user_name_list[i] == _hover_at_name[1] ){
+                        _close_reply.html( _reply_content_list[i] + "<p class='bubbleName' style='text-align:right; padding-right:0px;'>\
+                                            "+ _reply_user_name_list[i] +"&emsp;回复于"+ (i+page_previous_num*100) +"层&emsp;\
+                                        </p><img class='triangle' src='"+ triangle_img +"' />" );
+                        break;
+                    }
                 }
-            }
-            _this.mousemove(function(e){
-                if( _close_reply.html() ){
-                    _close_reply.css({"top":(e.pageY - 30 - _close_reply.height()) + "px", "left":(e.pageX - 60) + "px", 'opacity':'0.98', 'display':'block'});
-                }
-            });
+                _fo_mouse.css({"top":(_this.offset().top - 34 - _close_reply.height()) + "px", "left":(_this.offset().left - 80 + _this.width()/2) + "px", 'visibility':'visible', 'opacity':'1'});
+                _close_reply.css('marginTop', '10px');
+            },300);
         }
     });
 
     _reply_link.mouseleave(function(){
-        _close_reply.css({'opacity':'0'});
+        clearTimeout(display_foMouse);
+        _fo_mouse.css({'opacity':'0'});
+        _close_reply.css('marginTop', '0px');
         setTimeout(function(){
-            _close_reply.css('display', 'none');
-        },500);
+            _fo_mouse.css('visibility', 'hidden');
+        },300);
     });
 
     //————————————————快速查看最近一条回复————————————————

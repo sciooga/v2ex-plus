@@ -37,7 +37,7 @@
 {
     width: 150px;
     height: 150px;
-    margin: 10px auto;
+    margin: 20px auto;
     border-radius: 10px;
     border: 2px solid #fffff9;
     background-color: #e2e2e2;
@@ -51,7 +51,7 @@
     height: 110px;
 }
 
-#imgManage img
+#imgManage img.imgPreview
 {
     margin: auto;
     max-width: 130px;
@@ -60,9 +60,29 @@
     min-height: 60px;
 }
 
+#imgUploadBtn:hover
+{
+    border-bottom: 1px solid;
+}
+
 #imgManage input
 {
     font-size: 12px;
     margin-top: 2px;
     width: 130px;
+}
+
+div#imgManage img.deleteBTN
+{
+    position: relative;
+    top: -152px;
+    left: 72px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+div#imgManage > div:hover img.deleteBTN
+{
+    opacity: 1;
 }

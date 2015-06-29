@@ -57,10 +57,22 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }else if ( request.get_img_id ){//收到图片状态询问
         sendResponse({img_id: img_status});
         img_status != '上传中' && (img_status = '空闲');
+
+//——————————————————————————————————接收来自页面的图片数据上传并返回——————————————————————————————————
+
+
+//——————————————————————————————————返回设置选项——————————————————————————————————
+
+    }else if ( request.get_preview_status ){
+        sendResponse({preview_status: getCookie('preview')});
+    }else if ( request.get_keyReplyColor ){
+        sendResponse({keyReplyColor: getCookie('keyReplyColor'), keyReplyA: getCookie('keyReplyA')});
+    }else if ( request.get_newWindow_status ){
+        sendResponse({newWindow_status: getCookie('newWindow')});
     }
 });
 
-//——————————————————————————————————接收来自页面的图片数据上传并返回——————————————————————————————————
+//——————————————————————————————————返回设置选项——————————————————————————————————
 
 
 //——————————————————————————————————定时任务初始化——————————————————————————————————
@@ -151,7 +163,7 @@ function autoMission(){
     $.ajax({
     url: "http://www.v2ex.com/settings",
     success: function(data){
-                    var sign = RegExp("/signout(\\?once=\\d+)").exec(data);
+                    var sign = RegExp("/signout(\\?once=[0-9]+)").exec(data);
                     sign = sign != null && sign[1] || '未登录';
                     if ( sign != '未登录' ){
                         $.ajax({

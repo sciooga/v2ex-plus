@@ -26,6 +26,22 @@
     div.a{
         margin-left: 26px;
     }
+    #allDefault{
+        position: relative;
+        top: -2px;
+        background-color: #fff;
+        color: #333;
+        box-shadow: 0px 1px 0px rgba(66, 66, 77, 0.1);
+        padding: 4px 15px 4px 15px;
+        border: 1px solid rgba(80,80,90, 0.2);
+        border-bottom-color: rgba(80,80,90, 0.35);
+        border-radius: 3px;
+        font-size: 12px;
+        cursor: pointer;
+    }
+    #allDefault:hover{
+        background-color: #f9f9f9;
+    }
     </style>
 </head>
 <body style="background:#f6f6f6; color:#778087; font-family:sans-serif; font-size:100%; line-height: 1.6;">
@@ -44,17 +60,33 @@
         <h1>选项：</h1>
         <ul>
             <li><form name="newMsgSelect">
-                消息提醒：&emsp;&emsp;&emsp;&emsp;<input type="radio" name="newMsg" value="" disabled="disabled" />开启
+                消息提醒：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="newMsg" value="" disabled="disabled" />开启
                         &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="newMsg" value="f" disabled="disabled" />关闭
             </form></li>
             <li><form name="imageHostingSelect">
-                图床设置：&emsp;&emsp;&emsp;&emsp;<input type="radio" name="imageHosting" value="weibo" disabled="disabled" />微博图床
+                图床设置：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="imageHosting" value="weibo" disabled="disabled" />微博图床
                         &emsp;&emsp;&emsp;&emsp;<input type="radio" name="imageHosting" value="imgur" disabled="disabled" />imgur
             </form></li>
             <li><form name="autoMissionSelect">
-                自动签到：&emsp;&emsp;&emsp;&emsp;<input type="radio" name="autoMission" value="t" disabled="disabled" />开启
+                自动签到：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="autoMission" value="t" disabled="disabled" />开启
                         &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="autoMission" value="" disabled="disabled" />关闭
             </form></li>
+            <li><form name="previewSelect">
+                主题预览：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="preview" value="" disabled="disabled" />开启
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="preview" value="f" disabled="disabled" />关闭
+            </form></li>
+            <li><form name="newWindowSelect">
+                新标签页浏览主题：&emsp;&emsp;&emsp;<input type="radio" name="newWindow" value="t" disabled="disabled" />开启
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="newWindow" value="" disabled="disabled" />关闭
+            </form></li>
+            <li><form name="keyReplyColorSelect">
+                楼主回复背景色：&emsp;&emsp;&emsp;&emsp;<input type="color" name="keyReplyColor" disabled="disabled" />
+                &emsp;&emsp;&emsp;&emsp;&emsp;透明度：<span id="keyReplyAValue" style="display:inline-block; width:2em" >稍后</span>
+                <input type="range" name="keyReplyA" min="0.00" max="1.00" step="0.05" disabled="disabled" style="width:100px" />
+            </form></li>
+            <li>
+                重置所有设置：&emsp;&emsp;&emsp;&emsp;&emsp;<span id="allDefault">确认重置</span>
+            </li>
         </ul>
         <h1>功能介绍：</h1>
         <ul>
@@ -80,6 +112,12 @@
                 <div class="q">会话详情/所有回复：</div>
                 <div class="a">在主题页面，回复新增了一个“会话详情”/“所有回复”按钮，点击查看本页内此用户与其回复内@的用户的会话详情/所有回复。
                     <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et9s996xnoj208201udfo.jpg" alt="会话详情功能介绍"/>
+                </div>
+            </li>
+            <li>
+                <div class="q">用户信息：</div>
+                <div class="a">将鼠标悬浮在用户头像上半秒弹出该用户的主要信息。
+                    <img src="http://ww2.sinaimg.cn/large/62e721e4gw1etkwnnk3rbg20as0a4trt.jpg" alt="用户信息功能介绍"/>
                 </div>
             </li>
             <li>
@@ -128,6 +166,11 @@
                 <div class="q">旋转图片：</div>
                 <div class="a">当鼠标悬浮于回复内的图片时，右上角添加了两个功能键用以旋转一些不方便欣赏的图片。
                     <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et9swpspfjj20go0afn04.jpg" alt="旋转图片功能介绍"/>
+                </div>
+            </li>
+            <li>
+                <div class="q">新标签页浏览主题：</div>
+                <div class="a">开启后所有主题将在新标签页内打开。
                 </div>
             </li>
             <li>
@@ -214,7 +257,9 @@
         <h1>可能增加的功能：</h1>
         <ul>
             <li>
+                历史热帖记录<br/>
                 收藏节点新帖提醒<br/>
+                用户名备注功能<br/>
                 图片实时显示在文本框内以编辑<br/>
                 快捷回复误触发判断<br/>
                 扩展内私信<br/>
@@ -228,13 +273,26 @@
         <h1>更新日志：</h1>
         <ul>
             <li>
+                <div class="q">0.6版：</div>
+                <div class="a">
+                    悬浮于头像显示该用户的主要信息。<br/>
+                    增加新标签页浏览主题的功能。<br/>
+                    显示最近一条回复改进了显示效果。<br/>
+                    新建主题的图片管理可以删除已上传图片。<br/>
+                    增加主题预览开关。<br/>
+                    增加楼主回复背景颜色设置。<br/>
+                    增加一键重置所有设置按钮。<br/>
+                    改进部分 css。
+                </div>
+            </li>
+            <li>
                 <div class="q">0.5版：</div>
                 <div class="a">
                     增加一键领取今日的登录奖励。<br/>
                     增加自动领取今日的登录奖励。<br/>
                     增加消息通知开关。<br/>
                     更智能的会话详情智能模式。<br/>
-                    新建主题页面支持粘贴截图/上传图片功能。<br/>
+                    增加新建主题页面图片管理。<br/>
                     增加旋转图片的功能。<br/>
                     增加鼠标移动至被@用户快捷显示其最近一条回复的功能。<br/>
                     将“所有回复/会话详情”移入“隐藏、感谢回复者”之后。<br/>
@@ -279,7 +337,7 @@
             <li>
                 <div class="q">感谢以下捐助者对本拓展的支持，祝各位生活愉快、幸福美好~</div>
                 <div class="a">
-                    匿名&emsp;&emsp;*熠<br/>
+                    匿名&emsp;&emsp;*熠&emsp;&emsp;journey<br/>
                     更新于v0.5
                 </div>
             </li>
