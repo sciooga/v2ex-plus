@@ -32,7 +32,6 @@
                 $.get(_href, function(data){
                     var _previewWindow = _cell.next('.previewWindow');
                     data = data.substr(data.indexOf("header")+8);
-                    console.log(data.indexOf("<div class=\"topic_content\">"))
                     //当匹配不到topic_conten时返回-1 substring 按0处理，既显示整个标题头部
                     data = data.substring(data.indexOf("<div class=\"topic_content\">"), data.indexOf("<div class=\"topic_buttons\">"))
                     _this.addClass('btn_id'+btn_id);

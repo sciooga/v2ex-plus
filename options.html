@@ -4,8 +4,14 @@
     <meta charset="UTF-8">
     <title>v2ex plus - 选项与帮助</title>
     <script type="text/javascript" language="javascript" charset="UTF-8" src="cookie.js"></script>
-    <script type="text/javascript" language="javascript" charset="UTF-8" src="options.js"></script>
     <style type="text/css">
+    body{
+        background: #f6f6f6;
+        color: #778087;
+        font-family: sans-serif;
+        font-size: 100%;
+        line-height: 1.6;
+    }
     li{
         margin: 20px;
         padding: 10px;
@@ -26,7 +32,7 @@
     div.a{
         margin-left: 26px;
     }
-    #allDefault{
+    .vplusBTN{
         position: relative;
         top: -2px;
         background-color: #fff;
@@ -39,12 +45,12 @@
         font-size: 12px;
         cursor: pointer;
     }
-    #allDefault:hover{
+    .vplusBTN:hover{
         background-color: #f9f9f9;
     }
     </style>
 </head>
-<body style="background:#f6f6f6; color:#778087; font-family:sans-serif; font-size:100%; line-height: 1.6;">
+<body>
     <div style="position: fixed; top:60px; width:280px; padding:16px; background:#f0f0f0; border-radius:16px;">
         这是一个用于 v2ex 论坛的扩展程序，使用前最好登录 v2ex 以接收新消息提醒，登录新浪微博以使用插入图片、粘贴图片功能。
         <br/>感谢： <a href="https://github.com/ldong">ldong</a> 帮忙发布。
@@ -75,6 +81,11 @@
                 主题预览：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="preview" value="" disabled="disabled" />开启
                         &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="preview" value="f" disabled="disabled" />关闭
             </form></li>
+            </form></li>
+            <li><form name="foldSelect">
+                自动折叠：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="fold" value="" disabled="disabled" />开启
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="fold" value="f" disabled="disabled" />关闭
+            </form></li>
             <li><form name="newWindowSelect">
                 新标签页浏览主题：&emsp;&emsp;&emsp;<input type="radio" name="newWindow" value="t" disabled="disabled" />开启
                         &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="newWindow" value="" disabled="disabled" />关闭
@@ -85,7 +96,10 @@
                 <input type="range" name="keyReplyA" min="0.00" max="1.00" step="0.05" disabled="disabled" style="width:100px" />
             </form></li>
             <li>
-                重置所有设置：&emsp;&emsp;&emsp;&emsp;&emsp;<span id="allDefault">确认重置</span>
+                重置所有设置：&emsp;&emsp;&emsp;&emsp;&emsp;<span id="allDefault" class="vplusBTN">确认重置</span>
+            </li>
+            <li>
+                管理屏蔽名单：&emsp;&emsp;&emsp;&emsp;&emsp;<span id="blockList" class="vplusBTN">查看屏蔽名单</span>
             </li>
         </ul>
         <h1>功能介绍：</h1>
@@ -166,6 +180,11 @@
                 <div class="q">旋转图片：</div>
                 <div class="a">当鼠标悬浮于回复内的图片时，右上角添加了两个功能键用以旋转一些不方便欣赏的图片。
                     <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et9swpspfjj20go0afn04.jpg" alt="旋转图片功能介绍"/>
+                </div>
+            </li>
+            <li>
+                <div class="q">折叠超长主题、回复：</div>
+                <div class="a">开启后长度超过 1500px 的主题、长度超过 1000px 的回复将被折叠，需手动展开。
                 </div>
             </li>
             <li>
@@ -273,6 +292,19 @@
         <h1>更新日志：</h1>
         <ul>
             <li>
+                <div class="q">0.7版：</div>
+                <div class="a">
+                    增加屏蔽名单管理功能。<br/>
+                    增加自动折叠超长主题、回复的功能。<br/>
+                    优化了选项页面。<br/>
+                    让 https 访问 v2ex 同样支持腾讯视频。<br/>
+                    让 https 访问 v2ex 的用户可以快捷的在新窗口打开主题的优酷视频。<br/>
+                    更智能的用户信息窗口与快捷回复窗口。<br/>
+                    修复部分已知 BUG。<br/>
+                    改进部分 css。
+                </div>
+            </li>
+            <li>
                 <div class="q">0.6版：</div>
                 <div class="a">
                     悬浮于头像显示该用户的主要信息。<br/>
@@ -332,16 +364,17 @@
                 </div>
             </li>
         </ul>
-        <h1>所有捐助者：</h1><a name="thk"></a>
+        <h1 id="thk">所有捐助者：</h1>
         <ul>
             <li>
                 <div class="q">感谢以下捐助者对本拓展的支持，祝各位生活愉快、幸福美好~</div>
                 <div class="a">
                     匿名&emsp;&emsp;*熠&emsp;&emsp;journey<br/>
-                    更新于v0.6
+                    更新于v0.7
                 </div>
             </li>
         </ul>
     </div>
 </body>
+<script type="text/javascript" language="javascript" charset="UTF-8" src="options.js"></script>
 </html>

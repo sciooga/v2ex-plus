@@ -2,7 +2,7 @@ function saveChoice(e){
     setCookie(e.target.name, e.target.value);
 }
 
-window.onload = function(){
+//window.onload = function(){
 
     //消息提醒 默认开启
     var _newMsg = document.newMsgSelect.newMsg;
@@ -10,7 +10,7 @@ window.onload = function(){
     _newMsg[0].disabled = false;
     _newMsg[1].disabled = false;
     _newMsg[0].onclick = saveChoice;
-    _newMsg[1].onclick = saveChoice
+    _newMsg[1].onclick = saveChoice;
 
     //图床设置 默认微博
     var _imageHosting = document.imageHostingSelect.imageHosting;
@@ -26,7 +26,7 @@ window.onload = function(){
     _autoMission[0].disabled = false;
     _autoMission[1].disabled = false;
     _autoMission[0].onclick = saveChoice;
-    _autoMission[1].onclick = saveChoice
+    _autoMission[1].onclick = saveChoice;
 
     //主题预览 默认开启
     var _preview = document.previewSelect.preview;
@@ -34,15 +34,23 @@ window.onload = function(){
     _preview[0].disabled = false;
     _preview[1].disabled = false;
     _preview[0].onclick = saveChoice;
-    _preview[1].onclick = saveChoice
+    _preview[1].onclick = saveChoice;
 
-    //新窗口浏览主题 默认关闭
+    //自动折叠 默认开启
+    var _fold = document.foldSelect.fold;
+    !getCookie('fold') && (_fold[0].checked = true) || (_fold[1].checked = true);
+    _fold[0].disabled = false;
+    _fold[1].disabled = false;
+    _fold[0].onclick = saveChoice;
+    _fold[1].onclick = saveChoice;
+
+    //新标签页浏览主题 默认关闭
     var _newWindow = document.newWindowSelect.newWindow;
     getCookie('newWindow') && (_newWindow[0].checked = true) || (_newWindow[1].checked = true);
     _newWindow[0].disabled = false;
     _newWindow[1].disabled = false;
     _newWindow[0].onclick = saveChoice;
-    _newWindow[1].onclick = saveChoice
+    _newWindow[1].onclick = saveChoice;
 
     //楼主回复背景色 默认rgba('255', '255', '249', '0.4')
     var _keyReplyColor = document.keyReplyColorSelect.keyReplyColor;
@@ -81,4 +89,9 @@ window.onload = function(){
         }
     };
 
-}
+    //查看屏蔽列表
+    document.getElementById('blockList').onclick = function(){
+        chrome.runtime.sendMessage({get_blockList: 't'});
+    };
+
+//}

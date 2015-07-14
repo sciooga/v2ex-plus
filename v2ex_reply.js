@@ -1,21 +1,22 @@
 //倒三角图片
 var triangle_img = 'data:img/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAGCAYAAAD37n+BAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ\
-                    bWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdp\
-                    bj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6\
-                    eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0\
-                    NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJo\
-                    dHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlw\
-                    dGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAv\
-                    IiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RS\
-                    ZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpD\
-                    cmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFu\
-                    Y2VJRD0ieG1wLmlpZDo4Qzg5NDBERjEzNjgxMUU1QjFBNEJEQUY2OUQ1QUI3OSIgeG1wTU06RG9j\
-                    dW1lbnRJRD0ieG1wLmRpZDo4Qzg5NDBFMDEzNjgxMUU1QjFBNEJEQUY2OUQ1QUI3OSI+IDx4bXBN\
-                    TTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjhDODk0MEREMTM2ODExRTVC\
-                    MUE0QkRBRjY5RDVBQjc5IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjhDODk0MERFMTM2ODEx\
-                    RTVCMUE0QkRBRjY5RDVBQjc5Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4\
-                    bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+1nLxGAAAADtJREFUeNqMy8EOACAIAlD6c/6cys3m\
-                    aC056AEeJFH9EOugifYGCX6IuavghVg3DhzR+xHqDu2fTAEGABzG2i3onabOAAAAAElFTkSuQmCC'
+                                        bWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdp\
+                                        bj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6\
+                                        eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0\
+                                        NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJo\
+                                        dHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlw\
+                                        dGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAv\
+                                        IiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RS\
+                                        ZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpD\
+                                        cmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFu\
+                                        Y2VJRD0ieG1wLmlpZDpCMzgxN0NGRDFGQ0UxMUU1ODRFNEFEN0NBMTIzNEI4NiIgeG1wTU06RG9j\
+                                        dW1lbnRJRD0ieG1wLmRpZDpCMzgxN0NGRTFGQ0UxMUU1ODRFNEFEN0NBMTIzNEI4NiI+IDx4bXBN\
+                                        TTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkIzODE3Q0ZCMUZDRTExRTU4\
+                                        NEU0QUQ3Q0ExMjM0Qjg2IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkIzODE3Q0ZDMUZDRTEx\
+                                        RTU4NEU0QUQ3Q0ExMjM0Qjg2Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4\
+                                        bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+URHMMAAAAEVJREFUeNqMi4EJACAIBL+ZXLABdSZL\
+                                        ybCI6kAFuYOqVv2noi8w89McDiK4RiHP4BZleQlO0S7bFK8SImLHn0RUsNEEGAABGNqSnbcIhQAA\
+                                        AABJRU5ErkJggg=='
 
 //获取被@的用户，列表开始于 index 1
 function get_at_name_list( str ){
@@ -86,34 +87,26 @@ function input_img( input_img_base64, this_img_id ){
     });
 }
 
-    //————————————————同一帖子翻页跳过主题————————————————
-
-    var _t_num = RegExp("/t/([0-9]+)");
-    var _history_t_num = _t_num.exec(document.referrer);
-    _history_t_num = _history_t_num!=null && _history_t_num[1] || 'none';
-    var _current_t_num = _t_num.exec(window.location.href)[1] || ' none ';
-    if ( _history_t_num == _current_t_num ){
-        $('html, body').animate({scrollTop: ($('.topic_buttons').offset().top)}, 300);
-    }
-
-    //————————————————同一帖子翻页跳过主题————————————————
-
     //————————————————基本信息的获取及功能按钮初始化————————————————
     //图片功能的初始化放在图片功能内
 
     var page_current_num = $('.page_current').text();
     var page_previous_num = page_current_num && ~~(page_current_num)-1 || '0';
     var _key_user = $('.header small a:first-of-type').text();
+    var _topic = $('#Main > div:nth-of-type(2)');
+    var _topic_content = $('.cell .topic_content', _topic);
+    var _topic_buttons = $('.topic_buttons');
     var _reply_user_name_list = Array();
     var _reply_content_list = Array();
     var r_i = 1;
     var keyReplyColor;
 
-    $('.topic_buttons').append(" &nbsp;<a href='#;' id='onlyKeyUser' class='tb'>只看楼主</a>");
+    _topic_buttons.append(" &nbsp;<a href='#;' id='onlyKeyUser' class='tb'>只看楼主</a>");
 
     $('div[id^=r_]').each(function(){
         var _this = $(this);
-        var _reply_content = _this.find('.reply_content').html();
+        var _reply = _this.find('.reply_content');
+        var _reply_content = _reply.html();
         var _reply_user_name = _this.find('strong a').text();
         var _reply_at_name = RegExp("<a href=\"/member/(.*?)\">").exec(_reply_content);
 
@@ -121,6 +114,13 @@ function input_img( input_img_base64, this_img_id ){
             _this.addClass('keyUser');
         }else{
             _this.addClass('normalUser');
+        }
+
+        //判断高度是否超高
+        var height = _reply.height();
+        if ( height > 1000 ){
+            _reply.addClass('waitForFold')
+            _reply.attr('vPlus-height', height);
         }
 
         _reply_user_name_list[r_i] = _reply_user_name;
@@ -158,14 +158,83 @@ function input_img( input_img_base64, this_img_id ){
         }
     });
 
-    chrome.runtime.sendMessage({get_keyReplyColor: 't'}, function(response) {
+    chrome.runtime.sendMessage({get_replySetting: 't'}, function(response) {
+        var topic_height = _topic.height();
         keyReplyColor = response.keyReplyColor || '255,255,249';
         keyReplyColor += ',';
         keyReplyColor += response.keyReplyA || '0.4';
         $('.keyUser').css('backgroundColor', 'rgba('+ keyReplyColor +')');//设置楼主回复背景颜色
+        if (!response.fold){//折叠超长主题
+            if (topic_height>1800){
+                _topic_content.css({maxHeight:'1000px', overflow:'hidden', transition:'max-height 2s'});
+                $('.subtle', _topic).hide();
+                _topic_buttons.before("<div id='showTopic' style='padding:16px; color:#778087;'>\
+                                            <span id='topicBTN'>展开主题</span>\
+                                            <div style='height:10px;'></div>\
+                                            <span style='font-size:0.6em'>主题超长已自动折叠，点击按钮显示完整的主题。</span>\
+                                       </div>");
+                $('#topicBTN').click(function(){
+                    _topic_content.css({maxHeight:topic_height});
+                    $('.subtle', _topic).slideDown(800);
+                    $('#showTopic').remove();
+                });
+            }
+            var _reply = $('.waitForFold');
+            _reply.css({height:'600px', overflow:'hidden', transition:'height 2s'});
+            _reply.after("<div class='showReply' style='padding:20px 0px 10px; color:#778087; text-align:center; border-top:1px solid #e2e2e2'>\
+                                            <span class='replyBTN'>展开回复</span>\
+                                            <div style='height:16px;'></div>\
+                                            <span>回复超长已自动折叠，点击按钮显示完整的回复。</span>\
+                                  </div>");
+            $('.replyBTN').click(function(){
+                var _this = $(this);
+                var _showReply = _this.parent();
+                var _reply = _this.parent().prev();
+                _reply.css({height:_reply.attr('vPlus-height')+'px'});
+                _showReply.remove();
+            });
+        }
+
+        //————————同一帖子翻页跳过主题————————
+
+        var _t_num = RegExp("/t/([0-9]+)");
+        var _history_t_num = _t_num.exec(document.referrer);
+        _history_t_num = _history_t_num!=null && _history_t_num[1] || 'none';
+        var _current_t_num = _t_num.exec(window.location.href)[1] || ' none ';
+        if ( _history_t_num == _current_t_num ){
+                $('html, body').animate({scrollTop: (_topic_buttons.offset().top)}, 300);
+        }
+
+        //————————同一帖子翻页跳过主题————————
+
+
     });
 
+    //————————视频非 http 访问提示————————
+
+        if ( location.protocol == 'https:' ){
+            var iframe_list = _topic_content.find('iframe');
+            iframe_list.each(function(){
+                //判断是否为腾讯视频
+                var _this = $(this);
+                if (/http:\/\/v.qq.com/.test(_this.attr('src'))){
+                    _this.attr('src', function(index, oldvalue){
+                        return 'https' + oldvalue.substring(4);
+                    });
+                    _this.before('v2ex plus 提醒您：<br/>由于您以 https 访问 v2ex，已将腾讯视频链接修改为 https 现可正常观看。');
+                //判断是否为优酷视频
+                }else if (/http:\/\/player.youku.com/.test(_this.attr('src'))){
+                    _this.before("v2ex plus 提醒您：<br/>由于您以 https 访问 v2ex，无法正常显示优酷视频，您可以访问此链接观看：<br/><br/>&emsp;&emsp;&emsp;&emsp;<a href='"+ _this.attr('src') +"' target='_blank'>新窗口观赏视频</a><br/><br/>");
+                    _this.remove();
+                }
+            });
+        }
+
+    //————————腾讯视频非 http 访问提示————————
+
     //————————————————基本信息的获取及初始化————————————————
+
+
 
 
 //——————————————————————————————————会话详情 所有回复——————————————————————————————————
@@ -194,13 +263,12 @@ function input_img( input_img_base64, this_img_id ){
                 r_i = 1;
                 var _no = ~~(_this.closest('td').find('.no').text());
                 var have_main_reply = false;
-                var main_reply = 0;
                 _replyDetail.append("<p class='bubbleTitle' style='margin-top: 20px;padding-top: 20px;'>本页内 "+ _reply_user_name +" 与 "+ _reply_at_name_list[i] +" 的会话：</p>");
                 while ( _reply_user_name_list[r_i] ){
 
                     if ( _reply_user_name_list[r_i] == _reply_user_name ){
                         var _bubble = "<div class='rightBubble";
-                        !related_reply( _reply_content_list[r_i], _reply_user_name, _reply_at_name_list[i] ) && (_bubble+=' unrelated') && (++main_reply);
+                        !related_reply( _reply_content_list[r_i], _reply_user_name, _reply_at_name_list[i] ) && (_bubble+=' unrelated');
                         _bubble += "' style='text-align: right;'>\
                                 <div>\
                                     "+ _reply_content_list[r_i] +"\
@@ -213,7 +281,6 @@ function input_img( input_img_base64, this_img_id ){
                     }else if ( _reply_user_name_list[r_i] == _reply_at_name_list[i] ){
                         var _bubble = "<div class='leftBubble";
                         !related_reply( _reply_content_list[r_i], _reply_user_name, _reply_at_name_list[i] ) && (_bubble+=' unrelated') || (have_main_reply=true);
-                        ++main_reply;
                         _bubble += "' style='text-align: left;'>\
                                 <div>\
                                     "+ _reply_content_list[r_i] +"\
@@ -223,8 +290,9 @@ function input_img( input_img_base64, this_img_id ){
                                 </div></div>";
                         _replyDetail.append( _bubble );
                     }
-                    if ( _no-1 == r_i && !have_main_reply ){
-                        _replyDetail.find('.unrelated').eq(main_reply-1).removeClass('unrelated');
+                    //如果被@用户只有一条回复但回复是@其他不相干用户则显示这条回复
+                    if ( _no-1 == r_i && !have_main_reply && /(\S+?) 回复于47层/.exec(_replyDetail.children('.leftBubble').last().find('.bubbleName').text())[1] == _reply_at_name_list[i] ){
+                        _replyDetail.children('.leftBubble').last().removeClass('unrelated');
                     }
 
                 ++r_i;
@@ -296,8 +364,7 @@ function input_img( input_img_base64, this_img_id ){
 
     //————————————————快速查看最近一条回复————————————————
 
-    $('body').append("<div id='foMouse'><div id='closeReply'></div></div>");
-    var _fo_mouse = $('#foMouse');
+    $('body').append("<div id='closeReply'></div>");
     var _close_reply = $('#closeReply');
     var _reply_link = $('div[id^=r_] .reply_content a');
     var display_foMouse;
@@ -316,18 +383,25 @@ function input_img( input_img_base64, this_img_id ){
                         break;
                     }
                 }
-                _fo_mouse.css({"top":(_this.offset().top - 34 - _close_reply.height()) + "px", "left":(_this.offset().left - 80 + _this.width()/2) + "px", 'visibility':'visible', 'opacity':'1'});
-                _close_reply.css('marginTop', '10px');
+                //判断弹出位置
+                var _fo_triangle = $('.triangle', _close_reply);
+                var reply_position = [1, 0];
+                _fo_triangle.css({bottom:'-6px', top:'auto', transform:'rotate(0deg)'});
+                //上方空间不够且下方空间足够则向下弹出
+                if ( ( _this.offset().top - $(document).scrollTop() ) < ( _close_reply.height() + 50 ) && ( $(document).scrollTop() + $(window).height() - _this.offset().top ) > ( _close_reply.height() + 50 ) ){
+                    reply_position = [0, 16];
+                    _fo_triangle.css({top:'-6px', bottom:'auto', transform:'rotate(180deg)'});
+                }
+                _close_reply.css({"top":(_this.offset().top - reply_position[0]*(34 + _close_reply.height()) + reply_position[1] ) + "px", "left":(_this.offset().left - 80 + _this.width()/2) + "px", 'visibility':'visible', 'opacity':'1', 'marginTop':'10px'});
             },300);
         }
     });
 
     _reply_link.mouseleave(function(){
         clearTimeout(display_foMouse);
-        _fo_mouse.css({'opacity':'0'});
-        _close_reply.css('marginTop', '0px');
+        _close_reply.css({'opacity':'0', 'marginTop':'0px'});
         setTimeout(function(){
-            _fo_mouse.css('visibility', 'hidden');
+            _close_reply.css('visibility', 'hidden');
         },300);
     });
 

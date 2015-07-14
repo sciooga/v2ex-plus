@@ -45,10 +45,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     _response = RegExp( patt_id ).exec( _response );
                     _response = _response != null && _response[1] || '失败';//以防 API 更改
                     img_status = url_start + _response + url_end;
-                    console.log( "成功返回："+_response );// 返回成功数据
+                    //console.log( "成功返回："+_response );// 返回成功数据
                 }else{
                     img_status = '失败';
-                    console.log( "失败返回" );// 返回成功数据
+                    //console.log( "失败返回" );// 返回成功数据
                 }
             }
         };
@@ -65,10 +65,27 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
     }else if ( request.get_preview_status ){
         sendResponse({preview_status: getCookie('preview')});
-    }else if ( request.get_keyReplyColor ){
-        sendResponse({keyReplyColor: getCookie('keyReplyColor'), keyReplyA: getCookie('keyReplyA')});
+    }else if ( request.get_replySetting ){
+        sendResponse({keyReplyColor: getCookie('keyReplyColor'), keyReplyA: getCookie('keyReplyA'), fold: getCookie('fold')});
     }else if ( request.get_newWindow_status ){
         sendResponse({newWindow_status: getCookie('newWindow')});
+    }else if ( request.get_blockList ){
+        $.get("https://www.v2ex.com",function(data,status){
+            if(status == 'success'){
+                var block_list = /blocked = \[(.*?)\];/.exec(data);
+                var username = /首页<\/a>\&nbsp\;\&nbsp\;\&nbsp\;<a href="\/member\/(.+?)"/.exec(data);
+                if ( block_list && username ){
+                    block_list = block_list[1];
+                    username = username[1];
+                    window.open("/block_list.html#"+username+'='+block_list);
+                }else{
+                    alert('扩展没有获取到任何信息 : (\n或许是您未登录 V2EX 账号');
+                }
+            }else{
+                alert('扩展没有获取到任何信息 : (\n很有可能是网络问题，请稍后再试');
+            }
+        });
+        sendResponse({blockList: 'get'});
     }
 });
 
