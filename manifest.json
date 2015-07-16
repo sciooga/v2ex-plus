@@ -1,6 +1,6 @@
 {
   "name": "v2ex plus",
-  "version": "0.7",
+  "version": "0.7.1",
   "manifest_version": 2,
   "description": "可能是 v2ex 最好用的增强扩展",
   "background": {

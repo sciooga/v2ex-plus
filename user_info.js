@@ -81,7 +81,9 @@ function hidden_user_info(){
         avatar_src = _this.attr('src');
         _this.attr('vPlus-src', avatar_src);
         _triangle_img.css({bottom:'-6px', top:'auto', transform:'rotate(0deg)'});
-        _this.css({height:'73px', width:'73px'});//小头像使用的是 max-height/width，所以这样定死大小不会影响小头像，同时解决主题大头像的闪动问题
+        if ( _this.css('maxHeight') == 'none' ){
+            _this.css({height:'73px', width:'73px'});//小头像使用的是 max-height/width，所以这样定死大小不会影响小头像，同时解决主题大头像的闪动问题
+        }
         //判断是否已经弹出了用户信息框
         if( _user_info.css('visibility') == 'hidden' || user_name != _reply_user_name ){
             display_loading_img = setTimeout(function(){
