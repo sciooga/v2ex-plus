@@ -121,7 +121,7 @@ function checkMsg(){
             var sign = RegExp("([0-9]*?) (条未读提醒|unread)").exec(data);
             sign = sign != null && sign[1] || '未登录';
             if ( sign == '未登录' ){
-                alert('请登录 v2ex 账号以便获取新消息提醒，否则每5分钟将弹出此提示。');
+                alert('请登录 v2ex 账号以便获取新消息提醒，否则每5分钟将弹出此提示，或者您可以关闭扩展的消息提醒功能。');
             }else if( sign!='0') {
                 chrome.browserAction.setIcon({path: 'icon/icon38_msg.png'});
                 chrome.notifications.create(
