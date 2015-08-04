@@ -1,111 +1,15 @@
-# v2ex-plus
+由于我是大一学生，没有信用卡，感谢 [ldong](https://github.com/ldong) 帮我发布 Chrome 版扩展。
 
-可能是最好用的 v2ex 插件
+Chrome 版：[v2ex plus](https://chrome.google.com/webstore/detail/v2ex-plus/limfkkkgjbcfmfhkclkohdhddfngakhb)
 
-这是一个用于 v2ex 论坛的插件，使用前最好登录 v2ex 以接收新消息提醒，登录新浪微博以使用插入图片、粘贴图片功能。 
-
----------------------------------------
-
-#功能介绍：
-
-* 主题预览：
-
-> 在主题列表页面，每个主题新增了一个”预览“按钮，点击可预览主题，若无主题则预览标题详情。 
-
-![预览功能](http://ww2.sinaimg.cn/large/62e721e4gw1et1butjcfwj20c501wmx9.jpg)
-
-* 只看楼主：
-
-> 在主题页面，主题功能栏新增了一个“只看楼主”按钮，点击只看本页楼主的回复。
-
-![只看楼主功能](http://ww2.sinaimg.cn/large/62e721e4gw1et1bzs0geuj20iv00ujrf.jpg)
-
-* 突出楼主：
-
-> 回复列表中，楼主的回复背景颜色更为显眼(偏橙色)。
-
-![突出楼主功能](http://ww2.sinaimg.cn/large/62e721e4gw1et1myq67z3j20iy020jrn.jpg)
-
-* 会话详情：
-
-> 在主题页面，每条回复新增了一个“会话详情”按钮，点击查看此用户与其回复内@的用户的会话详情。
-
-![会话功能](http://ww2.sinaimg.cn/large/62e721e4gw1et1c8r9wtrj209c01x0sq.jpg)
-
-* 插入表情：
-
-> 在回复文本框上，新增了一个“表情”按钮，点击可选择表情。
-
-![插入表情功能](http://ww2.sinaimg.cn/large/62e721e4gw1et1cetj47qj209e05s74h.jpg)
-
-* 插入图片：
-
-> 在回复文本框上，新增了一个“插入图片”按钮，点击可选择插入的图片文件。
-
-![插入图片功能](http://ww2.sinaimg.cn/large/62e721e4gw1et1cgbhhvsj208a05y3yp.jpg)
-
-* 消息提醒：
-
-> 在浏览器右上角有一个可以隐藏的图标，当收到新消息时图标显示如下： 
-
-![消息提醒功能](http://ww2.sinaimg.cn/large/62e721e4gw1et1cmil973j200u00u0nn.jpg)
-
-* 跳过主题：
-
-> 当你在同一主题内翻页将跳过主题内容直接到回复列表。
-
-
----------------------------------------
-#Q & A：
-
-* MAC下为什么复制图片文件粘贴至回复框都为文件图标？
-
-> 由于浏览器局限，直接粘贴文件不被支持，请剪切图片黏贴而不是文件，比如使用 QQ 的截取屏幕功能。
-
-* 上传文件支持什么格式
-
-> 使用微博图床，所以支持新浪支持的所有格式，但推荐 png、jpg 格式。请勿上传微博图床不支持的文件，如 psd。
-
-* 使用表情功能需要登录微博吗？
-
-> 不需要。
-
-* 上传的图片是上传到哪里？
-
-> 图片上传至微博图床，但并不会像”围脖是个好图床“一样以用户（@围脖是个好图床1 ……）发表图片的方式获得图片链接，所以在图片发送出去前，只有你和微博服务器知道图片内容。
-
-* 为什么有时我查看了新消息，但图标任然提示有未读消息？
-
-> 如果你需要查看消息后图标立即更改，请点击图标查看消息，否则图标最长需要5分钟才能有反应。
-
----------------------------------------
-
-可能增加的功能：
-
->* 收藏节点新帖提醒
->* 将新消息提醒方式改为通知
->* 插件内私信
->* 关注了某位用户的也关注了某位用户
->* 收藏了某节点的也收藏了某节点
->* Block 了某位用户的也 block 了某位用户
->* 自定义表情
->* 签到
-
---------------------------------------
-由于我是大一学生，没有信用卡，感谢 [ldong](https://github.com/ldong) 帮我发布插件。
-
-Chrome 插件：[v2ex plus](https://chrome.google.com/webstore/detail/v2ex-plus/limfkkkgjbcfmfhkclkohdhddfngakhb)
-
-开源 ：[♥ Github](https://github.com/sciooga/v2ex-plus)
+Firefox 版：[v2ex plus](https://addons.mozilla.org/zh-CN/firefox/addon/v2ex-plus/)
 
 反馈： [点击(sciooga#gmail)](mailto:sciooga@gmail.com)
 
-请求：如果有设计师同学已经看不下插件 logo 了，麻烦出手吧！
-感谢设计师 [Sheep](http://sheephe.com) 画了新图标，很赞！
+感谢设计师 [Sheep](http://sheephe.com) 画了新图标以及一些界面上的指导，很赞！
 
-对本插件满意，可以送我一本书，支付宝二维码：
+感谢各位反馈建议、帮忙测试的同学！
 
-![二维码](http://ww2.sinaimg.cn/large/62e721e4gw1et1dvnmdxvj206x06xaar.jpg)
+插件介绍可在 [V2EX 主题](http://www.v2ex.com/t/198074) 查看或在扩展设置页面查看各版本对应的详细介绍。
 
 生活愉快~
-
