@@ -81,6 +81,7 @@ div.replyDetail div div
     margin-top: 10px;
     padding: 10px 10px 2px;
     max-width: 480px;
+    word-break:break-all;
     border-radius: 10px;
     background-color: #fffff9;
 }

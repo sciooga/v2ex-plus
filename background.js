@@ -97,7 +97,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 !getCookie('newMsg') && checkMsg();
 getCookie('autoMission') && autoMission();
 chrome.alarms.create('checkMsg', {periodInMinutes: 5});
-chrome.alarms.create('autoMission', {periodInMinutes: 60});
+chrome.alarms.create('autoMission', {periodInMinutes: 1});
 chrome.alarms.onAlarm.addListener(function( a ){
     switch (a.name){
         case 'checkMsg':
@@ -105,6 +105,7 @@ chrome.alarms.onAlarm.addListener(function( a ){
             break;
         case 'autoMission':
             getCookie('autoMission') && autoMission();
+            getCookie('autoLoginWeibo') && autoLoginWeibo();
             break;
     }
 });
@@ -198,17 +199,17 @@ function autoMission(){
                                     );
                                     setCookie( 'autoMission', new Date().getUTCDate() );
                                 }else{
-                                    alert('罕见错误！如果你遇见两次以上请联系开发者。');
+                                    alert('罕见错误！基本可以忽略，如果你遇见两次以上请联系开发者，当该提示已打扰到您，请关闭扩展的自动签到功能。');
                                 }
                             },
                             error: function(){
-                                alert('网络错误！等待一小时后重试或手动领取。');
+                                alert('网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。');
                             }
                         });
                     }
         },
         error: function(){
-                    alert('网络错误！等待一小时后重试或手动领取。');
+                    alert('网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。');
         }
     });
 }
@@ -238,7 +239,7 @@ function autoMission(){
     if (!isRefererSet) {
         headers.push({
             name: "referer",
-            value: "https://www.v2ex.com/mission/daily/"
+            value: "http://www.v2ex.com/mission/daily/"
         });
     }
 
@@ -251,3 +252,13 @@ function autoMission(){
     //————————————————设置 http 头————————————————
 
 //——————————————————————————————————自动签到——————————————————————————————————
+
+
+//——————————————————————————————————自动登陆微博——————————————————————————————————
+
+function autoLoginWeibo(){
+    alert(1);
+    $.get('http://weibo.com');
+}
+
+//——————————————————————————————————自动登陆微博——————————————————————————————————

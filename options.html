@@ -59,7 +59,7 @@
         <br/>源码请见： <a href="https://github.com/sciooga/v2ex-plus"> ♥ Github</a>
         <br/>对扩展满意，可以送我一本书。<br/>支付宝：sciooga@gmail.com
         <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et1dvnmdxvj206x06xaar.jpg" alt="支付宝二维码"/>
-        <br/>感谢<a href="#thk">所有捐助者</a>，共收到捐款11.94元: )
+        <br/>感谢<a href="#thk">所有捐助者</a>，共收到捐款125.14元。
         <br/>生活愉悦~
     </div>
     <div style="margin: 60px auto; padding-left:200px; width:800px;">
@@ -81,10 +81,13 @@
                 主题预览：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="preview" value="" disabled="disabled" />开启
                         &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="preview" value="f" disabled="disabled" />关闭
             </form></li>
-            </form></li>
             <li><form name="foldSelect">
                 自动折叠：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="fold" value="" disabled="disabled" />开启
                         &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="fold" value="f" disabled="disabled" />关闭
+            </form></li>
+            <li><form name="autoLoginWeiboSelect">
+                定时激活微博：&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="autoLoginWeibo" value="t" disabled="disabled" />开启
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="autoLoginWeibo" value="" disabled="disabled" />关闭&emsp;&emsp;&emsp;（未得到充分验证的实验性功能）
             </form></li>
             <li><form name="newWindowSelect">
                 新标签页浏览主题：&emsp;&emsp;&emsp;<input type="radio" name="newWindow" value="t" disabled="disabled" />开启
@@ -160,7 +163,7 @@
             </li>
             <li>
                 <div class="q">消息提醒：</div>
-                <div class="a">在浏览器右上角有一个可以隐藏的图标，每5分钟检查一次新消息，当收到新消息时 Chrome 的通知中心会提示您，同时图标显示如下：
+                <div class="a">在浏览器右上角有一个可以隐藏的图标，每5分钟检查一次新消息，当收到新消息时 Chrome 的通知中心会提示您，同时扩展按钮显示如下：
                     <img src="http://ww2.sinaimg.cn/large/62e721e4gw1et9sjnmvf2j2012012a9t.jpg" alt="消息提醒功能介绍"/>
                 </div>
             </li>
@@ -184,7 +187,7 @@
             </li>
             <li>
                 <div class="q">折叠超长主题、回复：</div>
-                <div class="a">开启后长度超过 1500px 的主题、长度超过 1000px 的回复将被折叠，需手动展开。
+                <div class="a">开启后长度超过 1800px 的主题、长度超过 1000px 的回复将被折叠，需手动展开。
                 </div>
             </li>
             <li>
@@ -202,7 +205,7 @@
         <ul>
             <li>
                 <div class="q">MAC 下为什么复制图片文件粘贴至回复框都为文件图标？</div>
-                <div class="a">由于浏览器局限，直接粘贴文件不被支持，请剪切图片粘贴而不是文件，比如使用 QQ 的截取屏幕功能。
+                <div class="a">由于浏览器局限，直接粘贴文件不被支持，请剪切图片粘贴而不是文件，比如使用 QQ 的截取屏幕功能，或使用插入图片功能。
                 </div>
             </li>
             <li>
@@ -253,6 +256,11 @@
                 </div>
             </li>
             <li>
+                <div class="q">我只需要消息通知的按钮提示，如何关闭不需要的横幅通知？</div>
+                <div class="a">横幅通知由系统或浏览器控制，您可以按需单独关闭，并不会影响按钮提示。
+                </div>
+            </li>
+            <li>
                 <div class="q">什么是会话详情的智能模式？</div>
                 <div class="a">扩展程序会智能判断对话内的每条回复，不相关的将被隐藏，您也可以选择关闭此功能，每个会话详情默认打开。
                 </div>
@@ -272,11 +280,17 @@
                 <div class="a">为了美观屏蔽宽度小于 100px 或高度小于 30px 的图片的旋转功能。
                 </div>
             </li>
+            <li>
+                <div class="q">什么是定时激活微博？</div>
+                <div class="a">为改善部分使用新浪微博为图床但不常登陆新浪微博的用户体验，故推出此实验性功能，主要用途是每小时访问一次 weibo.com 使用保存的 cookie 保持微博账号的登陆状态，此功能的稳定性及可靠性待确定。
+                    <br/>注意：使用 imgur 图床的用户无需此功能。
+                </div>
+            </li>
         </ul>
         <h1>可能增加的功能：</h1>
         <ul>
             <li>
-                历史热帖记录<br/>
+                历史热帖记录（内测）<br/>
                 收藏节点新帖提醒<br/>
                 用户名备注功能<br/>
                 图片实时显示在文本框内以编辑<br/>
@@ -291,6 +305,18 @@
         </ul>
         <h1>更新日志：</h1>
         <ul>
+            <li>
+                <div class="q">0.8版：</div>
+                <div class="a">
+                    兼容 /changes 页面。<br/>
+                    Tab 键返回顶部或跳转至回复框。<br/>
+                    修复折叠后展开不完整的问题。<br/>
+                    增加定时激活微博功能。<br/>
+                    修复部分情况下会话详情无法显示的问题及加入会话去重。<br/>
+                    修复部分已知 BUG、错字，改进部分提示表述。<br/>
+                    改进部分 css。
+                </div>
+            </li>
             <li>
                 <div class="q">0.7版：</div>
                 <div class="a">
@@ -368,10 +394,11 @@
         <h1 id="thk">所有捐助者：</h1>
         <ul>
             <li>
-                <div class="q">感谢以下捐助者对本拓展的支持，祝各位生活愉快、幸福美好~</div>
+                <div class="q">感谢以下捐助者对本扩展的支持，祝各位生活愉快、幸福美好~</div>
                 <div class="a">
-                    匿名&emsp;&emsp;*熠&emsp;&emsp;journey<br/>
-                    更新于v0.7
+                    匿名(1.94元)&emsp;&emsp;*熠&emsp;&emsp;journey&emsp;&emsp;SujiYan&emsp;&emsp;绿叶&emsp;&emsp;匿名(18.06元)&emsp;&emsp;匿名(5.74元)&emsp;&emsp;许凯&emsp;&emsp;syc378&emsp;&emsp;旭<br/>
+                    <br/>
+                    更新于 v0.8，由于支付宝更新后多位捐助者无法取得联系，各位捐助者可以选择全名、其他名称或不希望我写入感谢列表，一切尊重您的决定。
                 </div>
             </li>
         </ul>

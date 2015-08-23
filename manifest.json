@@ -12,19 +12,20 @@
     "webRequest",
     "webRequestBlocking",
     "*://*.v2ex.com/*",
+    "*://*.baidu.com/*",
     "*://*.imgur.com/*",
     "*://*.weibo.com/*"
   ],
   "content_scripts": [
     {
-      "matches": ["*://*.v2ex.com/", "*://*.v2ex.com/?tab=*", "*://*.v2ex.com/go/*", "*://*.v2ex.com/recent*"],
+      "matches": ["*://*.v2ex.com/", "*://*.v2ex.com/?tab=*", "*://*.v2ex.com/go/*", "*://*.v2ex.com/recent*", "*://*.v2ex.com/changes*"],
       "css": ["v2ex_tab.css"],
       "js": ["jquery191.js", "v2ex_tab.js", "user_info.js"]
     },
     {
       "matches": ["*://*.v2ex.com/t/*"],
-      "css": ["v2ex_reply.css"],
-      "js": ["jquery191.js", "emoticon.js", "v2ex_reply.js", "user_info.js"]
+      "css": ["v2ex_reply.css", "fun_box.css"],
+      "js": ["jquery191.js", "emoticon.js", "v2ex_reply.js", "user_info.js", "fun_box.js"]
     },
     {
       "matches": ["*://*.v2ex.com/new/*"],

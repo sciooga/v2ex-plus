@@ -1,0 +1,24 @@
+.funBox
+{
+    width: 270px;
+    position: fixed;
+    right: 50%;
+    margin-right: -485px;
+    transition: top .5s;
+}
+
+.funBoxHide
+{
+    top: calc(100% - 38px);
+}
+
+.funBoxShow
+{
+    top: 20px;
+}
+
+.vPlusFun-1, .vPlusFun-2
+{
+    margin: 8px;
+    text-align: center;
+}

@@ -55,18 +55,22 @@ $(document).ready(function(){
 
     $(document).on("click", ".vplusBTN-unblock", function(){
         var _this = $(this);
-        var id_name = _this.attr('key').split(',');
-        if (userCreated){
-            unblock(_this, id_name[1], id_name[0], userCreated);
+        if (_this.text()=='已经解除') {
+            alert('已解除对该用户的屏蔽，无需重复操作！');
         }else{
-            $.get('https://www.v2ex.com/api/members/show.json?username='+username, function(data, status){
-                if(status == 'success'){
-                    userCreated = data.created;
-                    unblock(_this, id_name[1], id_name[0], userCreated);
-                }else{
-                    alert('可能是网络原因获取用户 created 参数失败，请重试。');
-                }
-            });
+            var id_name = _this.attr('key').split(',');
+            if (userCreated){
+                unblock(_this, id_name[1], id_name[0], userCreated);
+            }else{
+                $.get('https://www.v2ex.com/api/members/show.json?username='+username, function(data, status){
+                    if(status == 'success'){
+                        userCreated = data.created;
+                        unblock(_this, id_name[1], id_name[0], userCreated);
+                    }else{
+                        alert('可能是网络原因获取用户 created 参数失败，请重试。');
+                    }
+                });
+            }
         }
     });
 

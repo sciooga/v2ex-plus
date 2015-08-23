@@ -27,7 +27,17 @@ function get_at_name_list( str ){
         name_list[i] = patt_at_name.exec( str );
         name_list[i] = name_list[i]!=null && name_list[i][1] || '';
     }
-    return name_list
+
+    // 简单去重
+    var  unique_name_list = Array();
+    for (var i in name_list) {
+        var item = name_list[i];
+        if (unique_name_list.indexOf(item) === -1) {
+            unique_name_list.push(item);
+        }
+    }
+
+    return unique_name_list;
 }
 
 //判断是否为相关的回复
@@ -119,7 +129,7 @@ function input_img( input_img_base64, this_img_id ){
         //判断高度是否超高
         var height = _reply.height();
         if ( height > 1000 ){
-            _reply.addClass('waitForFold')
+            _reply.addClass('waitForFold');
             _reply.attr('vPlus-height', height);
         }
 
@@ -166,7 +176,7 @@ function input_img( input_img_base64, this_img_id ){
         $('.keyUser').css('backgroundColor', 'rgba('+ keyReplyColor +')');//设置楼主回复背景颜色
         if (!response.fold){//折叠超长主题
             if (topic_height>1800){
-                _topic_content.css({maxHeight:'1000px', overflow:'hidden', transition:'max-height 2s'});
+                _topic_content.css({maxHeight:'600px', overflow:'hidden', transition:'max-height 2s'});
                 $('.subtle', _topic).hide();
                 _topic_buttons.before("<div id='showTopic' style='padding:16px; color:#778087;'>\
                                             <span id='topicBTN'>展开主题</span>\
@@ -174,13 +184,16 @@ function input_img( input_img_base64, this_img_id ){
                                             <span style='font-size:0.6em'>主题超长已自动折叠，点击按钮显示完整的主题。</span>\
                                        </div>");
                 $('#topicBTN').click(function(){
-                    _topic_content.css({maxHeight:topic_height});
+                    //乘2是由于当图片未加载完成时，预先记录的高度不准确（短于实际高度）
+                    _topic_content.css({maxHeight:topic_height*2});
+                    //还有可能是图片及其多，一开始保存的高度数值只有很少一部分图片的高度，所以在上面的两秒动画后还得再取消高度限制
+                    setTimeout("_topic_content.css({maxHeight:'none'})", 2000);
                     $('.subtle', _topic).slideDown(800);
                     $('#showTopic').remove();
                 });
             }
             var _reply = $('.waitForFold');
-            _reply.css({height:'600px', overflow:'hidden', transition:'height 2s'});
+            _reply.css({maxHeight:'300px', overflow:'hidden', transition:'max-height 2s'});
             _reply.after("<div class='showReply' style='padding:20px 0px 10px; color:#778087; text-align:center; border-top:1px solid #e2e2e2'>\
                                             <span class='replyBTN'>展开回复</span>\
                                             <div style='height:16px;'></div>\
@@ -189,8 +202,11 @@ function input_img( input_img_base64, this_img_id ){
             $('.replyBTN').click(function(){
                 var _this = $(this);
                 var _showReply = _this.parent();
-                var _reply = _this.parent().prev();
-                _reply.css({height:_reply.attr('vPlus-height')+'px'});
+                var _reply = _showReply.prev();
+                _reply.css({maxHeight:2*~~(_reply.attr('vPlus-height'))+'px'});
+                setTimeout(function(){
+                    _reply.css({maxHeight:'none'});
+                }, 2000);
                 _showReply.remove();
             });
         }
@@ -291,7 +307,7 @@ function input_img( input_img_base64, this_img_id ){
                         _replyDetail.append( _bubble );
                     }
                     //如果被@用户只有一条回复但回复是@其他不相干用户则显示这条回复
-                    if ( _no-1 == r_i && !have_main_reply && /(\S+?) 回复于47层/.exec(_replyDetail.children('.leftBubble').last().find('.bubbleName').text())[1] == _reply_at_name_list[i] ){
+                    if ( _no-1 == r_i && !have_main_reply && /(\S+?) 回复于\d+层/.exec(_replyDetail.children('.leftBubble').last().find('.bubbleName').text())[1] == _reply_at_name_list[i] ){
                         _replyDetail.children('.leftBubble').last().removeClass('unrelated');
                     }
 
@@ -366,7 +382,7 @@ function input_img( input_img_base64, this_img_id ){
 
     $('body').append("<div id='closeReply'></div>");
     var _close_reply = $('#closeReply');
-    var _reply_link = $('div[id^=r_] .reply_content a');
+    var _reply_link = $('.reply_content a');
     var display_foMouse;
     _reply_link.mouseenter(function(){
         var _this = $(this);
@@ -414,7 +430,10 @@ function input_img( input_img_base64, this_img_id ){
 
     //————————————————初始化————————————————
 
-    var _reply_textarea = $('#reply_content');
+    var _reply_textarea = document.getElementById('reply_content')
+    _reply_textarea.parentNode.replaceChild(_reply_textarea.cloneNode(true), _reply_textarea);
+    _reply_textarea = $('#reply_content');
+
     _reply_textarea.attr('placeholder', '你可以在文本框内直接粘贴截图\n类似于 [:微笑:] 的图片标签可以优雅的移动');
 
     var _reply_textarea_top_btn = _reply_textarea.parents('.box').children('.cell:first-of-type');
@@ -426,7 +445,7 @@ function input_img( input_img_base64, this_img_id ){
 
     _reply_textarea_top_btn.before(emoticon_list);
     var _emoticon = $(".emoticon");
-    _reply_textarea_top_btn.after("<div class = 'uploadImage'></div>")
+    _reply_textarea_top_btn.after("<div class = 'uploadImage'></div>");
     var _upload_image = $('.uploadImage');
 
     $('.inputBTN1').click(function(){
@@ -506,18 +525,42 @@ function input_img( input_img_base64, this_img_id ){
 
     //————————————————替换图片标签————————————————
 
-    if (_reply_textarea.val()) {_reply_textarea_top_btn.append('&emsp;之前上传的图片可能已丢失，请重新上传。')};
+    if (_reply_textarea.val()) {
+        _reply_textarea_top_btn.append('&emsp;<span style="color:red;">之前如有上传的图片则已丢失，请重新上传。</span>');
+        //还原图片链接为标签
+        _reply_textarea.val(function(i,origText){
+            for (var img_key_name in img_list){
+                origText = origText.replace(new RegExp(img_list[img_key_name],"g"), '[:'+img_key_name+':]');
+            }
+            return origText;
+        });
+    }
     //#1是用来调试的，点击 textarea 模拟显示上传的字符串
     //_reply_textarea.click(function( e ){//#1
     _reply_textarea.parent().submit(function( e ){
         if ( _upload_img_btn.text().indexOf('正在上传') == -1 ){
             _reply_textarea.val(function(i,origText){
-                var patt_emoticon_name = RegExp("\\[:(.+?):\\]", "g");
-                origText = origText.replace(patt_emoticon_name, function(i,k){return img_list[k]});
+                origText = origText.replace(new RegExp("\\[:(.+?):\\]", "g"), function(i,k){
+                    var img_rul = img_list[k];
+                    if (img_rul == undefined){
+                        e.preventDefault();
+                        return '[:此图片标签已失效删除后请重新上传' + k + ':]';
+                    }else{
+                        return img_rul;
+                    }
+                });
                 return origText;
             });
         }else{
             confirm('仍有图片未上传完成，确定要直接回复？\n未上传的图片将不被发送') || e.preventDefault();
+        }
+    });
+
+    //支持快捷键回复
+    _reply_textarea.keydown(function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.which === 13) {
+            //e.preventDefault();
+            _reply_textarea.parent().submit();
         }
     });
 
@@ -542,7 +585,7 @@ function input_img( input_img_base64, this_img_id ){
     var _rotateImg = $('#rotateImg');
     var _will_rotate_img;
     var _rotate_times;
-    var _rotate_img = $('div[id^=r_] .reply_content img');
+    var _rotate_img = $('.reply_content img');
     _rotate_img.mouseenter(function(e){
         var _this = $(this);
         var width = _this.width();
