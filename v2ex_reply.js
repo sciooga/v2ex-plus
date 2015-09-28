@@ -623,3 +623,28 @@ function input_img( input_img_base64, this_img_id ){
     //————————————————旋转图片————————————————
 
 //——————————————————————————————————图片功能——————————————————————————————————
+
+
+//——————————————————————————————————快捷键——————————————————————————————————
+
+// todo 判断是否有回复框
+var _r_c=$("#reply_content");
+var tab_switch = false;
+
+$(document).keydown(function(event) {
+    var keyCode = event.which;
+    if (keyCode == 9) {
+        if (!_r_c.attr('id') || tab_switch){
+            $("html, body").animate({scrollTop: 0}, 300);
+            _r_c.blur();
+            tab_switch = false;
+        }else{
+            $("html, body").animate({scrollTop: (_r_c.offset().top)}, 300);
+            _r_c.focus();
+            tab_switch = true;
+        }
+        window.event.returnValue = false;
+    }
+});
+
+//——————————————————————————————————快捷键——————————————————————————————————

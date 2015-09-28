@@ -97,7 +97,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 !getCookie('newMsg') && checkMsg();
 getCookie('autoMission') && autoMission();
 chrome.alarms.create('checkMsg', {periodInMinutes: 5});
-chrome.alarms.create('autoMission', {periodInMinutes: 1});
+chrome.alarms.create('autoMission', {periodInMinutes: 60});
 chrome.alarms.onAlarm.addListener(function( a ){
     switch (a.name){
         case 'checkMsg':
@@ -257,7 +257,7 @@ function autoMission(){
 //——————————————————————————————————自动登陆微博——————————————————————————————————
 
 function autoLoginWeibo(){
-    alert(1);
+    //console.log('0.8 测试版！ 目前准备自动激活微博');
     $.get('http://weibo.com');
 }
 

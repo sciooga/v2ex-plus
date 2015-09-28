@@ -12,7 +12,7 @@
     "webRequest",
     "webRequestBlocking",
     "*://*.v2ex.com/*",
-    "*://*.baidu.com/*",
+//    "*://*.baidu.com/*",
     "*://*.imgur.com/*",
     "*://*.weibo.com/*"
   ],
@@ -24,8 +24,8 @@
     },
     {
       "matches": ["*://*.v2ex.com/t/*"],
-      "css": ["v2ex_reply.css", "fun_box.css"],
-      "js": ["jquery191.js", "emoticon.js", "v2ex_reply.js", "user_info.js", "fun_box.js"]
+      "css": ["v2ex_reply.css"],
+      "js": ["jquery191.js", "emoticon.js", "v2ex_reply.js", "user_info.js"]
     },
     {
       "matches": ["*://*.v2ex.com/new/*"],
