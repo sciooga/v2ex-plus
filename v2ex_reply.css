@@ -147,6 +147,10 @@ div#closeReply
     transition: opacity .3s, margin .3s;
 }
 
+div#closeReply > img{
+    max-width: 590px !important;
+}
+
 div#closeReply > img.triangle
 {
     position: absolute;
