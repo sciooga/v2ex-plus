@@ -101,7 +101,6 @@ function input_img( input_img_base64, this_img_id ){
     //图片功能的初始化放在图片功能内
 
     var page_current_num = $('.page_current').text();
-    var page_previous_num = page_current_num && ~~(page_current_num)-1 || '0';
     var _key_user = $('.header small a:first-of-type').text();
     var _topic = $('#Main > div:nth-of-type(2)');
     var _topic_content = $('.cell .topic_content', _topic);
@@ -156,6 +155,17 @@ function input_img( input_img_base64, this_img_id ){
             _append_place.before(" &nbsp;<span class='replyDetailBTN'>"+ btn_name +"</span> &nbsp; &nbsp;");
         }
     });
+
+    if (page_current_num){
+        console.log('V2EX PLUS: 此主题有多页回复，正在加载所有回复。');
+        $.get('https://www.v2ex.com/api/replies/show.json?topic_id='+/\/t\/([0-9]+)/.exec(window.location.href)[1],function(data){
+            console.log('V2EX PLUS: 所有回复加载完成。');
+            for (var i in data){
+                _reply_user_name_list[~~i+1] = data[i].member.username;
+                _reply_content_list[~~i+1] = data[i].content_rendered;
+            }
+        });
+    }
 
     $('#onlyKeyUser').click(function(){
         var _this = $(this);
@@ -289,7 +299,7 @@ function input_img( input_img_base64, this_img_id ){
                                 <div>\
                                     "+ _reply_content_list[r_i] +"\
                                     <p class='bubbleName' style='text-align:right;'>\
-                                        <span class='unrelatedTip'><span>&emsp;回复于"+ (r_i+page_previous_num*100) +"层&emsp;"+ _reply_user_name +"\
+                                        <span class='unrelatedTip'><span>&emsp;回复于"+ (r_i) +"层&emsp;"+ _reply_user_name +"\
                                     </p>\
                                 </div></div>";
                         _replyDetail.append( _bubble );
@@ -301,7 +311,7 @@ function input_img( input_img_base64, this_img_id ){
                                 <div>\
                                     "+ _reply_content_list[r_i] +"\
                                     <p class='bubbleName' style=''>\
-                                        "+ _reply_at_name_list[i] +"&emsp;回复于"+ (r_i+page_previous_num*100) +"层&emsp;<span class='unrelatedTip'><span>\
+                                        "+ _reply_at_name_list[i] +"&emsp;回复于"+ (r_i) +"层&emsp;<span class='unrelatedTip'><span>\
                                     </p>\
                                 </div></div>";
                         _replyDetail.append( _bubble );
@@ -342,7 +352,7 @@ function input_img( input_img_base64, this_img_id ){
                                         <div>\
                                             "+ _reply_content_list[r_i] +"\
                                             <p class='bubbleName' style='text-align:right;'>\
-                                                <span class='unrelatedTip'><span>&emsp;回复于"+ (r_i+page_previous_num*100) +"层&emsp;"+ _reply_user_name +"\
+                                                <span class='unrelatedTip'><span>&emsp;回复于"+ (r_i) +"层&emsp;"+ _reply_user_name +"\
                                             </p>\
                                         </div>\
                                    </div>";
@@ -386,15 +396,15 @@ function input_img( input_img_base64, this_img_id ){
     var display_foMouse;
     _reply_link.mouseenter(function(){
         var _this = $(this);
-        var _no = ~~(_this.closest('td').find('.no').text()) - page_previous_num*100;
+        var _no = ~~(_this.closest('td').find('.no').text());
         var _hover_at_name = RegExp("/member/(.+)").exec( _this.attr('href') );
         if ( _hover_at_name != null ){
             display_foMouse = setTimeout(function(){
-                _close_reply.html( "<div style='padding-bottom:6px;'>" + (1+page_previous_num*100) + '层至' + (_no+page_previous_num*100) + "层间未发现该用户的回复</div>" + "<img class='triangle' src='"+ triangle_img +"' />" );
+                _close_reply.html( "<div style='padding-bottom:6px;'>" + (1) + '层至' + (_no) + "层间未发现该用户的回复</div>" + "<img class='triangle' src='"+ triangle_img +"' />" );
                 for (var i=_no; i; --i){
                     if ( _reply_user_name_list[i] == _hover_at_name[1] ){
                         _close_reply.html( _reply_content_list[i] + "<p class='bubbleName' style='text-align:right; padding-right:0px;'>\
-                                            "+ _reply_user_name_list[i] +"&emsp;回复于"+ (i+page_previous_num*100) +"层&emsp;\
+                                            "+ _reply_user_name_list[i] +"&emsp;回复于"+ (i) +"层&emsp;\
                                         </p><img class='triangle' src='"+ triangle_img +"' />" );
                         break;
                     }
