@@ -299,7 +299,7 @@ function input_img( input_img_base64, this_img_id ){
                                 <div>\
                                     "+ _reply_content_list[r_i] +"\
                                     <p class='bubbleName' style='text-align:right;'>\
-                                        <span class='unrelatedTip'><span>&emsp;回复于"+ (r_i) +"层&emsp;"+ _reply_user_name +"\
+                                        <span class='unrelatedTip'><span>&emsp;回复于"+ r_i +"层&emsp;"+ _reply_user_name +"\
                                     </p>\
                                 </div></div>";
                         _replyDetail.append( _bubble );
@@ -311,7 +311,7 @@ function input_img( input_img_base64, this_img_id ){
                                 <div>\
                                     "+ _reply_content_list[r_i] +"\
                                     <p class='bubbleName' style=''>\
-                                        "+ _reply_at_name_list[i] +"&emsp;回复于"+ (r_i) +"层&emsp;<span class='unrelatedTip'><span>\
+                                        "+ _reply_at_name_list[i] +"&emsp;回复于"+ r_i +"层&emsp;<span class='unrelatedTip'><span>\
                                     </p>\
                                 </div></div>";
                         _replyDetail.append( _bubble );
@@ -352,7 +352,7 @@ function input_img( input_img_base64, this_img_id ){
                                         <div>\
                                             "+ _reply_content_list[r_i] +"\
                                             <p class='bubbleName' style='text-align:right;'>\
-                                                <span class='unrelatedTip'><span>&emsp;回复于"+ (r_i) +"层&emsp;"+ _reply_user_name +"\
+                                                <span class='unrelatedTip'><span>&emsp;回复于"+ r_i +"层&emsp;"+ _reply_user_name +"\
                                             </p>\
                                         </div>\
                                    </div>";
@@ -404,7 +404,7 @@ function input_img( input_img_base64, this_img_id ){
                 for (var i=_no; i; --i){
                     if ( _reply_user_name_list[i] == _hover_at_name[1] ){
                         _close_reply.html( _reply_content_list[i] + "<p class='bubbleName' style='text-align:right; padding-right:0px;'>\
-                                            "+ _reply_user_name_list[i] +"&emsp;回复于"+ (i) +"层&emsp;\
+                                            "+ _reply_user_name_list[i] +"&emsp;回复于"+ i +"层&emsp;\
                                         </p><img class='triangle' src='"+ triangle_img +"' />" );
                         break;
                     }
