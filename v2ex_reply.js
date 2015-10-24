@@ -21,7 +21,7 @@ var triangle_img = 'data:img/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAGCAYAAAD3
 //获取被@的用户，列表开始于 index 1
 function get_at_name_list( str ){
     var name_list = Array();
-    var patt_at_name = RegExp("<a href=\"/member/(.*?)\">", "g");
+    var patt_at_name = RegExp("<a.*?href=\"/member/(.*?)\">", "g");
     name_list[0] = 't';
     for (var i=1; name_list[i-1]; ++i){
         name_list[i] = patt_at_name.exec( str );
