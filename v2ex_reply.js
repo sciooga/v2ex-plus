@@ -116,6 +116,13 @@ function input_img( input_img_base64, this_img_id ){
     $('div[id^=r_]').each(function(){
         var _this = $(this);
         var _reply = _this.find('.reply_content');
+
+        //———回复空格修复———
+        _reply.css('whiteSpace', 'pre-wrap').html(function(i, o){
+            return o.replace(/<br>/g, '');
+        });
+        //———回复空格修复———
+
         var _reply_content = _reply.html();
         var _reply_user_name = _this.find('strong a').text();
         var _reply_at_name = RegExp("<a href=\"/member/(.*?)\">").exec(_reply_content);
@@ -446,7 +453,7 @@ function input_img( input_img_base64, this_img_id ){
     _reply_textarea.parentNode.replaceChild(_reply_textarea.cloneNode(true), _reply_textarea);
     _reply_textarea = $('#reply_content');
 
-    _reply_textarea.attr('placeholder', '你可以在文本框内直接粘贴截图\n类似于 [:微笑:] 的图片标签可以优雅的移动');
+    _reply_textarea.attr('placeholder', '你可以在文本框内直接粘贴截图或拖拽图片上传\n类似于 [:微笑:] 的图片标签可以优雅的移动');
 
     var _reply_textarea_top_btn = _reply_textarea.parents('.box').children('.cell:first-of-type');
     _reply_textarea_top_btn.append("<span class='inputBTN1'> › 表情</span><span class='inputBTN2'> › 插入图片</span><input type='file' style='display: none' id='imgUpload' accept='image/*' />");
@@ -660,3 +667,29 @@ $(document).keydown(function(event) {
 });
 
 //——————————————————————————————————快捷键——————————————————————————————————
+
+
+//——————————————————————————————————拖拽上传图片——————————————————————————————————
+
+_r_c[0].addEventListener("drop",function(e){
+    e.preventDefault();
+    var fileReader = new FileReader();
+    fileReader.onloadend = function(e) {
+        input_img( this.result, img_id++ );
+    };
+    fileReader.readAsDataURL(e.dataTransfer.files[0]);
+});
+
+//——————————————————————————————————拖拽上传图片——————————————————————————————————
+
+
+//——————————————————————————————————高亮感谢——————————————————————————————————
+
+$('.box .small.fade').each(function(){
+    var $this = $(this);
+    if ($this.text().indexOf('♥')!=-1) {
+        $this.css('color', 'red');
+    }
+});
+
+//——————————————————————————————————高亮感谢——————————————————————————————————

@@ -123,7 +123,6 @@ function checkMsg(){
             sign = sign != null && sign[1] || '未登录';
             if ( sign == '未登录' ){
                 chrome.browserAction.setIcon({path: 'icon/icon38_nologin.png'});
-                //alert('请登录 v2ex 账号以便获取新消息提醒，否则每5分钟将弹出此提示，或者您可以关闭扩展的消息提醒功能。');
             }else if( sign!='0') {
                 chrome.browserAction.setIcon({path: 'icon/icon38_msg.png'});
                 chrome.notifications.create(
@@ -166,6 +165,11 @@ chrome.notifications.onClicked.addListener(function(notificationId){
             break;
     }
 });
+
+chrome.commands.onCommand.addListener(function(command) {
+    clean_msg();
+});
+
 
 //——————————————————————————————————通知/按钮点击反馈——————————————————————————————————
 

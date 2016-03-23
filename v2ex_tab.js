@@ -17,6 +17,9 @@
     chrome.runtime.sendMessage({get_preview_status: 't'}, function(response) {
         if ( !response.preview_status ){
             $('div#Main > div:nth-of-type(2) .cell').each(function(){
+                if($(this).find('.fade').text().indexOf('...')!=-1){
+                    return ;
+                }
                 $(this).find('.fade').append(" &nbsp;•&nbsp; <span class='preview'>预览</span>");
             });
         }
@@ -33,7 +36,8 @@
                     var _previewWindow = _cell.next('.previewWindow');
                     data = data.substr(data.indexOf("header")+8);
                     //当匹配不到topic_conten时返回-1 substring 按0处理，既显示整个标题头部
-                    data = data.substring(data.indexOf("<div class=\"topic_content\">"), data.indexOf("<div class=\"topic_buttons\">"))
+                    data = data.substring(data.indexOf("<div class=\"topic_content\">"), data.indexOf("<div class=\"topic_buttons\">"));
+                    data = data.replace('hljs.initHighlightingOnLoad();', '');
                     _this.addClass('btn_id'+btn_id);
                     _previewWindow.html(data+"<p class='previewWindowEnd'>\
                                                 <a class='item_node' href='"+ _href +"' "+ nwe_window +">详细</a>\

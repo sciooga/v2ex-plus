@@ -1,6 +1,6 @@
 {
   "name": "v2ex plus",
-  "version": "0.9.1",
+  "version": "1.0",
   "manifest_version": 2,
   "description": "优雅便捷的 v2ex 扩展",
   "background": {
@@ -16,6 +16,10 @@
     "*://*.weibo.com/*"
   ],
   "content_scripts": [
+    {
+      "matches": ["*://*.v2ex.com/*"],
+      "js": ["jquery191.js", "all.js"]
+    },
     {
       "matches": ["*://*.v2ex.com/", "*://*.v2ex.com/?tab=*", "*://*.v2ex.com/go/*", "*://*.v2ex.com/recent*", "*://*.v2ex.com/changes*"],
       "css": ["v2ex_tab.css"],
@@ -41,5 +45,13 @@
     "48": "icon/icon48.png",
     "128": "icon/icon128.png"
   },
-  "web_accessible_resources": ["img/user_info_background.gif", "img/loading.gif"]
+  "web_accessible_resources": ["img/user_info_background.gif", "img/loading.gif"],
+  "commands": {
+    "newMsg": {
+      "suggested_key": {
+        "default": "Ctrl+E"
+      },
+      "description": "查看 V2EX 消息"
+    }
+  }
 }
