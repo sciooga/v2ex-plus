@@ -87,6 +87,20 @@ function saveChoice(e){
         saveChoice(e);
     };
 
+    //感谢爱心颜色 默认rgba('204', '204', '204', '1')
+    var _thankColor = document.thankColorSelect.thankColor;
+    var thankColor = getCookie('thankColor');
+    thankColor = thankColor && thankColor.split(",") || ['204', '204', '204'];
+    _thankColor.value = '#' + (~~thankColor[0]).toString(16) + (~~thankColor[1]).toString(16) + (~~thankColor[2]).toString(16);
+    _thankColor.disabled = false;
+    _thankColor.onchange = function(e){
+        var hex = this.value.toLowerCase();
+        var r = hex.substr(1,2);
+        var g = hex.substr(3,2);
+        var b = hex.substr(5,2);
+        setCookie('thankColor', parseInt(r,16)+','+parseInt(g,16)+','+parseInt(b,16));
+    };
+
     //重置所有设置
     document.getElementById('allDefault').onclick = function(){
         var keys = document.cookie.match(/[^ =;]+(?=\=)/g);

@@ -230,20 +230,33 @@ function input_img( input_img_base64, this_img_id ){
             });
         }
 
-        //————————同一帖子翻页跳过主题————————
+        //————————高亮感谢————————
 
-        var _t_num = RegExp("/t/([0-9]+)");
-        var _history_t_num = _t_num.exec(document.referrer);
-        _history_t_num = _history_t_num!=null && _history_t_num[1] || 'none';
-        var _current_t_num = _t_num.exec(window.location.href)[1] || ' none ';
-        if ( _history_t_num == _current_t_num ){
-                $('html, body').animate({scrollTop: (_topic_buttons.offset().top)}, 300);
-        }
+        $('.box .small.fade').each(function(){
+            console.log('response.thankColor');
+            console.log(response.thankColor);
+            var $this = $(this);
+            if ($this.text().indexOf('♥')!=-1) {
+                $this.css('color', 'rgb(' + (response.thankColor || '204,204,204') + ')');
+            }
+        });
 
-        //————————同一帖子翻页跳过主题————————
+        //————————高亮感谢————————
 
 
     });
+
+    //————————同一帖子翻页跳过主题————————
+
+    var _t_num = RegExp("/t/([0-9]+)");
+    var _history_t_num = _t_num.exec(document.referrer);
+    _history_t_num = _history_t_num!=null && _history_t_num[1] || 'none';
+    var _current_t_num = _t_num.exec(window.location.href)[1] || ' none ';
+    if ( _history_t_num == _current_t_num ){
+        $('html, body').animate({scrollTop: (_topic_buttons.offset().top)}, 300);
+    }
+
+    //————————同一帖子翻页跳过主题————————
 
     //————————视频非 http 访问提示————————
 
@@ -681,15 +694,3 @@ _r_c[0].addEventListener("drop",function(e){
 });
 
 //——————————————————————————————————拖拽上传图片——————————————————————————————————
-
-
-//——————————————————————————————————高亮感谢——————————————————————————————————
-
-$('.box .small.fade').each(function(){
-    var $this = $(this);
-    if ($this.text().indexOf('♥')!=-1) {
-        $this.css('color', 'red');
-    }
-});
-
-//——————————————————————————————————高亮感谢——————————————————————————————————
