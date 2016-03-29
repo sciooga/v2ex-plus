@@ -2,7 +2,7 @@
   "name": "v2ex plus",
   "version": "1.0",
   "manifest_version": 2,
-  "description": "优雅便捷的 v2ex 扩展",
+  "description": "优雅便捷的 V2EX 扩展",
   "background": {
     "scripts": ["jquery191.js", "cookie.js", "background.js"]
   },
