@@ -233,8 +233,6 @@ function input_img( input_img_base64, this_img_id ){
         //————————高亮感谢————————
 
         $('.box .small.fade').each(function(){
-            console.log('response.thankColor');
-            console.log(response.thankColor);
             var $this = $(this);
             if ($this.text().indexOf('♥')!=-1) {
                 $this.css('color', 'rgb(' + (response.thankColor || '204,204,204') + ')');
@@ -470,6 +468,18 @@ function input_img( input_img_base64, this_img_id ){
 
     var _reply_textarea_top_btn = _reply_textarea.parents('.box').children('.cell:first-of-type');
     _reply_textarea_top_btn.append("<span class='inputBTN1'> › 表情</span><span class='inputBTN2'> › 插入图片</span><input type='file' style='display: none' id='imgUpload' accept='image/*' />");
+
+    $('script').each(function(){
+        var $this = $(this);
+        if ($this.attr('scr') || $this.attr('type') || $this.html().indexOf('textcomplete') == -1){
+            return ;
+        }
+
+        var script = document.createElement('script');
+        script.textContent = $this.html();
+        (document.head||document.documentElement).appendChild(script);
+        script.parentNode.removeChild(script);
+    });
 
     //————————————————初始化————————————————
 
