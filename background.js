@@ -65,6 +65,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
     }else if ( request.get_preview_status ){
         sendResponse({preview_status: getCookie('preview')});
+    }else if ( request.get_allSetting ){
+        sendResponse({dblclickToTop: getCookie('dblclickToTop')});
     }else if ( request.get_replySetting ){
         sendResponse({keyReplyColor: getCookie('keyReplyColor'), keyReplyA: getCookie('keyReplyA'), fold: getCookie('fold'), thankColor: getCookie('thankColor')});
     }else if ( request.get_newWindow_status ){

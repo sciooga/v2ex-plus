@@ -45,6 +45,14 @@ function saveChoice(e){
     _fold[1].onclick = saveChoice;
 
     //定时激活微博 默认关闭
+    var _dblclickToTop = document.dblclickToTopSelect.dblclickToTop;
+    getCookie('dblclickToTop') && (_dblclickToTop[0].checked = true) || (_dblclickToTop[1].checked = true);
+    _dblclickToTop[0].disabled = false;
+    _dblclickToTop[1].disabled = false;
+    _dblclickToTop[0].onclick = saveChoice;
+    _dblclickToTop[1].onclick = saveChoice;
+
+    //双击返回顶部 默认关闭
     var _autoLoginWeibo = document.autoLoginWeiboSelect.autoLoginWeibo;
     getCookie('autoLoginWeibo') && (_autoLoginWeibo[0].checked = true) || (_autoLoginWeibo[1].checked = true);
     _autoLoginWeibo[0].disabled = false;
