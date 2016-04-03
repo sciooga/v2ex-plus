@@ -13,6 +13,7 @@ div.previewWindow
     display: none;
     border: 1px solid #e2e2e2;
     border-radius: 3px;
+    width: 750px;
     margin: 10px 4px;
     padding: 12px 5px 0px;
     text-align: left;
