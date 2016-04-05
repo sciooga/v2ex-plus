@@ -34,7 +34,6 @@ div[id^=r_]:hover span.replyDetailBTN
 div.replyDetail
 {
     display: none;
-    width: 660px;
     margin: 0px;
     padding: 10px;
     shadow-box: 1px 1px 1px #000;
