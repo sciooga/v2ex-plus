@@ -38,7 +38,7 @@ function hidden_user_info(){
 }
 
 
-    $('body').append("<div id='userInfo' style='position:absolute; background:#fff; min-width:260px; max-width:360px; padding-bottom:10px; border-radius:3px; text-align:center; visibility:hidden; opacity:0; box-shadow:0px 0px 20px #8e8e8e; font-size:14px; line-height:1.6; transition:margin .3s, opacity .3s;'>\
+    $('body').append("<div id='userInfo' style='position:absolute; top:0; background:#fff; min-width:260px; max-width:360px; padding-bottom:10px; border-radius:3px; text-align:center; visibility:hidden; opacity:0; box-shadow:0px 0px 20px #8e8e8e; font-size:14px; line-height:1.6; transition:margin .3s, opacity .3s;'>\
                         <div style='background:url("+  chrome.extension.getURL('img/user_info_background.gif') +") 100% 100%; padding:18px 18px 18px 78px; border-radius:3px 3px 0px 0px; text-align:left; color:#fff; white-space:nowrap;'>\
                             <img  id='userAvatar' src='' style='width:48px; border-radius:4px; position:absolute; left:18px; margin-right:20px;'/>\
                             <span id='userName'></span>&emsp;<span id='userId'></span>号会员<br/>\
