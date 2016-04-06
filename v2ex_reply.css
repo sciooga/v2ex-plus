@@ -133,6 +133,7 @@ div#closeReply
 {
     position: absolute;
     visibility: hidden;
+    top: 0;
     opacity: 0;
     box-shadow: 0px 0px 20px #8e8e8e;
     border-radius: 10px;
