@@ -29,8 +29,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if ( getCookie('imageHosting') != 'imgur' ){
             data.append('b64_data', request.img_base64);
         }else{
-            data.append('base64s[]', request.img_base64);
-            post_url = 'http://imgur.com/upload';
+            data.append('image', request.img_base64);
+            post_url = 'https://api.imgur.com/3/image';
             patt_id = "hash\":\"(.*?)\"";
             url_start = 'https://i.imgur.com/';
             url_end = '.png';
@@ -45,14 +45,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     _response = RegExp( patt_id ).exec( _response );
                     _response = _response != null && _response[1] || '失败';//以防 API 更改
                     img_status = url_start + _response + url_end;
-                    //console.log( "成功返回："+_response );// 返回成功数据
+                    console.log( "成功返回："+_response );// 返回成功数据
                 }else{
                     img_status = '失败';
-                    //console.log( "失败返回" );// 返回成功数据
+                    console.log( "失败返回"+_response );// 返回成功数据
                 }
             }
         };
         xhr.open('POST', post_url);
+        if ( getCookie('imageHosting') == 'imgur' ){
+	    xhr.setRequestHeader('Authorization', 'Client-ID 9311f6be1c10160');
+	}
         xhr.send(data);
     }else if ( request.get_img_id ){//收到图片状态询问
         sendResponse({img_id: img_status});
@@ -225,36 +228,70 @@ function autoMission(){
 
     //直接 ajax http头是不带 referer 的
     //无 referer 将一直返回”今日的奖励已经领取了哦“并且有领取奖励按钮
-    var requestFilter = {
+    var requestfilter = {
         urls: ["*://*.v2ex.com/mission/daily/*"]
     };
 
-    var extraInfoSpec = ['requestHeaders', 'blocking'];
+    var extrainfospec = ['requestheaders', 'blocking'];
     var handler = function(details) {
 
-    var isRefererSet = false;
-    var headers = details.requestHeaders;
-    var blockingResponse = {};
+	var isrefererset = false;
+	var headers = details.requestheaders;
+	var blockingresponse = {};
 
-    for (var i = 0, l = headers.length; i < l; ++i) {
-        if (headers[i].name == 'referer') {
-            isRefererSet = true;
-            break;
-        }
-    }
+	for (var i = 0, l = headers.length; i < l; ++i) {
+	    if (headers[i].name == 'referer') {
+		isrefererset = true;
+		break;
+	    }
+	}
 
-    if (!isRefererSet) {
-        headers.push({
-            name: "referer",
-            value: "http://www.v2ex.com/mission/daily/"
-        });
-    }
+	if (!isrefererset) {
+	    headers.push({
+		name: "referer",
+		value: "http://www.v2ex.com/mission/daily/"
+	    });
+	}
 
-    blockingResponse.requestHeaders = headers;
-    return blockingResponse;
+	blockingresponse.requestheaders = headers;
+	return blockingresponse;
     };
 
-    chrome.webRequest.onBeforeSendHeaders.addListener(handler, requestFilter, extraInfoSpec);
+    chrome.webrequest.onbeforesendheaders.addlistener(handler, requestfilter, extrainfospec);
+/*
+//针对 imgur 的测试
+    var requestfilter = {
+        urls: ["*://*.imgur.com/*"]
+    };
+
+    var extrainfospec = ['requestheaders', 'blocking'];
+    var handler = function(details) {
+
+	var isrefererset = false;
+	var headers = details.requestheaders;
+	var blockingresponse = {};
+
+	for (var i = 0, l = headers.length; i < l; ++i) {
+	    if (headers[i].name == 'referer') {
+		isrefererset = true;
+		break;
+	    }
+	}
+
+	if (!isrefererset) {
+	    headers['Origin'] = 'http://imgur.com';
+	    headers.push({
+		name: "referer",
+		value: "http://imgur.com/"
+	    });
+	}
+
+	blockingresponse.requestheaders = headers;
+	return blockingresponse;
+    };
+
+    chrome.webrequest.onbeforesendheaders.addlistener(handler, requestfilter, extrainfospec);
+*/
 
     //————————————————设置 http 头————————————————
 

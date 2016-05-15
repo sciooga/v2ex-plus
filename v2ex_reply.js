@@ -77,7 +77,7 @@ function input_img( input_img_base64, this_img_id ){
             var get_img_id = setInterval(function(){
                 chrome.runtime.sendMessage({get_img_id: 't'}, function(response) {
                     if ( response.img_id.indexOf('失败') != -1 ){
-                        alert('图片上传失败，可能是未登录微博/imgur');
+                        alert('图片上传失败，可能是未登录微博/受 imgur 上传次数限制');
                         window.clearInterval( get_img_id );
                         _img_preview.find('span').text('请重新上传');
                         _upload_img_btn.text(' › 插入图片');
