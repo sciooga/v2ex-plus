@@ -31,7 +31,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         }else{
             data.append('image', request.img_base64);
             post_url = 'https://api.imgur.com/3/image';
-            patt_id = "hash\":\"(.*?)\"";
+            patt_id = "id\":\"(.*?)\"";
             url_start = 'https://i.imgur.com/';
             url_end = '.png';
         }
