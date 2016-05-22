@@ -5,6 +5,7 @@
     chrome.runtime.sendMessage({get_newWindow_status: 't'}, function(response) {
         if ( response.newWindow_status ){
             $('.item_title a').attr('target', '_blank');
+            $('.item_hot_topic_title a').attr('target', '_blank');
             nwe_window = "target='_blank'";
         }
     });
