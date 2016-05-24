@@ -242,3 +242,7 @@ span[class^="inputBTN"]:hover
 {
     cursor: pointer;
 }
+
+.gist{
+    white-space: normal !important;
+}
