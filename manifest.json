@@ -1,6 +1,10 @@
 {
   "name": "v2ex plus",
+<<<<<<< HEAD
   "version": "1.1.2",
+=======
+  "version": "1.1.1",
+>>>>>>> a95feec216b893cfbf6e1e5f66934ec1ef883e67
   "manifest_version": 2,
   "description": "优雅便捷的 V2EX 扩展",
   "background": {
@@ -21,7 +25,7 @@
       "js": ["jquery191.js", "all.js"]
     },
     {
-      "matches": ["*://*.v2ex.com/", "*://*.v2ex.com/?tab=*", "*://*.v2ex.com/go/*", "*://*.v2ex.com/recent*", "*://*.v2ex.com/changes*"],
+      "matches": ["*://*.v2ex.com/", "*://*.v2ex.com/?tab=*", "*://*.v2ex.com/go/*", "*://*.v2ex.com/my/*", "*://*.v2ex.com/recent*", "*://*.v2ex.com/changes*"],
       "css": ["v2ex_tab.css"],
       "js": ["jquery191.js", "v2ex_tab.js", "user_info.js"]
     },
