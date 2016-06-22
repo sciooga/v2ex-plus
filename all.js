@@ -9,4 +9,13 @@ chrome.runtime.sendMessage({get_allSetting: 't'}, function(response) {
     }
 });
 
+/*
+$('.avatar').each(function(){
+    var $this = $(this);
+    if ($this.attr('src').indexOf('gravatar') != -1){
+        $this.css('display', 'none')
+    }
+});
+*/
+
 //——————————————————————————————————双击回到顶部——————————————————————————————————
