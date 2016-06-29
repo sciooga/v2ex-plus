@@ -2,7 +2,7 @@
 
 Chrome 版：[v2ex plus](https://chrome.google.com/webstore/detail/daeclijmnojoemooblcbfeeceopnkolo)
 
-Firefox 版：[v2ex plus](https://addons.mozilla.org/zh-CN/firefox/addon/v2ex-plus/)
+Firefox 版：[v2ex plus](https://addons.mozilla.org/zh-CN/firefox/addon/v2ex-plus/) or [v2ex plus - 百度云链接](http://yun.baidu.com/share/link?shareid=3070298907&uk=3045100046)
 
 反馈： [点击(sciooga#gmail)](mailto:sciooga@gmail.com)
 
