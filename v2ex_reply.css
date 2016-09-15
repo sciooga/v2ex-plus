@@ -14,19 +14,19 @@ span#topicBTN:hover, .replyBTN:hover
     box-shadow: 0px 0px 6px 0px #a6a6a6;
 }
 
-span.replyDetailBTN
+span.replyDetailBTN, .direct
 {
     visibility: hidden;
     color: #778087;
     cursor: pointer;
 }
 
-span.replyDetailBTN:hover
+span.replyDetailBTN:hover, .direct:hover
 {
     background-color: #f5f5f5;
 }
 
-div[id^=r_]:hover span.replyDetailBTN
+div[id^=r_]:hover span.replyDetailBTN, div[id^=r_]:hover .direct
 {
     visibility: visible;
 }
