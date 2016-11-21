@@ -82,7 +82,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 if ( block_list && username ){
                     block_list = block_list[1];
                     username = username[1];
-                    window.open("/block_list.html#"+username+'='+block_list);
+                    chrome.tabs.create({url:"/block_list.html#"+username+'='+block_list});
                 }else{
                     alert('扩展没有获取到任何信息 : (\n或许是您未登录 V2EX 账号');
                 }
@@ -156,7 +156,7 @@ function checkMsg(){
 //清除通知图标，打开通知地址
 function clean_msg(){
     chrome.browserAction.setIcon({path: 'icon/icon38.png'});
-    window.open("https://www.v2ex.com/notifications");
+    chrome.tabs.create({url:"https://www.v2ex.com/notifications"});
 }
 
 chrome.browserAction.onClicked.addListener( clean_msg );
@@ -166,7 +166,7 @@ chrome.notifications.onClicked.addListener(function(notificationId){
             clean_msg();
             break;
         case 'autoMission':
-            window.open("https://www.v2ex.com/balance");
+            chrome.tabs.create({url:"https://www.v2ex.com/balance"});
             break;
     }
 });
