@@ -28,7 +28,7 @@
     {
       "matches": ["*://*.v2ex.com/t/*"],
       "css": ["v2ex_reply.css"],
-      "js": ["jquery224.js", "emoticon.js", "v2ex_reply.js", "user_info.js"]
+      "js": ["jquery224.js", "emoticon.js", "clipboard1512.js", "v2ex_reply.js", "user_info.js"]
     },
     {
       "matches": ["*://*.v2ex.com/new/*"],
