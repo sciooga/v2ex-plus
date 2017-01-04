@@ -45,10 +45,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     _response = RegExp( patt_id ).exec( _response );
                     _response = _response != null && _response[1] || '失败';//以防 API 更改
                     img_status = url_start + _response + url_end;
-                    console.log( "成功返回："+_response );// 返回成功数据
+                    //console.log( "成功返回："+_response );// 返回成功数据
                 }else{
                     img_status = '失败';
-                    console.log( "失败返回"+_response );// 返回成功数据
+                    //console.log( "失败返回"+_response );// 返回成功数据
                 }
             }
         };
@@ -184,7 +184,7 @@ chrome.commands.onCommand.addListener(function(command) {
 function autoMission(){
 
     if( getCookie('autoMission') == new Date().getUTCDate() ){
-        console.log('今天已经成功领取奖励了');
+        //console.log('今天已经成功领取奖励了');
         return;
     }
 

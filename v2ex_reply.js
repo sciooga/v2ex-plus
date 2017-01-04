@@ -162,16 +162,16 @@ function input_img( input_img_base64, this_img_id ){
             if ( btn_name ){
                 _append_place.before(" &nbsp;<span class='replyDetailBTN'>"+ btn_name +"</span> &nbsp; &nbsp;");
             }
-            console.log(page_current_num)
+            //console.log(page_current_num)
             _append_place.before(" &nbsp;<span class='direct' data-clipboard-text='"
               + location.origin + location.pathname + "?p=" + page_current_num + '#' + _this.attr('id')
               + "'>楼层直链</span> &nbsp; &nbsp;");
     });
 
     if (~~page_current_num > 1){
-        console.log('V2EX PLUS: 此主题有多页回复，正在加载所有回复。');
+        //console.log('V2EX PLUS: 此主题有多页回复，正在加载所有回复。');
         $.get('https://www.v2ex.com/api/replies/show.json?topic_id='+/\/t\/([0-9]+)/.exec(window.location.href)[1],function(data){
-            console.log('V2EX PLUS: 所有回复加载完成。');
+            //console.log('V2EX PLUS: 所有回复加载完成。');
             for (var i in data){
                 _reply_user_name_list[~~i+1] = data[i].member.username;
                 _reply_content_list[~~i+1] = data[i].content_rendered;

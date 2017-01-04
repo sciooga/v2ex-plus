@@ -77,7 +77,7 @@ function saveChoice(e){
     color = color && color.split(",") || ['255', '255', '249'];
     _keyReplyColor.value = '#' + (~~color[0]).toString(16) + (~~color[1]).toString(16) + (~~color[2]).toString(16);
     _keyReplyA.value = colorA || 0.4;
-    _keyReplyAValue.innerHTML = colorA || 0.4;
+    _keyReplyAValue.textContent = colorA || 0.4;
     _keyReplyColor.disabled = false;
     _keyReplyA.disabled = false;
     _keyReplyColor.onchange = function(e){
@@ -88,10 +88,10 @@ function saveChoice(e){
         setCookie('keyReplyColor', parseInt(r,16)+','+parseInt(g,16)+','+parseInt(b,16));
     };
     _keyReplyA.onmousemove = function(e){
-        _keyReplyAValue.innerHTML = this.value;
+        _keyReplyAValue.textContent = this.value;
     };
     _keyReplyA.onchange = function(e){
-        _keyReplyAValue.innerHTML = this.value;
+        _keyReplyAValue.textContent = this.value;
         saveChoice(e);
     };
 
