@@ -438,12 +438,21 @@ function input_img( input_img_base64, this_img_id ){
         if ( _hover_at_name != null ){
             display_foMouse = setTimeout(function(){
                 _close_reply.html( "<div style='padding-bottom:6px;'>" + (1) + '层至' + (_no) + "层间未发现该用户的回复</div>" + "<img class='triangle' src='"+ triangle_img +"' />" );
-                for (var i=_no; i; --i){
-                    if ( _reply_user_name_list[i] == _hover_at_name[1] ){
-                        _close_reply.html( _reply_content_list[i] + "<p class='bubbleName' style='text-align:right; padding-right:0px;'>\
-                                            "+ _reply_user_name_list[i] +"&emsp;回复于"+ (i+page_previous_num*100) +"层&emsp;\
-                                        </p><img class='triangle' src='"+ triangle_img +"' />" );
-                        break;
+                // 判断 @ 之后是否跟了 # 号
+                var result = RegExp("@" + _this.text() + " #(\\d+)").exec(_this.parent().text())
+                if (result){
+                    var i = +result[1]
+                    _close_reply.html( _reply_content_list[i] + "<p class='bubbleName' style='text-align:right; padding-right:0px;'>\
+                                                "+ _reply_user_name_list[i] +"&emsp;回复于"+ (i+page_previous_num*100) +"层&emsp;\
+                                            </p><img class='triangle' src='"+ triangle_img +"' />" );
+                } else {
+                    for (var i=_no; i; --i){
+                        if ( _reply_user_name_list[i] == _hover_at_name[1] ){
+                            _close_reply.html( _reply_content_list[i] + "<p class='bubbleName' style='text-align:right; padding-right:0px;'>\
+                                                "+ _reply_user_name_list[i] +"&emsp;回复于"+ (i+page_previous_num*100) +"层&emsp;\
+                                            </p><img class='triangle' src='"+ triangle_img +"' />" );
+                            break;
+                        }
                     }
                 }
                 //判断弹出位置
@@ -721,3 +730,43 @@ _r_c[0].addEventListener("drop",function(e){
 });
 
 //——————————————————————————————————拖拽上传图片——————————————————————————————————
+
+
+//——————————————————————————————————拖拽上传图片——————————————————————————————————
+
+$('[alt="Reply"]').click(function(){
+    var self = this;
+    setTimeout(function (){
+        replyContent = $("#reply_content");
+        oldContent = replyContent.val();
+        prefix = "#" + $(self).parent().parent().find('.no').text() + ' ';
+        newContent = ''
+        if(oldContent.length > 0){
+            if (oldContent != prefix) {
+                newContent = oldContent + prefix;
+            }
+        } else {
+            newContent = prefix
+        }
+        replyContent.focus();
+        replyContent.val(newContent);
+    }, 100)
+})
+
+//——————————————————————————————————拖拽上传图片——————————————————————————————————
+
+
+//——————————————————————————————————https 新浪图床修改——————————————————————————————————
+
+    if (location.protocol == 'https:'){
+        setTimeout(function () {
+            $('.reply_content img').each(function(){
+                var $this = $(this)
+                if ($this[0].src.indexOf('.sinaimg.cn') != -1 && $this[0].src.indexOf('http://') != -1) {
+                    $this[0].src = 'https' + $this[0].src.substr(4)
+                }
+            })
+        }, 100)
+    }
+
+//——————————————————————————————————https 新浪图床修改——————————————————————————————————
