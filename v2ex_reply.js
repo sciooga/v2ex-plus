@@ -440,7 +440,7 @@ function input_img( input_img_base64, this_img_id ){
                 _close_reply.html( "<div style='padding-bottom:6px;'>" + (1) + '层至' + (_no) + "层间未发现该用户的回复</div>" + "<img class='triangle' src='"+ triangle_img +"' />" );
                 // 判断 @ 之后是否跟了 # 号
                 var result = RegExp("@" + _this.text() + " #(\\d+)").exec(_this.parent().text())
-                if (result){
+                if (result && _reply_user_name_list[+result[1]] == _this.text()){
                     var i = +result[1]
                     _close_reply.html( _reply_content_list[i] + "<p class='bubbleName' style='text-align:right; padding-right:0px;'>\
                                                 "+ _reply_user_name_list[i] +"&emsp;回复于"+ (i+page_previous_num*100) +"层&emsp;\
