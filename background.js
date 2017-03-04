@@ -23,7 +23,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         post_url = 'http://picupload.service.weibo.com/interface/pic_upload.php?\
                     &mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog',
         patt_id = "pid\":\"(.*?)\"",
-        url_start = 'https://ww2.sinaimg.cn/large/',
+        url_start = 'https://ws2.sinaimg.cn/large/',
         url_end = '.jpg';
 
         if ( getCookie('imageHosting') != 'imgur' ){
