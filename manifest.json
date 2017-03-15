@@ -31,7 +31,7 @@
       "js": ["jquery191.js", "emoticon.js", "v2ex_reply.js", "user_info.js"]
     },
     {
-      "matches": ["*://*.v2ex.com/new/*"],
+      "matches": ["*://*.v2ex.com/new"],
       "css": ["v2ex_new.css"],
       "js": ["jquery191.js", "v2ex_new.js"]
     }
