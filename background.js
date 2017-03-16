@@ -21,7 +21,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
         //参数 url、nick、logo用于水印内容
         post_url = 'http://picupload.service.weibo.com/interface/pic_upload.php?\
-                    &mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog',
+                    ori=1&mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog',
         patt_id = "pid\":\"(.*?)\"",
         url_start = 'https://ws2.sinaimg.cn/large/',
         url_end = '.jpg';
