@@ -1,5 +1,5 @@
 //倒三角图片
-var triangle_img = triangle_img || chrome.extension.getURL("img/triangle.jpg");
+const triangle_img = chrome.extension.getURL("img/triangle.jpg");
 
 //关注与屏蔽
 function follow_or_bolck( _target, bash, undo, default_name ){
