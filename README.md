@@ -13,3 +13,7 @@ Firefox 版：[v2ex plus](https://addons.mozilla.org/zh-CN/firefox/addon/v2ex-pl
 感谢各位反馈建议、帮忙测试的同学！
 
 生活愉快~
+
+
+
+#### [MIT License](https://github.com/sciooga/v2ex-plus/blob/master/LICENSE)
