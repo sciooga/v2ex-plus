@@ -100,17 +100,11 @@ function input_img( input_img_base64, this_img_id ){
         const files = e.target.files || (e.dataTransfer && e.dataTransfer.files);
         if (files){
             const img_file = files[0];
-            //Chrome input file 支持 accepts 属性
-//            if(!/image\/\w+/.test(img_file.type)){
-//                alert("请上传图片文件");
-//                return false;
-//            }else{
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     input_img( this.result, img_id++ );
                 }
                 reader.readAsDataURL(img_file);
-//            }
         }else{
             alert('出错了，获取不到文件。');
         }
