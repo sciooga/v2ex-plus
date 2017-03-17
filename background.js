@@ -4,6 +4,12 @@ if (typeof browser === 'undefined' &&
     typeof chrome === 'object')
     browser = chrome;
 
+// Open options page if it's first install
+browser.runtime.onInstalled.addListener(function(e){
+    console.log(e);
+    if (e.reason === "install")
+        browser.runtime.openOptionsPage()
+});
 //——————————————————————————————————接收来自页面的图片数据上传并返回——————————————————————————————————
 const s = localStorage;
 var img_status = '空闲';
