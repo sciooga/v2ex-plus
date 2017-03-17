@@ -186,9 +186,10 @@ function input_img( input_img_base64, this_img_id ){
 
     chrome.runtime.sendMessage({get_replySetting: 't'}, function(response) {
         var topic_height = _topic.height();
-        keyReplyColor = response.keyReplyColor || '255,255,249';
-        keyReplyColor += ',';
-        keyReplyColor += response.keyReplyA || '0.4';
+        r = parseInt((response.keyReplyColor).substring(1,3),16);
+        g = parseInt((response.keyReplyColor).substring(3,5),16);
+        b = parseInt((response.keyReplyColor).substring(5,7),16);
+        keyReplyColor = r+','+g+','+b+','+response.keyReplyA;
         $('.keyUser').css('backgroundColor', 'rgba('+ keyReplyColor +')');//设置楼主回复背景颜色
         if (!response.fold){//折叠超长主题
             if (topic_height>1800){

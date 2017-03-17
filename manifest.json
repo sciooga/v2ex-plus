@@ -4,7 +4,7 @@
   "manifest_version": 2,
   "description": "优雅便捷的 V2EX 扩展",
   "background": {
-    "scripts": ["jquery191.js", "cookie.js", "background.js"]
+    "scripts": ["jquery191.js", "background.js"]
   },
   "permissions": [
     "alarms",
