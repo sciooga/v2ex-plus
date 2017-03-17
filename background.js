@@ -1,49 +1,40 @@
 // WebExtension is cross-platform
 // Why would anyone call `chrome` api in it?
 if (typeof browser === 'undefined' &&
-    typeof chrome === 'object')
-    browser = chrome;
+    typeof chrome === 'object'){
+        console.log("On Chrome");
+        var browser = chrome;
+    }
 
 // Open options page if it's first install
 browser.runtime.onInstalled.addListener(function(e){
-    console.log(e);
     if (e.reason === "install")
         browser.runtime.openOptionsPage()
 });
 //——————————————————————————————————接收来自页面的图片数据上传并返回——————————————————————————————————
 const s = localStorage;
-var img_status = '空闲';
 
 browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if ( request.img_base64 ){
-        if ( img_status != '空闲'){
-            sendResponse({upload_status: '上传中'});//让他稍等
-        }else{
-            sendResponse({upload_status: '空闲'});//没问题，来吧
-        }
-        //开始上传
-        img_status = '上传中';
-        var xhr = new XMLHttpRequest();
-        var data = new FormData();
-        var _response = '',
+        const xhr = new XMLHttpRequest(),
+              data = new FormData();
+        let _response = '';
 
         //——————————设置微博或 imgur 的信息——————————
 
-        //参数 url、nick、logo用于水印内容
-        post_url = 'http://picupload.service.weibo.com/interface/pic_upload.php?\
-                    ori=1&mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog',
-        patt_id = "pid\":\"(.*?)\"",
-        url_start = 'https://ws2.sinaimg.cn/large/',
-        url_end = '.jpg';
-
         if ( s.getItem('imageHosting') === 'weibo' ){
+            var post_url = 'http://picupload.service.weibo.com/interface/pic_upload.php?\
+                        ori=1&mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog',
+                patt_id = "pid\":\"(.*?)\"",
+                url_start = 'https://ws2.sinaimg.cn/large/',
+                url_end = '.jpg';
             data.append('b64_data', request.img_base64);
         }else{
+            var post_url = 'https://api.imgur.com/3/image',
+                patt_id = "id\":\"(.*?)\"",
+                url_start = 'https://i.imgur.com/',
+                url_end = '.png';
             data.append('image', request.img_base64);
-            post_url = 'https://api.imgur.com/3/image';
-            patt_id = "id\":\"(.*?)\"";
-            url_start = 'https://i.imgur.com/';
-            url_end = '.png';
         }
 
         //——————————微博或 imgur 的信息完成——————————
@@ -55,22 +46,19 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     _response = RegExp( patt_id ).exec( _response );
                     _response = _response != null && _response[1] || '失败';//以防 API 更改
                     img_status = url_start + _response + url_end;
-                    console.log( "成功返回："+_response );// 返回成功数据
+                    console.log( "成功返回："+_response );
                 }else{
-                    img_status = '失败';
-                    console.log( "失败返回"+_response );// 返回成功数据
+                    img_status = "Failed";
+                    console.log( "失败返回"+_response );
                 }
+                sendResponse({img_status: img_status});
             }
         };
         xhr.open('POST', post_url);
-        if ( s.getItem('imageHosting') === 'imgur' ){
-	    xhr.setRequestHeader('Authorization', 'Client-ID 9311f6be1c10160');
-	}
+        if ( s.getItem('imageHosting') === 'imgur' )
+            xhr.setRequestHeader('Authorization', 'Client-ID 9311f6be1c10160');
         xhr.send(data);
-    }else if ( request.get_img_id ){//收到图片状态询问
-        sendResponse({img_id: img_status});
-        img_status != '上传中' && (img_status = '空闲');
-
+        return true;
 //——————————————————————————————————接收来自页面的图片数据上传并返回——————————————————————————————————
 
 
