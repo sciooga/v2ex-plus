@@ -16,48 +16,51 @@ const s = localStorage;
 
 browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if ( request.img_base64 ){
-        const xhr = new XMLHttpRequest(),
-              data = new FormData();
-        let _response = '';
 
         //——————————设置微博或 imgur 的信息——————————
-
         if ( s.getItem('imageHosting') === 'weibo' ){
             var post_url = 'http://picupload.service.weibo.com/interface/pic_upload.php?\
                         ori=1&mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog',
-                patt_id = "pid\":\"(.*?)\"",
+                patt_id = "pijd\":\"(.*?)\"",
                 url_start = 'https://ws2.sinaimg.cn/large/',
-                url_end = '.jpg';
-            data.append('b64_data', request.img_base64);
+                url_end = '.jpg',
+                data = {'b64_data': request.img_base64};
         }else{
             var post_url = 'https://api.imgur.com/3/image',
                 patt_id = "id\":\"(.*?)\"",
                 url_start = 'https://i.imgur.com/',
-                url_end = '.png';
-            data.append('image', request.img_base64);
+                url_end = '.png',
+                data = {'image': request.img_base64};
         }
-
         //——————————微博或 imgur 的信息完成——————————
 
-        xhr.onreadystatechange = function(){
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200 ){
-                    _response =  xhr.responseText;
-                    _response = RegExp( patt_id ).exec( _response );
-                    _response = _response != null && _response[1] || '失败';//以防 API 更改
-                    img_status = url_start + _response + url_end;
-                    console.log( "成功返回："+_response );
-                }else{
-                    img_status = "Failed";
-                    console.log( "失败返回"+_response );
+        $.ajax({
+            url: post_url,
+            method: 'POST',
+            data: data,
+            dataType: 'text',
+            beforeSend: (xhr) => {
+                if ( s.getItem('imageHosting') === 'imgur' )
+                    xhr.setRequestHeader('Authorization', 'Client-ID 9311f6be1c10160');
+            },
+            success: (data) => {
+                try{
+                    img_status = url_start + RegExp(patt_id).exec(data)[1] + url_end;
+                    console.log("Succeed: "+ img_status);
                 }
+                catch(e){
+                    console.error("Field not found");
+                    img_status = "Failed";
+                }
+            },
+            error: () => {
+                img_status = "Failed";
+                console.info("Request failed");
+            },
+            complete: () => {
                 sendResponse({img_status: img_status});
             }
-        };
-        xhr.open('POST', post_url);
-        if ( s.getItem('imageHosting') === 'imgur' )
-            xhr.setRequestHeader('Authorization', 'Client-ID 9311f6be1c10160');
-        xhr.send(data);
+        });
         return true;
 //——————————————————————————————————接收来自页面的图片数据上传并返回——————————————————————————————————
 
