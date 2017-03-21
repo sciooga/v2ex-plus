@@ -9,29 +9,15 @@ function input_img( input_img_base64, this_img_id ){
                                 </div>");
     input_img_base64 = RegExp("base64,(.*)").exec(input_img_base64)[1];
 
-    chrome.runtime.sendMessage({img_base64: input_img_base64}, function(response) {
-        const _img_preview = $('.imgId'+ this_img_id);
-        const _url_input = _img_preview.find('input');
-        if (response.upload_status == '上传中' ){
-            alert('仍有图片在上传中，请稍等...');
-            _url_input.val('请重新上传');
-        }else{
-            _url_input.val('正在上传');
-            //哎，下下策，谁有更好的办法一定要告诉我
-            let get_img_id = setInterval(function(){
-                chrome.runtime.sendMessage({get_img_id: 't'}, function(response) {
-                    if ( response.img_id.indexOf('失败') != -1 ){
-                        alert('图片上传失败，可能是未登录微博/受 imgur 上传次数限制');
-                        window.clearInterval( get_img_id );
-                        _url_input.val('请重新上传');
-                    }else if( response.img_id != '上传中' ){
-                        window.clearInterval( get_img_id );
-                        _url_input.val( response.img_id );
-                        _img_preview.css({'background': 'rgba(246, 246, 246, 0.5)','borderColor': '#A4FF94'});
-                    }
-                });
-            },1000);
-        }
+    chrome.runtime.sendMessage({img_base64: input_img_base64}, function(res) {
+        const _img_preview = $('.imgId'+ this_img_id),
+              _url_input = _img_preview.find('input');
+
+        if (res.img_status !== "Failed")
+            _img_preview.css({'background': 'rgba(246, 246, 246, 0.5)','borderColor': '#A4FF94'});
+        else
+            alert('图片上传失败，可能是未登录微博/受 imgur 上传次数限制');
+        _url_input.val(res.img_status);
     });
 }
 
