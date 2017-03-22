@@ -6,11 +6,27 @@ if (typeof browser === 'undefined' &&
         var browser = chrome;
     }
 
-// Open options page if it's first install
 browser.runtime.onInstalled.addListener(function(e){
-    if (e.reason === "install")
-        browser.runtime.openOptionsPage()
+    // Open options page if it's first install
+    if (e.reason === 'install')
+        browser.runtime.openOptionsPage();
+
+    // Versions before 1.2.0 use cookies and need reset
+    // 1.2.0 was released without updating migration
+    // Should be safe to remove after 1.3.0 is released
+    if (e.reason === 'update' &&
+        e.previousVersion === '1.2.0' ||
+        e.previousVersion.substring(0,3) !== '1.2'){
+        browser.notifications.create({
+            type   : 'basic',
+            iconUrl: 'icon/icon38_msg.png',
+            title  : '我们刚刚进行了更新',
+            message: '存储配置的方式得到了优化，但是先前的配置都将被重设。如有需要请在配置页面中重新设置。',
+        });
+        browser.runtime.openOptionsPage();
+    }
 });
+
 //——————————————————————————————————接收来自页面的图片数据上传并返回——————————————————————————————————
 const s = localStorage;
 
