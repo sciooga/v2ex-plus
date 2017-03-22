@@ -21,7 +21,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if ( s.getItem('imageHosting') === 'weibo' ){
             var post_url = 'http://picupload.service.weibo.com/interface/pic_upload.php?\
                         ori=1&mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog',
-                patt_id = "pijd\":\"(.*?)\"",
+                patt_id = "pid\":\"(.*?)\"",
                 url_start = 'https://ws2.sinaimg.cn/large/',
                 url_end = '.jpg',
                 data = {'b64_data': request.img_base64};
