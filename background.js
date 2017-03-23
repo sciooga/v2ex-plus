@@ -99,7 +99,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 if ( block_list && username ){
                     block_list = block_list[1];
                     username = username[1];
-                    browser.tabs.create({url:"/block_list.html#"+username+'='+block_list});
+                    browser.tabs.create({url:"/page/block_list.html#"+username+'='+block_list});
                 }else{
                     alert('扩展没有获取到任何信息 : (\n或许是您未登录 V2EX 账号');
                 }
