@@ -72,7 +72,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }else if ( request.get_allSetting ){
         sendResponse({dblclickToTop: Number(s.getItem('dblclickToTop'))});
     }else if ( request.get_replySetting ){
-        sendResponse({keyReplyColor: s.getItem('replyColor'), keyReplyA: s.getItem('replyA'), fold: s.getItem('fold'), thankColor: s.getItem('thankColor')});
+        sendResponse({replyColor: s.getItem('replyColor'), replyA: s.getItem('replyA'), fold: s.getItem('fold'), thankColor: s.getItem('thankColor')});
     }else if ( request.get_newWindow_status ){
         sendResponse({newWindow_status: Number(s.getItem('newWindow'))});
     }else if ( request.get_blockList ){

@@ -96,7 +96,7 @@ function input_img( input_img_base64, this_img_id ){
     var _reply_user_name_list = Array();
     var _reply_content_list = Array();
     var r_i = 1;
-    var keyReplyColor;
+    var replyColor;
 
     _topic_buttons.append(" &nbsp;<a href='#;' id='onlyKeyUser' class='tb'>只看楼主</a>");
 
@@ -185,11 +185,11 @@ function input_img( input_img_base64, this_img_id ){
 
     chrome.runtime.sendMessage({get_replySetting: 't'}, function(response) {
         var topic_height = _topic.height();
-        r = parseInt((response.keyReplyColor).substring(1,3),16);
-        g = parseInt((response.keyReplyColor).substring(3,5),16);
-        b = parseInt((response.keyReplyColor).substring(5,7),16);
-        keyReplyColor = r+','+g+','+b+','+response.keyReplyA;
-        $('.keyUser').css('backgroundColor', 'rgba('+ keyReplyColor +')');//设置楼主回复背景颜色
+        r = parseInt((response.replyColor).substring(1,3),16);
+        g = parseInt((response.replyColor).substring(3,5),16);
+        b = parseInt((response.replyColor).substring(5,7),16);
+        replyColor = r+','+g+','+b+','+response.replyA;
+        $('.keyUser').css('backgroundColor', 'rgba('+ replyColor +')');//设置楼主回复背景颜色
         if (!response.fold){//折叠超长主题
             if (topic_height>1800){
                 _topic_content.css({maxHeight:'600px', overflow:'hidden', transition:'max-height 2s'});
@@ -228,14 +228,10 @@ function input_img( input_img_base64, this_img_id ){
         }
 
         //————————高亮感谢————————
-
         $('.box .small.fade').each(function(){
-            var $this = $(this);
-            if ($this.text().indexOf('♥')!=-1) {
-                $this.css('color', 'rgb(' + (response.thankColor || '204,204,204') + ')');
-            }
+            if ($(this).text().indexOf('♥') !== -1)
+                $(this).css('color', response.thankColor);
         });
-
         //————————高亮感谢————————
 
 
