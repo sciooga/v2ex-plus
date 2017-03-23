@@ -3,7 +3,7 @@ function saveChoice(e){
     localStorage.setItem(e.target.name, e.target.value);
 }
 
-//window.onload = function(){
+window.onload = function(){
     const s = localStorage;
 
    /*
@@ -103,4 +103,4 @@ function saveChoice(e){
     document.getElementById('blockList').onclick = function(){
         chrome.runtime.sendMessage({get_blockList: 't'});
     };
-//}
+}
