@@ -68,25 +68,25 @@ function saveChoice(e){
     }
 
     //楼主回复背景色 默认rgba('255', '255', '249', '0.4')
-    const _keyReplyColor = document.keyReplyColorSelect.keyReplyColor,
-          _keyReplyA = document.keyReplyColorSelect.keyReplyA,
-          _keyReplyAValue = document.getElementById("keyReplyAValue");
-    _keyReplyColor.value = s.getItem('replyColor');
-    _keyReplyA.value = _keyReplyAValue.innerHTML = s.getItem('replyA');
+    const _replyColor = document.replyColorSelect.replyColor,
+          _replyA = document.replyColorSelect.replyA,
+          _replyAValue = document.getElementById("replyAValue");
+    _replyColor.value = s.getItem('replyColor');
+    _replyA.value = _replyAValue.innerHTML = s.getItem('replyA');
 
-    _keyReplyColor.onchange = function(e){
+    _replyColor.onchange = function(e){
         let hex = this.value.toLowerCase();
         s.setItem('replyColor', hex);
     };
-    _keyReplyA.onmousemove = function(e){
-        _keyReplyAValue.innerHTML = this.value;
+    _replyA.onmousemove = function(e){
+        _replyAValue.innerHTML = this.value;
     };
-    _keyReplyA.onchange = function(e){
-        _keyReplyAValue.innerHTML = this.value;
+    _replyA.onchange = function(e){
+        _replyAValue.innerHTML = this.value;
         saveChoice(e);
     };
-    _keyReplyA.disabled = false;
-    _keyReplyColor.disabled = false;
+    _replyA.disabled = false;
+    _replyColor.disabled = false;
 
     //感谢爱心颜色 默认rgba('204', '204', '204', '1')
     const _thankColor = document.thankColorSelect.thankColor;
