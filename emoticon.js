@@ -2,6 +2,7 @@
 'use strict';
 
 const img_list = {
+    0: null,
     '爱心':   ' https://ws4.sinaimg.cn/bmiddle/62e721e4gw1et00rm9p57j200k00k0rr.jpg ',
     '心碎':   ' https://ws2.sinaimg.cn/bmiddle/62e721e4gw1et00rn36zaj200k00k0sh.jpg ',
     '外星人': ' https://ws4.sinaimg.cn/bmiddle/62e721e4gw1et00ro13drj200k00k0mr.jpg ',
