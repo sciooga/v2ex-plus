@@ -1,15 +1,22 @@
 'use strict';
 const deleteBTN_img = chrome.extension.getURL("img/deleteBTN.jpg");
+
 //插入图片
 function input_img( input_img_base64, this_img_id ){
-    $('#imgManage').append("<div class='imgId"+ this_img_id +"'>\
-                                <div><img class='imgPreview' src='"+ input_img_base64 +"' alt='上传图片'/></div>\
-                                <input style='text' onmouseover='this.select()'></input>\
-                                <img class='deleteBTN' src='"+ deleteBTN_img +"' onclick=\"$('.imgId"+ this_img_id +"').remove()\" />\
-                                </div>");
-    input_img_base64 = RegExp("base64,(.*)").exec(input_img_base64)[1];
+    $('#imgManage').append(
+        $('<div>', {class:'imgId'+this_img_id}).append(
+            $('<div>').append(
+                $('<img>', {class:'imgPreview', src:input_img_base64, alt:'上传图片'})
+            )
+        ).append(
+            $('<input>', {style: 'text', onmouseover:'this.select();'})
+        ).append(
+            $('<img>',{class:'deleteBTN', src:deleteBTN_img, onclick:'$(".imgId'+this_img_id+'").remove();'})
+        )
+    );
 
-    chrome.runtime.sendMessage({img_base64: input_img_base64}, function(res) {
+    const img_base64 = input_img_base64.match("base64,(.*)")[1];
+    chrome.runtime.sendMessage({img_base64: img_base64}, function(res) {
         const _img_preview = $('.imgId'+ this_img_id),
               _url_input = _img_preview.find('input');
 
@@ -71,16 +78,11 @@ function input_img( input_img_base64, this_img_id ){
     //————————————————粘贴图片上传————————————————
 
     //————————————————选择图片上传————————————————
-
     const _upload_img_btn = $('#imgUploadBtn');
     const _imgUpload = $('#imgUpload');
     _upload_img_btn.click(function(){
         _imgUpload.click();
     });
-//遇见了不规则的冒泡事件...95%的情况下不需要此按钮，或许与隐藏的 input 位置有关
-//    _imgUpload.click(function( e ){
-//        e.stopPropagation()
-//    });
 
     _imgUpload.change(function(e){
         const files = e.target.files || (e.dataTransfer && e.dataTransfer.files);
@@ -95,5 +97,4 @@ function input_img( input_img_base64, this_img_id ){
             alert('出错了，获取不到文件。');
         }
     });
-
     //————————————————选择图片上传————————————————
