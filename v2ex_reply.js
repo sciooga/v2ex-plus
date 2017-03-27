@@ -56,7 +56,7 @@ function input_img(input_img_base64, this_img_id){
         const _img_preview = $('.imgId'+ this_img_id);
 
         if (res.img_status !== "Failed"){
-            img_list['图片'+this_img_id] = ' '+ res.img_id +' ';
+            img_list['图片'+this_img_id] = ' '+res.img_status+' ';
             _reply_textarea.val((i,origText) => { return origText+"[:图片"+this_img_id+":]";});
             _img_preview.find('span').text('[:图片'+ this_img_id +':]');
             _img_preview.css({'background': 'rgba(246, 246, 246, 0.5)','borderColor': '#A4FF94'});
@@ -567,15 +567,15 @@ function input_img(input_img_base64, this_img_id){
     //#1是用来调试的，点击 textarea 模拟显示上传的字符串
     //_reply_textarea.click(function( e ){//#1
     _reply_textarea.parent().submit(function( e ){
-        if ( _upload_img_btn.text().indexOf('正在上传') == -1 ){
+        if ( _upload_img_btn.text().indexOf('正在上传') === -1 ){
             _reply_textarea.val(function(i,origText){
                 origText = origText.replace(new RegExp("\\[:(.+?):\\]", "g"), function(i,k){
-                    var img_rul = img_list[k];
-                    if (img_rul == undefined){
+                    const img_url = img_list[k];
+                    if (img_url === undefined){
                         e.preventDefault();
                         return '[:此图片标签已失效删除后请重新上传' + k + ':]';
                     }else{
-                        return img_rul;
+                        return img_url;
                     }
                 });
                 return origText;
