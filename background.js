@@ -118,9 +118,8 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 
 Number(s.getItem('newMsg')) && checkMsg();
-Number(s.getItem('autoMission')) && autoMission();
 browser.alarms.create('checkMsg', {periodInMinutes: 5});
-browser.alarms.create('autoMission', {periodInMinutes: 60});
+browser.alarms.create('autoMission', {periodInMinutes: 30});
 
 browser.alarms.onAlarm.addListener(function( a ){
     switch (a.name){
@@ -199,157 +198,47 @@ browser.commands.onCommand.addListener(function(command) {
 
 
 //——————————————————————————————————自动签到——————————————————————————————————
-
 function autoMission(){
-    // 延时 5 分钟签到 （有的用户开机自动打开 Chrome 此时还没有拨号成功）
-    setTimeout(function(){
-        if( s.getItem('autoMission') == new Date().getUTCDate() ){
-            console.log('今天已经成功领取奖励了');
-            return;
-        }
-        console.log('开始签到')
-        $.ajax({
-        url: "http://www.v2ex.com/settings",
-        success: function(data){
-                        var sign = RegExp("/signout(\\?once=[0-9]+)").exec(data);
-                        sign = sign != null && sign[1] || '未登录';
-                        if ( sign != '未登录' ){
-                            $.ajax({
-                                url: "http://www.v2ex.com/mission/daily/redeem" + sign,
-                                success: function(data){
-                                    if (RegExp("查看我的账户余额").exec(data) != null ){
-                                        browser.notifications.create(
-                                            'autoMission' ,
-                                            {
-                                                type       : 'basic',
-                                                iconUrl    : 'icon/icon38_msg.png',
-                                                title      : 'v2ex plus 提醒您',
-                                                message    : '今日的登陆奖励已领取。\nTake your passion and make it come true.',
-                                            }
-                                        );
-                                        s.setItem( 'autoMission', new Date().getUTCDate() );
-                                    }else{
-                                        alert('罕见错误！基本可以忽略，如果你遇见两次以上请联系开发者，当该提示已打扰到您，请关闭扩展的自动签到功能。');
-                                    }
-                                },
-                                error: function(){
-                                    alert('网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。');
-                                }
-                            });
-                        }
-            },
-            error: function(){
-                        alert('网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。');
-            }
-        });
-    }, 1000 * 60 * 5)
-}
-
-    //————————————————设置 http 头————————————————
-
-    //直接 ajax http头是不带 referer 的
-    //无 referer 将一直返回”今日的奖励已经领取了哦“并且有领取奖励按钮
-    try {
-
-        var requestfilter = {
-            urls: ["*://*.v2ex.com/mission/daily/*"]
-        };
-
-        var extrainfospec = ['requestheaders', 'blocking'];
-        var handler = function(details) {
-
-            var isrefererset = false;
-            var headers = details.requestheaders || [];
-            var blockingresponse = {};
-
-            for (var i = 0, l = headers.length; i < l; ++i) {
-                if (headers[i].name == 'referer') {
-                isrefererset = true;
-                break;
-                }
-            }
-
-            if (!isrefererset) {
-                headers.push({
-                    name: "referer",
-                    value: "http://www.v2ex.com/mission/daily/"
-                });
-            }
-
-            blockingresponse.requestheaders = headers;
-            return blockingresponse;
-        };
-
-        browser.webrequest.onbeforesendheaders.addlistener(handler, requestfilter, extrainfospec);
-    } catch(err) {
-        var requestfilter = {
-            urls: ["*://*.v2ex.com/mission/daily/*"]
-        };
-
-        var extrainfospec = ['requestHeaders', 'blocking'];
-        var handler = function(details) {
-
-            var isrefererset = false;
-            var headers = details.requestHeaders || [];
-            var blockingresponse = {};
-
-            for (var i = 0, l = headers.length; i < l; ++i) {
-                if (headers[i].name == 'referer') {
-                isrefererset = true;
-                break;
-                }
-            }
-
-            if (!isrefererset) {
-                headers.push({
-                    name: "referer",
-                    value: "http://www.v2ex.com/mission/daily/"
-                });
-            }
-
-            blockingresponse.requestHeaders = headers;
-            return blockingresponse;
-        };
-
-        browser.webRequest.onBeforeSendHeaders.addListener(handler, requestfilter, extrainfospec);
+    if( s.getItem('autoMission') == new Date().getUTCDate() ){
+        console.log('今天已经成功领取奖励了');
+        return;
     }
-/*
-//针对 imgur 的测试
-    var requestfilter = {
-        urls: ["*://*.imgur.com/*"]
-    };
-
-    var extrainfospec = ['requestheaders', 'blocking'];
-    var handler = function(details) {
-
-	var isrefererset = false;
-	var headers = details.requestheaders;
-	var blockingresponse = {};
-
-	for (var i = 0, l = headers.length; i < l; ++i) {
-	    if (headers[i].name == 'referer') {
-		isrefererset = true;
-		break;
-	    }
-	}
-
-	if (!isrefererset) {
-	    headers['Origin'] = 'http://imgur.com';
-	    headers.push({
-		name: "referer",
-		value: "http://imgur.com/"
-	    });
-	}
-
-	blockingresponse.requestheaders = headers;
-	return blockingresponse;
-    };
-
-    chrome.webrequest.onbeforesendheaders.addlistener(handler, requestfilter, extrainfospec);
-*/
-
-    //————————————————设置 http 头————————————————
-
+    console.log('开始签到')
+    $.ajax({
+        url: "https://www.v2ex.com/",
+        success: function(data){
+            let sign = data.match('/signout(\\?once=[0-9]+)');
+            sign = sign != null && sign[1] || '未登录';
+            if ( sign != '未登录' ){
+                $.ajax({
+                    url: 'https://www.v2ex.com/mission/daily/redeem' + sign,
+                    success: function(data){
+                        if ( data.search('查看我的账户余额') ){
+                            browser.notifications.create(
+                                'autoMission' ,
+                                {
+                                    type    : "basic",
+                                    iconUrl : "icon/icon38_msg.png",
+                                    title   : "v2ex plus 提醒您",
+                                    message : "今日的登陆奖励已领取。\nTake your passion and make it come true.",
+                                }
+                            );
+                            s.setItem( 'autoMission', new Date().getUTCDate() );
+                        }else{
+                            alert('罕见错误！基本可以忽略，如果你遇见两次以上请联系开发者，当该提示已打扰到您，请关闭扩展的自动签到功能。');
+                        }
+                    },
+                    error: function(){
+                        alert('网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。');
+                    }
+                });
+            }
+        },
+        error: function(){
+            alert('网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。');
+        }
+    });
+}
 //——————————————————————————————————自动签到——————————————————————————————————
 
 
