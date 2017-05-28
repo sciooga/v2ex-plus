@@ -2,8 +2,13 @@ function saveChoice(e){
     setCookie(e.target.name, e.target.value);
 }
 
-//window.onload = function(){
-
+window.onresize = function(){
+    if(document.body.clientWidth < 790){
+        document.getElementById("introduction").style.display="none";
+    }else{
+        document.getElementById("introduction").style.display="";
+    }
+}
     //消息提醒 默认开启
     var _newMsg = document.newMsgSelect.newMsg;
     !getCookie('newMsg') && (_newMsg[0].checked = true) || (_newMsg[1].checked = true);
@@ -123,5 +128,3 @@ function saveChoice(e){
     document.getElementById('blockList').onclick = function(){
         chrome.runtime.sendMessage({get_blockList: 't'});
     };
-
-//}
