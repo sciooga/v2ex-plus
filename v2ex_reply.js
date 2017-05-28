@@ -180,9 +180,9 @@ function input_img( input_img_base64, this_img_id ){
         });
     }
 
-    new Clipboard('.direct');
     $('.direct').click(function () {
-        alert('此楼层直链已经复制到剪切板中')
+        var _this = $(this);
+        setClipboardText(_this.data("clipboard-text"))
     });
 
     $('#onlyKeyUser').click(function(){
