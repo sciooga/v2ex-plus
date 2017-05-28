@@ -303,7 +303,7 @@ function input_img( input_img_base64, this_img_id ){
     var btn_id = 0;
     $('.replyDetailBTN').click(function(){
         if(maxNestDivCount > 1){
-            alert('可能与其他脚本或扩展有冲突，会话详情暂可用！')
+            alert('可能与其他脚本或扩展有冲突，会话详情暂不可用！')
             return;
         }
         var _this = $(this);
