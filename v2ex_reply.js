@@ -110,6 +110,7 @@ function input_img( input_img_base64, this_img_id ){
     var _reply_content_list = Array();
     var r_i = 1;
     var keyReplyColor;
+    var maxNestDivCount = 1;
 
     _topic_buttons.append(" &nbsp;<a href='#;' id='onlyKeyUser' class='tb'>只看楼主</a>");
 
@@ -152,20 +153,25 @@ function input_img( input_img_base64, this_img_id ){
                 break;
             }
         }
-            var _append_place;
-            var _thanked = _this.find('.thanked');
-            if ( _thanked.text() == '感谢已发送' ){
-                _append_place = _thanked;
-            }else{
-                _append_place = _this.find('.no').prev();
+        var _append_place;
+        var _thanked = _this.find('.thanked');
+        if ( _thanked.text() == '感谢已发送' ){
+            _append_place = _thanked;
+        }else{
+            var itemAll = _this.find('.no');
+            var item1 = itemAll[0];
+            if (itemAll.length > maxNestDivCount){
+                maxNestDivCount = itemAll.length;
             }
-            if ( btn_name ){
-                _append_place.before(" &nbsp;<span class='replyDetailBTN'>"+ btn_name +"</span> &nbsp; &nbsp;");
-            }
-            //console.log(page_current_num)
-            _append_place.before(" &nbsp;<span class='direct' data-clipboard-text='"
-              + location.origin + location.pathname + "?p=" + page_current_num + '#' + _this.attr('id')
-              + "'>楼层直链</span> &nbsp; &nbsp;");
+            _append_place = _this.find(item1).prev();
+        }
+        if ( btn_name ){
+            _append_place.before(" &nbsp;<span class='replyDetailBTN'>"+ btn_name +"</span> &nbsp; &nbsp;");
+        }
+        //console.log(page_current_num)
+        _append_place.before(" &nbsp;<span class='direct' data-clipboard-text='"
+          + location.origin + location.pathname + "?p=" + page_current_num + '#' + _this.attr('id')
+          + "'>楼层直链</span> &nbsp; &nbsp;");
     });
 
     if (~~page_current_num > 1){
@@ -296,6 +302,10 @@ function input_img( input_img_base64, this_img_id ){
 
     var btn_id = 0;
     $('.replyDetailBTN').click(function(){
+        if(maxNestDivCount > 1){
+            alert('可能与其他脚本或扩展有冲突，会话详情暂可用！')
+            return;
+        }
         var _this = $(this);
         var _cell = _this.parents("div[id^=r_]");//由于最后一条回复 class 为 inner 所以还是匹配 id 完整些
         var _reply_user_name = _cell.find('strong a').text();
