@@ -34,7 +34,8 @@
                 _this.text('加载中...');
                 _cell.after("<div class='previewWindow'></div>");
                 var _href = _cell.find('.item_title a').attr('href');
-                $.get('https://www.v2ex.com'+_href, function(data){
+                _href = location.origin + _href;
+                $.get(_href, function(data){
                     var _previewWindow = _cell.next('.previewWindow');
                     data = data.substr(data.indexOf("header")+8);
                     //当匹配不到topic_conten时返回-1 substring 按0处理，既显示整个标题头部
