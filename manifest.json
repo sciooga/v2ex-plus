@@ -4,7 +4,7 @@
   "manifest_version": 2,
   "description": "优雅便捷的 V2EX 扩展",
   "background": {
-    "scripts": ["jquery-2.2.4.js", "cookie.js", "background.js"]
+    "scripts": ["jquery-2.2.4.min.js", "cookie.js", "background.js"]
   },
   "permissions": [
     "alarms",
@@ -15,27 +15,30 @@
     "*://*.imgur.com/*",
     "*://*.weibo.com/*",
     "*://i.imgur.com/*",
+    "*://ww1.sinaimg.cn/*",
+    "*://ww2.sinaimg.cn/*",
+    "*://ww3.sinaimg.cn/*",
     "*://ww4.sinaimg.cn/*"
   ],
   "content_scripts": [
     {
       "matches": ["*://*.v2ex.com/*"],
-      "js": ["jquery-2.2.4.js", "all.js"]
+      "js": ["jquery-2.2.4.min.js", "all.js"]
     },
     {
       "matches": ["*://*.v2ex.com/", "*://*.v2ex.com/?tab=*", "*://*.v2ex.com/go/*", "*://*.v2ex.com/my/*", "*://*.v2ex.com/recent*", "*://*.v2ex.com/changes*"],
       "css": ["v2ex_tab.css"],
-      "js": ["jquery-2.2.4.js", "v2ex_tab.js", "user_info.js"]
+      "js": ["jquery-2.2.4.min.js", "v2ex_tab.js", "user_info.js"]
     },
     {
       "matches": ["*://*.v2ex.com/t/*"],
       "css": ["v2ex_reply.css"],
-      "js": ["jquery-2.2.4.js", "emoticon.js", "clipboard.js", "v2ex_reply.js", "user_info.js"]
+      "js": ["jquery-2.2.4.min.js", "emoticon.js", "clipboard.js", "v2ex_reply.js", "user_info.js"]
     },
     {
       "matches": ["*://*.v2ex.com/new/*"],
       "css": ["v2ex_new.css"],
-      "js": ["jquery-2.2.4.js", "v2ex_new.js"]
+      "js": ["jquery-2.2.4.min.js", "v2ex_new.js"]
     }
   ],
   "browser_action": {
@@ -49,7 +52,7 @@
     "48": "icon/icon48.png",
     "128": "icon/icon128.png"
   },
-  "web_accessible_resources": ["img/user_info_background.gif", "img/loading.gif"],
+  "web_accessible_resources": ["img/*"],
   "commands": {
     "newMsg": {
       "suggested_key": {

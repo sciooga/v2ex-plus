@@ -1,23 +1,3 @@
-//倒三角图片
-var triangle_img = 'data:img/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAGCAYAAAD37n+BAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ\
-                                        bWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdp\
-                                        bj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6\
-                                        eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0\
-                                        NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJo\
-                                        dHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlw\
-                                        dGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAv\
-                                        IiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RS\
-                                        ZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpD\
-                                        cmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFu\
-                                        Y2VJRD0ieG1wLmlpZDpCMzgxN0NGRDFGQ0UxMUU1ODRFNEFEN0NBMTIzNEI4NiIgeG1wTU06RG9j\
-                                        dW1lbnRJRD0ieG1wLmRpZDpCMzgxN0NGRTFGQ0UxMUU1ODRFNEFEN0NBMTIzNEI4NiI+IDx4bXBN\
-                                        TTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkIzODE3Q0ZCMUZDRTExRTU4\
-                                        NEU0QUQ3Q0ExMjM0Qjg2IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkIzODE3Q0ZDMUZDRTEx\
-                                        RTU4NEU0QUQ3Q0ExMjM0Qjg2Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4\
-                                        bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+URHMMAAAAEVJREFUeNqMi4EJACAIBL+ZXLABdSZL\
-                                        ybCI6kAFuYOqVv2noi8w89McDiK4RiHP4BZleQlO0S7bFK8SImLHn0RUsNEEGAABGNqSnbcIhQAA\
-                                        AABJRU5ErkJggg=='
-
 //获取被@的用户，列表开始于 index 1
 function get_at_name_list( str ){
     var name_list = Array();
