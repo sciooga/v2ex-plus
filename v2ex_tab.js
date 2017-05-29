@@ -16,15 +16,14 @@
 //——————————————————————————————————预览功能——————————————————————————————————
 
     chrome.runtime.sendMessage({get_preview_status: 't'}, function(response) {
-        if (!response.preview_status)
-            return;
-
-        $('div#Main > div:nth-of-type(2) .cell').each(function(){
-            if($(this).find('.fade').text().indexOf('...')!=-1){
-                return ;
-            }
-            $(this).find('.fade').append(" &nbsp;•&nbsp; <span class='preview'>预览</span>");
-        });
+        if ( !response.preview_status ){
+            $('div#Main > div:nth-of-type(2) .cell').each(function(){
+                if($(this).find('.fade').text().indexOf('...')!=-1){
+                    return ;
+                }
+                $(this).find('.fade').append(" &nbsp;•&nbsp; <span class='preview'>预览</span>");
+            });
+        }
 
         var btn_id = 0;
         $('.preview').click(function(){
