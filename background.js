@@ -54,8 +54,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         };
         xhr.open('POST', post_url);
         if ( getCookie('imageHosting') == 'imgur' ){
-	    xhr.setRequestHeader('Authorization', 'Client-ID 9311f6be1c10160');
-	}
+        xhr.setRequestHeader('Authorization', 'Client-ID 9311f6be1c10160');
+    }
         xhr.send(data);
     }else if ( request.get_img_id ){//收到图片状态询问
         sendResponse({img_id: img_status});
@@ -223,78 +223,6 @@ function autoMission(){
         }
     });
 }
-
-    //————————————————设置 http 头————————————————
-
-    //直接 ajax http头是不带 referer 的
-    //无 referer 将一直返回”今日的奖励已经领取了哦“并且有领取奖励按钮
-    var requestfilter = {
-        urls: ["*://*.v2ex.com/mission/daily/*"]
-    };
-
-    var extrainfospec = ['requestheaders', 'blocking'];
-    var handler = function(details) {
-
-	var isrefererset = false;
-	var headers = details.requestheaders;
-	var blockingresponse = {};
-
-	for (var i = 0, l = headers.length; i < l; ++i) {
-	    if (headers[i].name == 'referer') {
-		isrefererset = true;
-		break;
-	    }
-	}
-
-	if (!isrefererset) {
-	    headers.push({
-		name: "referer",
-		value: "http://www.v2ex.com/mission/daily/"
-	    });
-	}
-
-	blockingresponse.requestheaders = headers;
-	return blockingresponse;
-    };
-
-    chrome.webrequest.onbeforesendheaders.addlistener(handler, requestfilter, extrainfospec);
-/*
-//针对 imgur 的测试
-    var requestfilter = {
-        urls: ["*://*.imgur.com/*"]
-    };
-
-    var extrainfospec = ['requestheaders', 'blocking'];
-    var handler = function(details) {
-
-	var isrefererset = false;
-	var headers = details.requestheaders;
-	var blockingresponse = {};
-
-	for (var i = 0, l = headers.length; i < l; ++i) {
-	    if (headers[i].name == 'referer') {
-		isrefererset = true;
-		break;
-	    }
-	}
-
-	if (!isrefererset) {
-	    headers['Origin'] = 'http://imgur.com';
-	    headers.push({
-		name: "referer",
-		value: "http://imgur.com/"
-	    });
-	}
-
-	blockingresponse.requestheaders = headers;
-	return blockingresponse;
-    };
-
-    chrome.webrequest.onbeforesendheaders.addlistener(handler, requestfilter, extrainfospec);
-*/
-
-    //————————————————设置 http 头————————————————
-
 //——————————————————————————————————自动签到——————————————————————————————————
 
 
