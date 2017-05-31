@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta charset="UTF-8">
+    <title>v2ex plus - 选项与帮助</title>
+    <script src="/cookie.js"></script>
+    <style type="text/css">
+    body{
+        background: #f6f6f6;
+        color: #778087;
+        font-family: sans-serif;
+        font-size: 100%;
+        line-height: 1.6;
+    }
+    li{
+        margin: 20px;
+        padding: 10px;
+        border: 1px dashed #e2e2e2;
+        list-style-type: none;
+    }
+    a{
+        color: #778087;
+    }
+    img{
+        display: block;
+        margin-top: 10px;
+        max-width: 660px;
+    }
+    div.q{
+        margin-bottom: 6px;
+    }
+    div.a{
+        margin-left: 26px;
+    }
+    .vplusBTN{
+        position: relative;
+        top: -2px;
+        background-color: #fff;
+        color: #333;
+        box-shadow: 0px 1px 0px rgba(66, 66, 77, 0.1);
+        padding: 4px 15px 4px 15px;
+        border: 1px solid rgba(80,80,90, 0.2);
+        border-bottom-color: rgba(80,80,90, 0.35);
+        border-radius: 3px;
+        font-size: 12px;
+        cursor: pointer;
+    }
+    .vplusBTN:hover{
+        background-color: #f9f9f9;
+    }
+    a.vplusBTN{
+        text-decoration: none;
+    }
+    </style>
+</head>
+<body>
+    <div id="introduction" style="float: right; width:240px; padding:16px; background:#f0f0f0; border-radius:16px;">
+        这是一个用于 v2ex 论坛的扩展程序，使用前最好登录 v2ex 以接收新消息提醒，登录新浪微博以使用插入图片、粘贴图片功能。
+        <br/>感谢： <a href="https://github.com/ldong">ldong</a> 帮忙发布。
+        <br/>感谢： <a href="http://sheephe.com/">Sheep</a> 设计图标。
+        <br/>反馈问题请 <a href="mailto:sciooga@gmail.com">点击<br/>(sciooga@gmail.com)</a>
+        <br/>源码请见： <a href="https://github.com/sciooga/v2ex-plus"> ♥ Github</a>
+        <br/>对扩展满意，可以送我一本书。<br/>支付宝：sciooga@gmail.com
+        <img src="/img/62e721e4gw1et1dvnmdxvj206x06xaar.jpg" alt="支付宝二维码"/>
+    </div>
+    <div style="margin:0px; padding-left:0px; width:800px;">
+        <h1>选项：</h1>
+        <ul>
+            <li><form name="newMsgSelect">
+                消息提醒：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="newMsg" value="" disabled="disabled" />开启
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="newMsg" value="f" disabled="disabled" />关闭
+            </form></li>
+            <li><form name="imageHostingSelect">
+                图床设置：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="imageHosting" value="weibo" disabled="disabled" />微博图床
+                        &emsp;&emsp;&emsp;&emsp;<input type="radio" name="imageHosting" value="imgur" disabled="disabled" />imgur
+            </form></li>
+            <li><form name="autoMissionSelect">
+                自动签到：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="autoMission" value="t" disabled="disabled" />开启
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="autoMission" value="" disabled="disabled" />关闭
+            </form></li>
+            <li><form name="previewSelect">
+                主题预览：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="preview" value="" disabled="disabled" />开启
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="preview" value="f" disabled="disabled" />关闭
+            </form></li>
+            <li><form name="foldSelect">
+                自动折叠：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="fold" value="" disabled="disabled" />开启
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="fold" value="f" disabled="disabled" />关闭
+            </form></li>
+            <li><form name="autoLoginWeiboSelect">
+                定时激活微博（实验）：&emsp;<input type="radio" name="autoLoginWeibo" value="t" disabled="disabled" />开启
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="autoLoginWeibo" value="" disabled="disabled" />关闭&emsp;&emsp;&emsp;
+            </form></li>
+            <li><form name="dblclickToTopSelect">
+                双击返回顶部：&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="dblclickToTop" value="t" disabled="disabled" />开启
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="dblclickToTop" value="" disabled="disabled" />关闭&emsp;&emsp;&emsp;
+            </form></li>
+            <li><form name="newWindowSelect">
+                新标签页浏览主题：&emsp;&emsp;&emsp;<input type="radio" name="newWindow" value="t" disabled="disabled" />开启
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="newWindow" value="" disabled="disabled" />关闭
+            </form></li>
+            <li><form name="keyReplyColorSelect">
+                楼主回复背景色：&emsp;&emsp;&emsp;&emsp;<input type="color" name="keyReplyColor" disabled="disabled" />
+                &emsp;&emsp;&emsp;&emsp;&emsp;透明度：<span id="keyReplyAValue" style="display:inline-block; width:2em" >稍后</span>
+                <input type="range" name="keyReplyA" min="0.00" max="1.00" step="0.05" disabled="disabled" style="width:100px" />
+            </form></li>
+            <li><form name="thankColorSelect">
+                感谢爱心颜色：&emsp;&emsp;&emsp;&emsp;&emsp;<input type="color" name="thankColor" disabled="disabled" />
+            </form></li>
+            <li>
+                重置所有设置：&emsp;&emsp;&emsp;&emsp;&emsp;<span id="allDefault" class="vplusBTN">确认重置</span>
+            </li>
+            <li>
+                管理屏蔽名单：&emsp;&emsp;&emsp;&emsp;&emsp;<span id="blockList" class="vplusBTN">查看屏蔽名单</span>
+            </li>
+            <li>
+                关于：&emsp;&emsp;&emsp;&emsp;&emsp;<a href="/page/about.html" class="vplusBTN" target="_blank">查看更多</a>
+            </li>
+        </ul>
+    </div>
+    <script src="options.js"></script>
+</body>
+</html>
