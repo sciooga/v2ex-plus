@@ -6,7 +6,7 @@ Firefox 版：[v2ex plus](https://addons.mozilla.org/zh-CN/firefox/addon/v2ex-pl
 
 反馈： [点击(sciooga#gmail)](mailto:sciooga@gmail.com)
 
-由于我是大一学生，没有信用卡，感谢 [ldong](https://github.com/ldong) 和 [GPU](https://www.v2ex.com/member/GPU) 帮我发布 Chrome 版扩展。
+感谢 [ldong](https://github.com/ldong) 和 [GPU](https://www.v2ex.com/member/GPU) 发布 Chrome 版扩展。
 
 感谢设计师 [Sheep](http://sheephe.com) 画了新图标以及一些界面上的指导，很赞！
 
