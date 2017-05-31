@@ -6,7 +6,7 @@ function follow_or_bolck( _target, bash, undo, default_name ){
     var v = '撤销';
     _target.attr('value') == '撤销' && (bash = undo) && (v = default_name);
     _target.attr('value', '等待');
-    $.get( bash+btn_key, function(){
+    $.get( location.origin+bash+btn_key, function(){
         _target.attr('value', v);
     });
 }

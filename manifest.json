@@ -15,10 +15,10 @@
     "*://*.imgur.com/*",
     "*://*.weibo.com/*",
     "*://i.imgur.com/*",
-    "*://ww1.sinaimg.cn/*",
-    "*://ww2.sinaimg.cn/*",
-    "*://ww3.sinaimg.cn/*",
-    "*://ww4.sinaimg.cn/*"
+    "*://ws1.sinaimg.cn/*",
+    "*://ws2.sinaimg.cn/*",
+    "*://ws3.sinaimg.cn/*",
+    "*://ws4.sinaimg.cn/*"
   ],
   "content_scripts": [
     {
