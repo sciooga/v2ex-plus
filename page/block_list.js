@@ -104,8 +104,10 @@ $(function(){
     });
 
     $('.vplusBTN-refresh').click(function(){
-        chrome.runtime.sendMessage({get_blockList: 't'}, function(response) {
-            window.close();
+        chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+            chrome.runtime.sendMessage({get_blockList: 't'}, function(response) {
+                chrome.tabs.remove(tabs[0].id);
+            });
         });
     });
 });
