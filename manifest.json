@@ -1,6 +1,6 @@
 {
   "name": "v2ex plus",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "manifest_version": 2,
   "description": "优雅便捷的 V2EX 扩展",
   "background": {
@@ -9,16 +9,9 @@
   "permissions": [
     "alarms",
     "notifications",
-    "webRequest",
-    "webRequestBlocking",
     "*://*.v2ex.com/*",
     "*://*.imgur.com/*",
-    "*://*.weibo.com/*",
-    "*://i.imgur.com/*",
-    "*://ws1.sinaimg.cn/*",
-    "*://ws2.sinaimg.cn/*",
-    "*://ws3.sinaimg.cn/*",
-    "*://ws4.sinaimg.cn/*"
+    "*://*.weibo.com/*"
   ],
   "content_scripts": [
     {
@@ -28,17 +21,17 @@
     {
       "matches": ["*://*.v2ex.com/", "*://*.v2ex.com/?tab=*", "*://*.v2ex.com/go/*", "*://*.v2ex.com/my/*", "*://*.v2ex.com/recent*", "*://*.v2ex.com/changes*"],
       "css": ["v2ex_tab.css"],
-      "js": ["jquery-2.2.4.min.js", "v2ex_tab.js", "user_info.js"]
+      "js": ["v2ex_tab.js", "user_info.js"]
     },
     {
       "matches": ["*://*.v2ex.com/t/*"],
       "css": ["v2ex_reply.css"],
-      "js": ["jquery-2.2.4.min.js", "emoticon.js", "clipboard.js", "v2ex_reply.js", "user_info.js"]
+      "js": ["emoticon.js", "clipboard.js", "v2ex_reply.js", "user_info.js"]
     },
     {
-      "matches": ["*://*.v2ex.com/new/*"],
+      "matches": ["*://*.v2ex.com/new"],
       "css": ["v2ex_new.css"],
-      "js": ["jquery-2.2.4.min.js", "v2ex_new.js"]
+      "js": ["v2ex_new.js"]
     }
   ],
   "browser_action": {
