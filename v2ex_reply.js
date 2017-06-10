@@ -37,43 +37,28 @@ function related_reply( reply_content, _reply_user_name, _reply_at_name ){
 }
 
 //插入图片
-function input_img( input_img_base64, this_img_id ){
-
+function input_img(input_img_base64, this_img_id){
     _upload_image.append("<div class='imgId"+ this_img_id +"'>\
                                 <div><img src='"+ input_img_base64 +"' alt='上传图片'/></div>\
                                 <span>上传中</span>\
                           </div>");
     _upload_image.slideDown(700);
-    input_img_base64 = RegExp("base64,(.*)").exec(input_img_base64)[1];
 
-    chrome.runtime.sendMessage({img_base64: input_img_base64}, function(response) {
-        var _img_preview = $('.imgId'+ this_img_id);
-        if (response.upload_status == '上传中' ){
-            alert('仍有图片在上传中，请稍等...');
-            _img_preview.find('span').text('请重新上传');
-        }else{
-            _upload_img_btn.text(' › 正在上传');
-            //哎，下下策，谁有更好的办法一定要告诉我
-            var get_img_id = setInterval(function(){
-                chrome.runtime.sendMessage({get_img_id: 't'}, function(response) {
-                    if ( response.img_id.indexOf('失败') != -1 ){
-                        alert('图片上传失败，可能是未登录微博/受 imgur 上传次数限制');
-                        window.clearInterval( get_img_id );
-                        _img_preview.find('span').text('请重新上传');
-                        _upload_img_btn.text(' › 插入图片');
-                    }else if( response.img_id != '上传中' ){
-                        window.clearInterval( get_img_id );
-                        img_list['图片'+this_img_id] = ' '+ response.img_id +' ';
-                        _reply_textarea.val(function(i,origText){
-                            return origText + "[:图片"+ this_img_id +":]";
-                        });
-                        _upload_img_btn.text(' › 插入图片');
-                        _img_preview.find('span').text('[:图片'+ this_img_id +':]');
-                        _img_preview.css({'background': 'rgba(246, 246, 246, 0.5)','borderColor': '#A4FF94'});
-                    }
-                });
-            },1000);
+    const img_base64 = input_img_base64.match("base64,(.*)")[1];
+    chrome.runtime.sendMessage({img_base64: img_base64}, function(res) {
+        const _img_preview = $('.imgId'+ this_img_id);
+
+        if (res.img_status !== "Failed"){
+            img_list['图片'+this_img_id] = ' '+res.img_status+' ';
+            _reply_textarea.val((i,origText) => { return origText+"[:图片"+this_img_id+":]";});
+            _img_preview.find('span').text('[:图片'+ this_img_id +':]');
+            _img_preview.css({'background': 'rgba(246, 246, 246, 0.5)','borderColor': '#A4FF94'});
         }
+        else{
+            alert('图片上传失败，可能是未登录微博/受 imgur 上传次数限制');
+            _img_preview.find('span').text('请重新上传');
+        }
+        _upload_img_btn.text(' › 插入图片');
     });
 }
 
@@ -89,7 +74,7 @@ function input_img( input_img_base64, this_img_id ){
     var _reply_user_name_list = Array();
     var _reply_content_list = Array();
     var r_i = 1;
-    var keyReplyColor;
+    var replyColor;
     var maxNestDivCount = 1;
 
     _topic_buttons.append(" &nbsp;<a href='#;' id='onlyKeyUser' class='tb'>只看楼主</a>");
@@ -184,10 +169,11 @@ function input_img( input_img_base64, this_img_id ){
 
     chrome.runtime.sendMessage({get_replySetting: 't'}, function(response) {
         var topic_height = _topic.height();
-        keyReplyColor = response.keyReplyColor || '255,255,249';
-        keyReplyColor += ',';
-        keyReplyColor += response.keyReplyA || '0.4';
-        $('.keyUser').css('backgroundColor', 'rgba('+ keyReplyColor +')');//设置楼主回复背景颜色
+        r = parseInt((response.replyColor).substring(1,3),16);
+        g = parseInt((response.replyColor).substring(3,5),16);
+        b = parseInt((response.replyColor).substring(5,7),16);
+        replyColor = r+','+g+','+b+','+response.replyA;
+        $('.keyUser').css('backgroundColor', 'rgba('+ replyColor +')');//设置楼主回复背景颜色
         if (!response.fold){//折叠超长主题
             if (topic_height>1800){
                 _topic_content.css({maxHeight:'600px', overflow:'hidden', transition:'max-height 2s'});
@@ -226,14 +212,10 @@ function input_img( input_img_base64, this_img_id ){
         }
 
         //————————高亮感谢————————
-
         $('.box .small.fade').each(function(){
-            var $this = $(this);
-            if ($this.text().indexOf('♥')!=-1) {
-                $this.css('color', 'rgb(' + (response.thankColor || '204,204,204') + ')');
-            }
+            if ($(this).text().indexOf('♥') !== -1)
+                $(this).css('color', response.thankColor);
         });
-
         //————————高亮感谢————————
 
 
@@ -588,15 +570,15 @@ function input_img( input_img_base64, this_img_id ){
     //#1是用来调试的，点击 textarea 模拟显示上传的字符串
     //_reply_textarea.click(function( e ){//#1
     _reply_textarea.parent().submit(function( e ){
-        if ( _upload_img_btn.text().indexOf('正在上传') == -1 ){
+        if ( _upload_img_btn.text().indexOf('正在上传') === -1 ){
             _reply_textarea.val(function(i,origText){
                 origText = origText.replace(new RegExp("\\[:(.+?):\\]", "g"), function(i,k){
-                    var img_rul = img_list[k];
-                    if (img_rul == undefined){
+                    const img_url = img_list[k];
+                    if (img_url === undefined){
                         e.preventDefault();
                         return '[:此图片标签已失效删除后请重新上传' + k + ':]';
                     }else{
-                        return img_rul;
+                        return img_url;
                     }
                 });
                 return origText;
@@ -711,4 +693,39 @@ _r_c[0].addEventListener("drop",function(e){
     fileReader.readAsDataURL(e.dataTransfer.files[0]);
 });
 
+$('[alt="Reply"]').click(function(){
+    var self = this;
+    setTimeout(function (){
+        replyContent = $("#reply_content");
+        oldContent = replyContent.val();
+        prefix = "#" + $(self).parent().parent().find('.no').text() + ' ';
+        newContent = ''
+        if(oldContent.length > 0){
+            if (oldContent != prefix) {
+                newContent = oldContent + prefix;
+            }
+        } else {
+            newContent = prefix
+        }
+        replyContent.focus();
+        replyContent.val(newContent);
+    }, 100)
+})
+
 //——————————————————————————————————拖拽上传图片——————————————————————————————————
+
+
+//——————————————————————————————————https 新浪图床修改——————————————————————————————————
+
+    if (location.protocol == 'https:'){
+        setTimeout(function () {
+            $('.reply_content img').each(function(){
+                var $this = $(this)
+                if ($this[0].src.indexOf('.sinaimg.cn') != -1 && $this[0].src.indexOf('http://') != -1) {
+                    $this[0].src = 'https' + $this[0].src.substr(4)
+                }
+            })
+        }, 100)
+    }
+
+//——————————————————————————————————https 新浪图床修改——————————————————————————————————

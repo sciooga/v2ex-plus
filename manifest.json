@@ -1,10 +1,10 @@
 {
   "name": "v2ex plus",
-  "version": "1.1.11",
+  "version": "1.2.0",
   "manifest_version": 2,
   "description": "优雅便捷的 V2EX 扩展",
   "background": {
-    "scripts": ["jquery-2.2.4.min.js", "cookie.js", "background.js"]
+    "scripts": ["jquery-2.2.4.min.js", "background.js"]
   },
   "permissions": [
     "alarms",

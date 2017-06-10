@@ -1,79 +1,96 @@
+// WebExtension is cross-platform
+// Why would anyone call `chrome` api in it?
+if (typeof browser === 'undefined' &&
+    typeof chrome === 'object'){
+        //console.log("On Chrome");
+        var browser = chrome;
+    }
 
+browser.runtime.onInstalled.addListener(function(e){
+    // Open options page if it's first install
+    if (e.reason === 'install')
+        browser.runtime.openOptionsPage();
+
+    // Versions before 1.2.0 use cookies and need reset
+    // 1.2.0 was released without updating migration
+    // Should be safe to remove after 1.3.0 is released
+    if (e.reason === 'update' &&
+        e.previousVersion === '1.2.0' ||
+        e.previousVersion.substring(0,3) !== '1.2'){
+        browser.notifications.create({
+            type   : 'basic',
+            iconUrl: 'icon/icon38_msg.png',
+            title  : '我们刚刚进行了更新',
+            message: '存储配置的方式得到了优化，但是先前的配置都将被重设。如有需要请在配置页面中重新设置。',
+        });
+        browser.runtime.openOptionsPage();
+    }
+});
 
 //——————————————————————————————————接收来自页面的图片数据上传并返回——————————————————————————————————
+const s = localStorage;
 
-var img_status = '空闲';
-
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if ( request.img_base64 ){
-        if ( img_status != '空闲'){
-            sendResponse({upload_status: '上传中'});//让他稍等
-        }else{
-            sendResponse({upload_status: '空闲'});//没问题，来吧
-        }
-        //开始上传
-        img_status = '上传中';
-        var xhr = new XMLHttpRequest();
-        var data = new FormData();
-        var _response = '',
 
         //——————————设置微博或 imgur 的信息——————————
-
-        //参数 url、nick、logo用于水印内容
-        post_url = 'http://picupload.service.weibo.com/interface/pic_upload.php?\
-                    &mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog',
-        patt_id = "pid\":\"(.*?)\"",
-        url_start = 'https://ws2.sinaimg.cn/large/',
-        url_end = '.jpg';
-
-        if ( getCookie('imageHosting') != 'imgur' ){
-            data.append('b64_data', request.img_base64);
+        if ( s.getItem('imageHosting') === 'weibo' ){
+            var post_url = 'http://picupload.service.weibo.com/interface/pic_upload.php?\
+                        ori=1&mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog',
+                patt_id = "pid\":\"(.*?)\"",
+                url_start = 'https://ws2.sinaimg.cn/large/',
+                url_end = '.jpg',
+                data = {'b64_data': request.img_base64};
         }else{
-            data.append('image', request.img_base64);
-            post_url = 'https://api.imgur.com/3/image';
-            patt_id = "id\":\"(.*?)\"";
-            url_start = 'https://i.imgur.com/';
-            url_end = '.png';
+            var post_url = 'https://api.imgur.com/3/image',
+                patt_id = "id\":\"(.*?)\"",
+                url_start = 'https://i.imgur.com/',
+                url_end = '.png',
+                data = {'image': request.img_base64};
         }
-
         //——————————微博或 imgur 的信息完成——————————
 
-        xhr.onreadystatechange = function(){
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200 ){
-                    _response =  xhr.responseText;
-                    _response = RegExp( patt_id ).exec( _response );
-                    _response = _response != null && _response[1] || '失败';//以防 API 更改
-                    img_status = url_start + _response + url_end;
-                    //console.log( "成功返回："+_response );// 返回成功数据
-                }else{
-                    img_status = '失败';
-                    //console.log( "失败返回"+_response );// 返回成功数据
+        $.ajax({
+            url: post_url,
+            method: 'POST',
+            data: data,
+            dataType: 'text',
+            beforeSend: (xhr) => {
+                if ( s.getItem('imageHosting') === 'imgur' )
+                    xhr.setRequestHeader('Authorization', 'Client-ID 9311f6be1c10160');
+            },
+            success: (data) => {
+                try{
+                    img_status = url_start + RegExp(patt_id).exec(data)[1] + url_end;
+                    //console.log("Succeed: "+ img_status);
                 }
+                catch(e){
+                    console.error("Field not found");
+                    img_status = "Failed";
+                }
+            },
+            error: () => {
+                img_status = "Failed";
+                console.info("Request failed");
+            },
+            complete: () => {
+                sendResponse({img_status: img_status});
             }
-        };
-        xhr.open('POST', post_url);
-        if ( getCookie('imageHosting') == 'imgur' ){
-        xhr.setRequestHeader('Authorization', 'Client-ID 9311f6be1c10160');
-    }
-        xhr.send(data);
-    }else if ( request.get_img_id ){//收到图片状态询问
-        sendResponse({img_id: img_status});
-        img_status != '上传中' && (img_status = '空闲');
-
+        });
+        return true;
 //——————————————————————————————————接收来自页面的图片数据上传并返回——————————————————————————————————
 
 
 //——————————————————————————————————返回设置选项——————————————————————————————————
 
     }else if ( request.get_preview_status ){
-        sendResponse({preview_status: getCookie('preview')});
+        sendResponse({preview_status: Number(s.getItem('preview'))});
     }else if ( request.get_allSetting ){
-        sendResponse({dblclickToTop: getCookie('dblclickToTop')});
+        sendResponse({dblclickToTop: Number(s.getItem('dblclickToTop'))});
     }else if ( request.get_replySetting ){
-        sendResponse({keyReplyColor: getCookie('keyReplyColor'), keyReplyA: getCookie('keyReplyA'), fold: getCookie('fold'), thankColor: getCookie('thankColor')});
+        sendResponse({replyColor: s.getItem('replyColor'), replyA: s.getItem('replyA'), fold: s.getItem('fold'), thankColor: s.getItem('thankColor')});
     }else if ( request.get_newWindow_status ){
-        sendResponse({newWindow_status: getCookie('newWindow')});
+        sendResponse({newWindow_status: Number(s.getItem('newWindow'))});
     }else if ( request.get_blockList ){
         $.get("https://www.v2ex.com",function(data,status){
             if(status == 'success'){
@@ -82,7 +99,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 if ( block_list && username ){
                     block_list = block_list[1];
                     username = username[1];
-                    chrome.tabs.create({url:"/page/block_list.html#"+username+'='+block_list});
+                    browser.tabs.create({url:"/page/block_list.html#"+username+'='+block_list});
                 }else{
                     alert('扩展没有获取到任何信息 : (\n或许是您未登录 V2EX 账号');
                 }
@@ -99,18 +116,19 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 //——————————————————————————————————定时任务初始化——————————————————————————————————
 
-!getCookie('newMsg') && checkMsg();
-getCookie('autoMission') && autoMission();
-chrome.alarms.create('checkMsg', {periodInMinutes: 5});
-chrome.alarms.create('autoMission', {periodInMinutes: 60});
-chrome.alarms.onAlarm.addListener(function( a ){
+
+Number(s.getItem('newMsg')) && checkMsg();
+browser.alarms.create('checkMsg', {periodInMinutes: 5});
+browser.alarms.create('autoMission', {periodInMinutes: 30});
+
+browser.alarms.onAlarm.addListener(function( a ){
     switch (a.name){
         case 'checkMsg':
-            !getCookie('newMsg') && checkMsg();
+            Number(s.getItem('newMsg')) && checkMsg();
             break;
         case 'autoMission':
-            getCookie('autoMission') && autoMission();
-            getCookie('autoLoginWeibo') && autoLoginWeibo();
+            Number(s.getItem('autoMission')) && autoMission();
+            Number(s.getItem('autoLoginWeibo')) && autoLoginWeibo();
             break;
     }
 });
@@ -127,10 +145,10 @@ function checkMsg(){
             var sign = RegExp("([0-9]*?) (条未读提醒|unread)").exec(data);
             sign = sign != null && sign[1] || '未登录';
             if ( sign == '未登录' ){
-                chrome.browserAction.setIcon({path: 'icon/icon38_nologin.png'});
+                browser.browserAction.setIcon({path: 'icon/icon38_nologin.png'});
             }else if( sign!='0') {
-                chrome.browserAction.setIcon({path: 'icon/icon38_msg.png'});
-                chrome.notifications.create(
+                browser.browserAction.setIcon({path: 'icon/icon38_msg.png'});
+                browser.notifications.create(
                 'newMsg' ,
                 {
                                 type       : 'basic',
@@ -139,7 +157,7 @@ function checkMsg(){
                                 message    : '您有 V2EX 的未读新消息，点击查看。',
                 });
             }else{
-                chrome.browserAction.setIcon({path: 'icon/icon38.png'});
+                browser.browserAction.setIcon({path: 'icon/icon38.png'});
             }
         }else{
             alert('V2EX消息获取失败：' + status);
@@ -155,23 +173,23 @@ function checkMsg(){
 
 //清除通知图标，打开通知地址
 function clean_msg(){
-    chrome.browserAction.setIcon({path: 'icon/icon38.png'});
-    chrome.tabs.create({url:"https://www.v2ex.com/notifications"});
+    browser.browserAction.setIcon({path: 'icon/icon38.png'});
+    browser.tabs.create({url:"https://www.v2ex.com/notifications"});
 }
 
-chrome.browserAction.onClicked.addListener( clean_msg );
-chrome.notifications.onClicked.addListener(function(notificationId){
+browser.browserAction.onClicked.addListener( clean_msg );
+browser.notifications.onClicked.addListener(function(notificationId){
     switch (notificationId){
         case 'newMsg':
             clean_msg();
             break;
         case 'autoMission':
-            chrome.tabs.create({url:"https://www.v2ex.com/balance"});
+            browser.tabs.create({url:"https://www.v2ex.com/balance"});
             break;
     }
 });
 
-chrome.commands.onCommand.addListener(function(command) {
+browser.commands.onCommand.addListener(function(command) {
     clean_msg();
 });
 
@@ -180,46 +198,44 @@ chrome.commands.onCommand.addListener(function(command) {
 
 
 //——————————————————————————————————自动签到——————————————————————————————————
-
 function autoMission(){
-
-    if( getCookie('autoMission') == new Date().getUTCDate() ){
+    if( s.getItem('autoMission') == new Date().getUTCDate() ){
         //console.log('今天已经成功领取奖励了');
         return;
     }
-
+    //console.log('开始签到')
     $.ajax({
-    url: "http://www.v2ex.com/settings",
-    success: function(data){
-                    var sign = RegExp("/signout(\\?once=[0-9]+)").exec(data);
-                    sign = sign != null && sign[1] || '未登录';
-                    if ( sign != '未登录' ){
-                        $.ajax({
-                            url: "http://www.v2ex.com/mission/daily/redeem" + sign,
-                            success: function(data){
-                                if (RegExp("查看我的账户余额").exec(data) != null ){
-                                    chrome.notifications.create(
-                                        'autoMission' ,
-                                        {
-                                            type       : 'basic',
-                                            iconUrl    : 'icon/icon38_msg.png',
-                                            title      : 'v2ex plus 提醒您',
-                                            message    : '今日的登陆奖励已领取。\nTake your passion and make it come true.',
-                                        }
-                                    );
-                                    setCookie( 'autoMission', new Date().getUTCDate() );
-                                }else{
-                                    alert('罕见错误！基本可以忽略，如果你遇见两次以上请联系开发者，当该提示已打扰到您，请关闭扩展的自动签到功能。');
+        url: "https://www.v2ex.com/",
+        success: function(data){
+            let sign = data.match('/signout(\\?once=[0-9]+)');
+            sign = sign != null && sign[1] || '未登录';
+            if ( sign != '未登录' ){
+                $.ajax({
+                    url: 'https://www.v2ex.com/mission/daily/redeem' + sign,
+                    success: function(data){
+                        if ( data.search('查看我的账户余额') ){
+                            browser.notifications.create(
+                                'autoMission' ,
+                                {
+                                    type    : "basic",
+                                    iconUrl : "icon/icon38_msg.png",
+                                    title   : "v2ex plus 提醒您",
+                                    message : "今日的登陆奖励已领取。\nTake your passion and make it come true.",
                                 }
-                            },
-                            error: function(){
-                                alert('网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。');
-                            }
-                        });
+                            );
+                            s.setItem( 'autoMission', new Date().getUTCDate() );
+                        }else{
+                            alert('罕见错误！基本可以忽略，如果你遇见两次以上请联系开发者，当该提示已打扰到您，请关闭扩展的自动签到功能。');
+                        }
+                    },
+                    error: function(){
+                        alert('网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。');
                     }
+                });
+            }
         },
         error: function(){
-                    alert('网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。');
+            alert('网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。');
         }
     });
 }
