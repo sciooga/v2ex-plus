@@ -187,7 +187,9 @@ function input_img(input_img_base64, this_img_id){
                     //乘2是由于当图片未加载完成时，预先记录的高度不准确（短于实际高度）
                     _topic_content.css({maxHeight:topic_height*2});
                     //还有可能是图片及其多，一开始保存的高度数值只有很少一部分图片的高度，所以在上面的两秒动画后还得再取消高度限制
-                    setTimeout("_topic_content.css({maxHeight:'none'})", 2000);
+                    setTimeout(function(){
+                        _topic_content.css({maxHeight:'none'});
+                    }, 2000);
                     $('.subtle', _topic).slideDown(800);
                     $('#showTopic').remove();
                 });
