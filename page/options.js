@@ -3,6 +3,14 @@ function saveChoice(e){
     localStorage.setItem(e.target.name, e.target.value);
 }
 
+window.onresize = function(){
+    if(document.body.clientWidth < 790){
+        document.getElementById("introduction").style.display="none";
+    }else{
+        document.getElementById("introduction").style.display="";
+    }
+}
+
 window.onload = function(){
     const s = localStorage;
 
@@ -72,17 +80,17 @@ window.onload = function(){
           _replyA = document.replyColorSelect.replyA,
           _replyAValue = document.getElementById("replyAValue");
     _replyColor.value = s.getItem('replyColor');
-    _replyA.value = _replyAValue.innerHTML = s.getItem('replyA');
+    _replyA.value = _replyAValue.textContent = s.getItem('replyA');
 
     _replyColor.onchange = function(e){
         let hex = this.value.toLowerCase();
         s.setItem('replyColor', hex);
     };
     _replyA.onmousemove = function(e){
-        _replyAValue.innerHTML = this.value;
+        _replyAValue.textContent = this.value;
     };
     _replyA.onchange = function(e){
-        _replyAValue.innerHTML = this.value;
+        _replyAValue.textContent = this.value;
         saveChoice(e);
     };
     _replyA.disabled = false;

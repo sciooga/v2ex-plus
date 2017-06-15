@@ -2,7 +2,7 @@
 // Why would anyone call `chrome` api in it?
 if (typeof browser === 'undefined' &&
     typeof chrome === 'object'){
-        console.log("On Chrome");
+        //console.log("On Chrome");
         var browser = chrome;
     }
 
@@ -62,7 +62,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             success: (data) => {
                 try{
                     img_status = url_start + RegExp(patt_id).exec(data)[1] + url_end;
-                    console.log("Succeed: "+ img_status);
+                    //console.log("Succeed: "+ img_status);
                 }
                 catch(e){
                     console.error("Field not found");
@@ -200,10 +200,10 @@ browser.commands.onCommand.addListener(function(command) {
 //——————————————————————————————————自动签到——————————————————————————————————
 function autoMission(){
     if( s.getItem('autoMission') == new Date().getUTCDate() ){
-        console.log('今天已经成功领取奖励了');
+        //console.log('今天已经成功领取奖励了');
         return;
     }
-    console.log('开始签到')
+    //console.log('开始签到')
     $.ajax({
         url: "https://www.v2ex.com/",
         success: function(data){
