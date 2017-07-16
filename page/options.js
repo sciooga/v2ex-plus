@@ -21,6 +21,7 @@ window.onload = function(){
     * 自动签到 默认关闭
     * 主题预览 默认开启
     * 自动折叠 默认开启
+    * 回复楼层号 默认开启
     * 双击返回顶部 默认关闭
     * 定时激活微博 默认关闭
     * 新标签页浏览主题 默认关闭
@@ -33,6 +34,7 @@ window.onload = function(){
             'preview': 1,
             'fold': 1,
             'dblclickToTop': 0,
+            'replyUser' : 1,
             'autoLoginWeibo': 0,
             'newWindow': 0,
             'replyColor': '#fffff9',
@@ -50,6 +52,7 @@ window.onload = function(){
         autoMission: document.autoMissionSelect.autoMission,
         preview: document.previewSelect.preview,
         fold: document.foldSelect.fold,
+        replyUser: document.replyUserSelect.replyUser,
         dblclickToTop: document.dblclickToTopSelect.dblclickToTop,
         autoLoginWeibo: document.autoLoginWeiboSelect.autoLoginWeibo,
         newWindow: document.newWindowSelect.newWindow
