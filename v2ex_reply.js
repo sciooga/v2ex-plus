@@ -133,7 +133,7 @@ function input_img(input_img_base64, this_img_id){
         if ( btn_name ){
             _append_place.before(" &nbsp;<span class='replyDetailBTN'>"+ btn_name +"</span> &nbsp; &nbsp;");
         }
-        //console.log(page_current_num)
+        // console.log(page_current_num)
         _append_place.before(" &nbsp;<span class='direct' data-clipboard-text='"
           + location.origin + location.pathname + "?p=" + page_current_num + '#' + _this.attr('id')
           + "'>楼层直链</span> &nbsp; &nbsp;");
@@ -693,27 +693,33 @@ _r_c[0].addEventListener("drop",function(e){
     };
     fileReader.readAsDataURL(e.dataTransfer.files[0]);
 });
-
-$('[alt="Reply"]').click(function(){
-    var self = this;
-    setTimeout(function (){
-        replyContent = $("#reply_content");
-        oldContent = replyContent.val();
-        prefix = "#" + $(self).parent().parent().find('.no').text() + ' ';
-        newContent = ''
-        if(oldContent.length > 0){
-            if (oldContent != prefix) {
-                newContent = oldContent + prefix;
-            }
-        } else {
-            newContent = prefix
-        }
-        replyContent.focus();
-        replyContent.val(newContent);
-    }, 100)
-})
-
 //——————————————————————————————————拖拽上传图片——————————————————————————————————
+
+
+//——————————————————————————————————回复楼层号——————————————————————————————————
+chrome.runtime.sendMessage({get_replyUser: 't'}, function(response) {
+    if (response.replyUser){
+        $('[alt="Reply"]').click(function(){
+            var self = this;
+            setTimeout(function (){
+                replyContent = $("#reply_content");
+                oldContent = replyContent.val();
+                prefix = "#" + $(self).parent().parent().find('.no').text() + ' ';
+                newContent = ''
+                if(oldContent.length > 0){
+                    if (oldContent != prefix) {
+                        newContent = oldContent + prefix;
+                    }
+                } else {
+                    newContent = prefix
+                }
+                replyContent.focus();
+                replyContent.val(newContent);
+            }, 100)
+        })
+    }
+});
+//——————————————————————————————————回复楼层号——————————————————————————————————
 
 
 //——————————————————————————————————https 新浪图床修改——————————————————————————————————

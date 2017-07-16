@@ -85,12 +85,14 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
     }else if ( request.get_preview_status ){
         sendResponse({preview_status: Number(s.getItem('preview'))});
-    }else if ( request.get_allSetting ){
+    }else if ( request.get_dblclickToTop ){
         sendResponse({dblclickToTop: Number(s.getItem('dblclickToTop'))});
     }else if ( request.get_replySetting ){
         sendResponse({replyColor: s.getItem('replyColor'), replyA: s.getItem('replyA'), fold: s.getItem('fold'), thankColor: s.getItem('thankColor')});
     }else if ( request.get_newWindow_status ){
         sendResponse({newWindow_status: Number(s.getItem('newWindow'))});
+    }else if ( request.get_replyUser ){
+        sendResponse({replyUser: Number(s.getItem('replyUser'))});
     }else if ( request.get_blockList ){
         $.get("https://www.v2ex.com",function(data,status){
             if(status == 'success'){
