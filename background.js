@@ -10,6 +10,11 @@ browser.runtime.onInstalled.addListener(function(e){
     // Open options page to initialize localStorage
     if (e.reason === 'install')
         browser.runtime.openOptionsPage();
+    if (e.reason === 'update')
+        replyUser = localStorage.getItem('replyUser')
+        if ( replyUser == null )
+            localStorage.setItem('replyUser', 1)
+
 });
 
 //——————————————————————————————————接收来自页面的图片数据上传并返回——————————————————————————————————
