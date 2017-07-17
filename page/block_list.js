@@ -105,7 +105,7 @@ $(function(){
 
     $('.vplusBTN-refresh').click(function(){
         chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-            chrome.runtime.sendMessage({get_blockList: 't'}, function(response) {
+            chrome.runtime.sendMessage({action: 'get_blockList'}, function(response) {
                 chrome.tabs.remove(tabs[0].id);
             });
         });

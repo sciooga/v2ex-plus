@@ -166,7 +166,7 @@ function input_img(input_img_base64, this_img_id){
         }
     });
 
-    chrome.runtime.sendMessage({get_replySetting: 't'}, function(response) {
+    chrome.runtime.sendMessage({action: 'get_replySetting'}, function(response) {
         var topic_height = _topic.height();
         r = parseInt((response.replyColor).substring(1,3),16);
         g = parseInt((response.replyColor).substring(3,5),16);
@@ -697,7 +697,7 @@ _r_c[0].addEventListener("drop",function(e){
 
 
 //——————————————————————————————————回复楼层号——————————————————————————————————
-chrome.runtime.sendMessage({get_replyUser: 't'}, function(response) {
+chrome.runtime.sendMessage({action: 'get_replyUser'}, function(response) {
     if (response.replyUser){
         $('[alt="Reply"]').click(function(){
             var self = this;

@@ -1,6 +1,6 @@
 
 //——————————————————————————————————双击回到顶部——————————————————————————————————
-chrome.runtime.sendMessage({get_dblclickToTop: 't'}, function(response) {
+chrome.runtime.sendMessage({action: 'get_dblclickToTop'}, function(response) {
     if (response.dblclickToTop){
         $('body').dblclick(function () {
             window.getSelection().removeAllRanges();
