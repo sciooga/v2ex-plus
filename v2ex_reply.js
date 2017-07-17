@@ -173,7 +173,7 @@ function input_img(input_img_base64, this_img_id){
         b = parseInt((response.replyColor).substring(5,7),16);
         replyColor = r+','+g+','+b+','+response.replyA;
         $('.keyUser').css('backgroundColor', 'rgba('+ replyColor +')');//设置楼主回复背景颜色
-        if (!response.fold){//折叠超长主题
+        if (response.fold){//折叠超长主题
             if (topic_height>1800){
                 _topic_content.css({maxHeight:'600px', overflow:'hidden', transition:'max-height 2s'});
                 $('.subtle', _topic).hide();
