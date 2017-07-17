@@ -68,7 +68,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 
 //——————————————————————————————————返回设置选项——————————————————————————————————
-    switch (request) {
+    switch (request.action) {
         case 'get_preview_status':
             sendResponse({preview_status: Number(s.getItem('preview'))});
             break;
