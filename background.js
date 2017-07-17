@@ -12,7 +12,7 @@ browser.runtime.onInstalled.addListener(function(e){
         browser.runtime.openOptionsPage();
     if (e.reason === 'update')
         replyUser = localStorage.getItem('replyUser')
-        if ( replyUser == null )
+        if ( replyUser === null )
             localStorage.setItem('replyUser', 1)
 
 });
