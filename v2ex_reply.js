@@ -700,11 +700,10 @@ _r_c[0].addEventListener("drop",function(e){
 chrome.runtime.sendMessage({action: 'get_replyUser'}, function(response) {
     if (response.replyUser){
         $('[alt="Reply"]').click(function(){
-            var self = this;
-            setTimeout(function (){
+            setTimeout(() => {
                 replyContent = $("#reply_content");
                 oldContent = replyContent.val();
-                prefix = "#" + $(self).parent().parent().find('.no').text() + ' ';
+                prefix = "#" + $(this).parent().parent().find('.no').text() + ' ';
                 newContent = ''
                 if(oldContent.length > 0){
                     if (oldContent != prefix) {
