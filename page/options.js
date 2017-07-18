@@ -112,6 +112,6 @@ window.onload = function(){
 
     //查看屏蔽列表
     document.getElementById('blockList').onclick = function(){
-        chrome.runtime.sendMessage({get_blockList: 't'});
+        chrome.runtime.sendMessage({action: 'get_blockList'});
     };
 }

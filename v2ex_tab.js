@@ -2,7 +2,7 @@
 
 
     var nwe_window;
-    chrome.runtime.sendMessage({get_newWindow_status: 't'}, function(response) {
+    chrome.runtime.sendMessage({action: 'get_newWindow_status'}, function(response) {
         if ( response.newWindow_status ){
             $('.item_title a').attr('target', '_blank');
             $('.item_hot_topic_title a').attr('target', '_blank');
@@ -15,7 +15,7 @@
 
 //——————————————————————————————————预览功能——————————————————————————————————
 
-    chrome.runtime.sendMessage({get_preview_status: 't'}, function(response) {
+    chrome.runtime.sendMessage({action: 'get_preview_status'}, function(response) {
         if (!response.preview_status)
             return;
 
