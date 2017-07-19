@@ -17,3 +17,12 @@ rules:
   semi:
     - error
     - always
+  brace-style:
+    - error
+    - 1tbs
+    - allowSingleLine: true
+  arrow-body-style:
+    - error
+    - as-needed
+  no-undefined:
+    - error
