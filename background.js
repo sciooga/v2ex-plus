@@ -10,10 +10,9 @@ browser.runtime.onInstalled.addListener(function(e){
     // Open options page to initialize localStorage
     if (e.reason === "install")
         browser.runtime.openOptionsPage();
-    if (e.reason === "update")
-        replyUser = localStorage.getItem("replyUser");
-    if ( replyUser === null )
-        localStorage.setItem("replyUser", 1);
+    else if (e.reason === "update")
+        if (localStorage.getItem("replyUser") === null)
+            localStorage.setItem("replyUser", 1);
 
 });
 
