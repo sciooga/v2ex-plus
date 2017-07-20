@@ -1,17 +1,18 @@
+/*global img_list emoticon_list triangle_img setClipboardText*/
 //获取被@的用户，列表开始于 index 1
 function get_at_name_list( str ){
     var name_list = Array();
     var patt_at_name = RegExp("<a.*?href=\"/member/(.*?)\">", "g");
     name_list[0] = "t";
-    for (var i=1; name_list[i-1]; ++i){
+    for (let i=1; name_list[i-1]; ++i){
         name_list[i] = patt_at_name.exec( str );
         name_list[i] = name_list[i]!=null && name_list[i][1] || "";
     }
 
     // 简单去重
-    var  unique_name_list = Array();
-    for (var i in name_list) {
-        var item = name_list[i];
+    const  unique_name_list = Array();
+    for (const i in name_list) {
+        const item = name_list[i];
         if (unique_name_list.indexOf(item) === -1) {
             unique_name_list.push(item);
         }
@@ -49,7 +50,7 @@ function input_img(input_img_base64, this_img_id){
         const _img_preview = $(".imgId"+ this_img_id);
 
         if (res.img_status !== "Failed"){
-            img_list["图片"+this_img_id] = " "+res.img_status+" ";
+            img_list["图片"+this_img_id] = ` ${res.img_status} `;
             _reply_textarea.val((i,origText) => origText+"[:图片"+this_img_id+":]");
             _img_preview.find("span").text("[:图片"+ this_img_id +":]");
             _img_preview.css({"background": "rgba(246, 246, 246, 0.5)","borderColor": "#A4FF94"});
@@ -73,7 +74,6 @@ var _topic_buttons = $(".topic_buttons");
 var _reply_user_name_list = Array();
 var _reply_content_list = Array();
 var r_i = 1;
-var replyColor;
 var maxNestDivCount = 1;
 
 _topic_buttons.append(" &nbsp;<a href='#;' id='onlyKeyUser' class='tb'>只看楼主</a>");
@@ -166,12 +166,13 @@ $("#onlyKeyUser").click(function(){
 });
 
 chrome.runtime.sendMessage({action: "get_replySetting"}, function(response) {
-    var topic_height = _topic.height();
-    r = parseInt((response.replyColor).substring(1,3),16);
-    g = parseInt((response.replyColor).substring(3,5),16);
-    b = parseInt((response.replyColor).substring(5,7),16);
-    replyColor = r+","+g+","+b+","+response.replyA;
-    $(".keyUser").css("backgroundColor", "rgba("+ replyColor +")");//设置楼主回复背景颜色
+    const topic_height = _topic.height(),
+        r = parseInt((response.replyColor).substring(1,3),16),
+        g = parseInt((response.replyColor).substring(3,5),16),
+        b = parseInt((response.replyColor).substring(5,7),16),
+        replyColor = `${r},${g},${b},${response.replyA}`;
+
+    $(".keyUser").css("backgroundColor", `rgba(${replyColor})`);//设置楼主回复背景颜色
     if (response.fold){//折叠超长主题
         if (topic_height>1800){
             _topic_content.css({maxHeight:"600px", overflow:"hidden", transition:"max-height 2s"});
@@ -286,7 +287,7 @@ $(".replyDetailBTN").click(function(){
 
         _replyDetail.append("<div class='smartMode' onclick=\"$(this).children('span').toggleClass('checked');$(this).siblings('.unrelated').slideToggle(300);\"><span class='checked'>智能模式</span></div>");
 
-        for (var i=1; _reply_at_name_list[i]; ++i) {
+        for (let i=1; _reply_at_name_list[i]; ++i) {
             r_i = 1;
             var _no = ~~(_this.closest("td").find(".no").text());
             var have_main_reply = false;
@@ -410,7 +411,7 @@ _reply_link.mouseenter(function(){
                                                 "+ _reply_user_name_list[i] +"&emsp;回复于"+ (i+page_previous_num*100) +"层&emsp;\
                                             </p><img class='triangle' src='"+ triangle_img +"' />" );
             } else {
-                for (var i=_no; i; --i){
+                for (let i=_no; i; --i){
                     if ( _reply_user_name_list[i] == _hover_at_name[1] ){
                         _close_reply.html( _reply_content_list[i] + "<p class='bubbleName' style='text-align:right; padding-right:0px;'>\
                                                 "+ _reply_user_name_list[i] +"&emsp;回复于"+ (i+page_previous_num*100) +"层&emsp;\
@@ -511,7 +512,7 @@ document.body.addEventListener("paste", function(e) {
             var imageFile = this_item.getAsFile();
 
             var fileReader = new FileReader();
-            fileReader.onloadend = function(e) {
+            fileReader.onloadend = function() {
                 input_img( this.result, img_id++ );
             };
 
@@ -543,7 +544,7 @@ _imgUpload.change(function(e){
         //                return false;
         //            }else{
         var reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function() {
             input_img( this.result, img_id++ );
         };
         reader.readAsDataURL(img_file);
@@ -574,11 +575,11 @@ _reply_textarea.parent().submit(function( e ){
         _reply_textarea.val(function(i,origText){
             origText = origText.replace(new RegExp("\\[:(.+?):\\]", "g"), function(i,k){
                 const img_url = img_list[k];
-                if (img_url === undefined){
+                if (img_url) {
+                    return img_url;
+                } else {
                     e.preventDefault();
                     return "[:此图片标签已失效删除后请重新上传" + k + ":]";
-                }else{
-                    return img_url;
                 }
             });
             return origText;
@@ -618,7 +619,7 @@ var _rotateImg = $("#rotateImg");
 var _will_rotate_img;
 var _rotate_times;
 var _rotate_img = $(".reply_content img");
-_rotate_img.mouseenter(function(e){
+_rotate_img.mouseenter(function(){
     var _this = $(this);
     var width = _this.width();
     var height = _this.height();
@@ -631,11 +632,11 @@ _rotate_img.mouseenter(function(e){
     }
 });
 
-$("#rotateImgLBtn").click(function(e){
+$("#rotateImgLBtn").click(function(){
     rotateImg(_will_rotate_img, --_rotate_times);
 });
 
-$("#rotateImgRBtn").click(function(e){
+$("#rotateImgRBtn").click(function(){
     rotateImg(_will_rotate_img, ++_rotate_times);
 });
 
@@ -687,7 +688,7 @@ $(document).keydown(function(event) {
 _r_c[0].addEventListener("drop",function(e){
     e.preventDefault();
     var fileReader = new FileReader();
-    fileReader.onloadend = function(e) {
+    fileReader.onloadend = function() {
         input_img( this.result, img_id++ );
     };
     fileReader.readAsDataURL(e.dataTransfer.files[0]);
@@ -700,11 +701,11 @@ chrome.runtime.sendMessage({action: "get_replyUser"}, function(response) {
     if (response.replyUser){
         $("[alt=\"Reply\"]").click(function(){
             setTimeout(() => {
-                replyContent = $("#reply_content");
-                oldContent = replyContent.val();
-                prefix = "#" + $(this).parent().parent().find(".no").text() + " ";
-                newContent = "";
-                if(oldContent.length > 0){
+                const replyContent = $("#reply_content"),
+                    oldContent = replyContent.val(),
+                    prefix = "#" + $(this).parent().parent().find(".no").text() + " ";
+                let newContent = "";
+                if (oldContent.length > 0){
                     if (oldContent != prefix) {
                         newContent = oldContent + prefix;
                     }

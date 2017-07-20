@@ -85,11 +85,11 @@ window.onload = function(){
     _replyColor.value = s.getItem("replyColor");
     _replyA.value = _replyAValue.textContent = s.getItem("replyA");
 
-    _replyColor.onchange = function(e){
+    _replyColor.onchange = function(){
         let hex = this.value.toLowerCase();
         s.setItem("replyColor", hex);
     };
-    _replyA.onmousemove = function(e){
+    _replyA.onmousemove = function(){
         _replyAValue.textContent = this.value;
     };
     _replyA.onchange = function(e){
@@ -102,7 +102,7 @@ window.onload = function(){
     //感谢爱心颜色 默认rgba('204', '204', '204', '1')
     const _thankColor = document.thankColorSelect.thankColor;
     _thankColor.value = s.getItem("thankColor");
-    _thankColor.onchange = function(e){
+    _thankColor.onchange = function(){
         let hex = this.value.toLowerCase();
         s.setItem("thankColor", hex);
     };

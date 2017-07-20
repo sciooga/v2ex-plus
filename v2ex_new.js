@@ -62,7 +62,7 @@ document.onpaste = function(e) {
             const imageFile = item.getAsFile();
 
             const fileReader = new FileReader();
-            fileReader.onloadend = function(e) {
+            fileReader.onloadend = function() {
                 input_img( this.result, img_id++ );
             };
 
@@ -89,7 +89,7 @@ _imgUpload.change(function(e){
     if (files){
         const img_file = files[0];
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function() {
             input_img( this.result, img_id++ );
         };
         reader.readAsDataURL(img_file);

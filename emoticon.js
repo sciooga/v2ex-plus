@@ -71,5 +71,6 @@ for (let i=21; i<=40; i++){
     );
 }
 
+// eslint-disable-next-line no-unused-vars
 const emoticon_list = $("<div>", {class: "emoticon", style: "display: none;padding-top: 8px;"})
     .append(emoticon_1).append(emoticon_2);

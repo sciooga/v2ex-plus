@@ -1,5 +1,4 @@
-// WebExtension is cross-platform
-// Why would anyone call `chrome` api in it?
+// Avoid `chrome` namespace
 if (typeof browser === "undefined" &&
     typeof chrome === "object"){
     //console.log("On Chrome");
@@ -96,7 +95,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         $.get("https://www.v2ex.com",function(data,status){
             if(status == "success"){
                 var block_list = /blocked = \[(.*?)\];/.exec(data);
-                var username = /首页<\/a>\&nbsp\;\&nbsp\;\&nbsp\;<a href="\/member\/(.+?)"/.exec(data);
+                var username = /首页<\/a>&nbsp;&nbsp;&nbsp;<a href="\/member\/(.+?)"/.exec(data);
                 if ( block_list && username ){
                     block_list = block_list[1];
                     username = username[1];
@@ -193,7 +192,7 @@ browser.notifications.onClicked.addListener(function(notificationId){
     }
 });
 
-browser.commands.onCommand.addListener(function(command) {
+browser.commands.onCommand.addListener(function() {
     clean_msg();
 });
 
