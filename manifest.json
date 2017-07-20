@@ -4,7 +4,7 @@
   "manifest_version": 2,
   "description": "优雅便捷的 V2EX 扩展",
   "background": {
-    "scripts": ["jquery-3.2.0.min.js", "background.js"]
+    "scripts": ["libs/jquery-3.2.0.min.js", "background.js"]
   },
   "permissions": [
     "alarms",
@@ -16,7 +16,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.v2ex.com/*"],
-      "js": ["jquery-3.2.0.min.js", "all.js"]
+      "js": ["libs/jquery-3.2.0.min.js", "all.js"]
     },
     {
       "matches": ["*://*.v2ex.com/", "*://*.v2ex.com/?tab=*", "*://*.v2ex.com/go/*", "*://*.v2ex.com/my/*", "*://*.v2ex.com/recent*", "*://*.v2ex.com/changes*"],
@@ -26,7 +26,7 @@
     {
       "matches": ["*://*.v2ex.com/t/*"],
       "css": ["v2ex_reply.css"],
-      "js": ["emoticon.js", "clipboard.js", "v2ex_reply.js", "user_info.js"]
+      "js": ["emoticon.js", "libs/clipboard.js", "v2ex_reply.js", "user_info.js"]
     },
     {
       "matches": ["*://*.v2ex.com/new"],
