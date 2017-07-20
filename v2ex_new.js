@@ -80,9 +80,7 @@ document.onpaste = function(e) {
 //————————————————选择图片上传————————————————
 const _upload_img_btn = $("#imgUploadBtn");
 const _imgUpload = $("#imgUpload");
-_upload_img_btn.click(function(){
-    _imgUpload.click();
-});
+_upload_img_btn.click(_imgUpload.click);
 
 _imgUpload.change(function(e){
     const files = e.target.files || (e.dataTransfer && e.dataTransfer.files);

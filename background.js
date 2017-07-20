@@ -180,7 +180,8 @@ function clean_msg(){
     browser.tabs.create({url:"https://www.v2ex.com/notifications"});
 }
 
-browser.browserAction.onClicked.addListener( clean_msg );
+browser.commands.onCommand.addListener(clean_msg);
+browser.browserAction.onClicked.addListener(clean_msg);
 browser.notifications.onClicked.addListener(function(notificationId){
     switch (notificationId){
     case "newMsg":
@@ -192,9 +193,6 @@ browser.notifications.onClicked.addListener(function(notificationId){
     }
 });
 
-browser.commands.onCommand.addListener(function() {
-    clean_msg();
-});
 
 
 //——————————————————————————————————通知/按钮点击反馈——————————————————————————————————
