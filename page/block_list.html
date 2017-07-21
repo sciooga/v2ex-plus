@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="/libs/jquery-3.2.0.min.js"></script>
+    <script src="block_list.js"></script>
+    <title>v2ex plus - 屏蔽列表</title>
+    <style type="text/css">
+    body{
+        background: #f6f6f6;
+        color: #778087;
+        font-family: sans-serif;
+        font-size: 100%;
+        line-height: 1.6;
+    }
+    [class^=vplusBTN]{
+        position: relative;
+        top: -2px;
+        background-color: #fff;
+        color: #333;
+        box-shadow: 0px 1px 0px rgba(66, 66, 77, 0.1);
+        padding: 4px 15px 4px 15px;
+        border: 1px solid rgba(80,80,90, 0.2);
+        border-bottom-color: rgba(80,80,90, 0.35);
+        border-radius: 3px;
+        font-size: 12px;
+        cursor: pointer;
+    }
+    [class^=vplusBTN]:hover{
+        background-color: #f9f9f9;
+    }
+    .avatar{
+        border: 0;
+        border-radius: 3px;
+        max-width: 48px;
+        max-height: 48px;
+    }
+    table{
+        padding: 4px 8px 0px;
+        width: 432px;
+        min-height: 78px;
+        margin: 20px auto;
+        border-radius: 3px;
+        border: 1px solid #bbb;
+        background-color: #f0f0f0;
+        }
+    td{
+        padding: 8px;
+    }
+    </style>
+</head>
+<body>
+
+    <div id="blockList" style="margin: 60px auto; width:600px; border-radius: 3px; border:1px dashed #e2e2e2;">
+        <div style="text-align:center;"><br/>
+            注意！只有点此按钮才能刷新名单：<span class="vplusBTN-refresh">刷新名单</span><br/>
+            以下用户按屏蔽时间由远及近排列：
+        </div>
+    </div>
+
+</body>
+</html>

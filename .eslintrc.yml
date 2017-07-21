@@ -1,0 +1,28 @@
+env:
+  es6: true
+  jquery: true
+  browser: true
+  webextensions: true
+extends: 'eslint:recommended'
+rules:
+  indent:
+    - error
+    - 4
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - error
+    - double
+  semi:
+    - error
+    - always
+  brace-style:
+    - error
+    - 1tbs
+    - allowSingleLine: true
+  arrow-body-style:
+    - error
+    - as-needed
+  no-undefined:
+    - error
