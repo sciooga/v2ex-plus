@@ -76,8 +76,8 @@ if ( _mission_btn.text() == '领取今日的登录奖励' ){
     _mission_btn.html('一键领取今日的登录奖励 by vPlus<br/>Take your passion and make it come true. ')
 }
 
-    //Enable Gift ClickOnce Feature
-    //From v2excellent.js
+    //Enable Gift ClickOnce Feature from v2excellent.js
+    //Standalone MIT License from https://gist.github.com/VitoVan/bf00ce496b44c56417a675c521fe67e8
     $('a[href="/mission/daily"]')
     .attr('id', 'gift_v2excellent')
     .attr('href', '#')

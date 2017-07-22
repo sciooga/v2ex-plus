@@ -12,7 +12,9 @@ Firefox/Offline install: [v2ex plus](https://github.com/sciooga/v2ex-plus/releas
 
 感谢设计师 [Sheep](http://sheephe.com) 画了新图标以及一些界面上的指导，很赞！
 
-感谢各位反馈建议、帮忙测试的同学！
+感谢 [Vito Van](https://github.com/VitoVan) 提供了于 v2excellent.js 签到[代码](https://gist.github.com/VitoVan/bf00ce496b44c56417a675c521fe67e8)的独立协议授权。
+
+感谢各位贡献代码、反馈建议、帮忙测试的同学！
 
 生活愉快~
 
