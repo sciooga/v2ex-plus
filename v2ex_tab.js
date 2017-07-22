@@ -83,13 +83,13 @@ if ( _mission_btn.text() == '领取今日的登录奖励' ){
     .attr('href', '#')
     .click(function() {
         $('#gift_v2excellent').text('正在领取......');
-        giftLink = ("https://www.v2ex.com/mission/daily/redeem" + RegExp("/signout(\\?once=[0-9]+)").exec($('div#Top').html())[1]);
+        giftLink = (location.origin + "/mission/daily/redeem" + RegExp("/signout(\\?once=[0-9]+)").exec($('div#Top').html())[1]);
         $.get(giftLink, function(checkResult) {
             var okSign = $('<output>')
             .append($.parseHTML(checkResult))
             .find('li.fa.fa-ok-sign');
             if (okSign.length > 0) {
-            $.get('/balance', function(result) {
+            $.get(location.origin + '/balance', function(result) {
                 var amount = $('<output>')
                 .append($.parseHTML(result))
                 .find('table>tbody>tr:contains("每日登录"):first>td:nth(2)')
