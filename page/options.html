@@ -11,6 +11,9 @@
         font-size: 100%;
         line-height: 1.6;
     }
+    ul{
+        padding: 0;
+    }
     li{
         margin: 20px;
         padding: 10px;
@@ -50,20 +53,29 @@
     a.vplusBTN{
         text-decoration: none;
     }
+
+    .info {
+        margin: 20px;
+    }
+    .info p {
+        margin: 0;
+    }
     </style>
 </head>
 <body>
-    <div id="introduction" style="float: right; width:240px; padding:16px; background:#f0f0f0; border-radius:16px;">
-        这是一个用于 v2ex 论坛的扩展程序，使用前最好登录 v2ex 以接收新消息提醒，登录新浪微博以使用插入图片、粘贴图片功能。
-        <br/>感谢： <a href="https://github.com/ldong">ldong</a> 帮忙发布。
-        <br/>感谢： <a href="http://sheephe.com/">Sheep</a> 设计图标。
-        <br/>反馈问题请 <a href="mailto:sciooga@gmail.com">点击<br/>(sciooga@gmail.com)</a>
-        <br/>源码请见： <a href="https://github.com/sciooga/v2ex-plus"> ♥ Github</a>
-        <br/>对扩展满意，可以送我一本书。<br/>支付宝：sciooga@gmail.com
-        <img src="/img/alipayQRCode.jpg" alt="支付宝二维码"/>
-    </div>
-    <div style="margin:0px; padding-left:0px; width:800px;">
-        <h1>选项：</h1>
+    <div style="margin:0 auto; width:40em;">
+        <div class="info">
+            <p>这是一个用于 V2EX 论坛的扩展程序，使用前请登录 V2EX 以接收新消息提醒，登录新浪微博以使用图片相关功能。</p>
+            <br>
+            <p>感谢： <a href="https://github.com/ldong">ldong</a> 帮忙发布。</p>
+            <p>感谢： <a href="http://sheephe.com/">Sheep</a> 设计图标。</p>
+            <p>感谢： GPU 的热心支持和共同维护本项目。</p>
+            <p>感谢： ghost404 的热心支持和共同维护本项目。</p>
+            <p>感谢： xhhjin 的热心支持和共同维护本项目。</p>
+            <p>感谢： <a href="https://vitovan.github.io/v2excellent.js/" target="_blank">V2EXcellent</a> 及作者 VitoVan 提供了更好的签到方案。</p>
+            <p>反馈问题请 <a href="mailto:sciooga@gmail.com">点击(sciooga@gmail.com)</a></p>
+            <p>源码请见： <a href="https://github.com/sciooga/v2ex-plus"> ♥ Github</a></p>
+        </div>
         <ul>
             <li><form name="newMsgSelect">
                 消息提醒：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="newMsg" value="1" disabled="disabled"/>开启
@@ -116,7 +128,7 @@
                 管理屏蔽名单：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="blockList" class="vplusBTN">查看屏蔽名单</span>
             </li>
             <li>
-                关于：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/page/about.html" class="vplusBTN" target="_blank">查看更多</a>
+                使用说明及更多：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/page/about.html" class="vplusBTN" target="_blank">查看更多</a>
             </li>
         </ul>
     </div>
