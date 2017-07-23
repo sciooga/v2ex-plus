@@ -71,11 +71,40 @@ chrome.runtime.sendMessage({action: "get_preview_status"}, function(response) {
 
 
 //——————————————————————————————————一键领取登陆奖励——————————————————————————————————
-
-var _mission_btn = $("div#Rightbar > div:nth-of-type(4) a");
-if ( _mission_btn.text() == "领取今日的登录奖励" ){
-    _mission_btn.attr("href", "/mission/daily/redeem" + RegExp("/signout(\\?once=[0-9]+)").exec($("div#Top").html())[1]);
-    _mission_btn.html("一键领取今日的登录奖励 by vPlus<br/>Take your passion and make it come true. ");
+var _mission_btn = $('div#Rightbar > div:nth-of-type(4) a');
+if ( _mission_btn.text() == '领取今日的登录奖励' ){
+    _mission_btn.html('一键领取今日的登录奖励 by vPlus<br/>Take your passion and make it come true. ')
 }
 
+    //Enable Gift ClickOnce Feature from v2excellent.js
+    //Standalone MIT License from https://gist.github.com/VitoVan/bf00ce496b44c56417a675c521fe67e8
+    $('a[href="/mission/daily"]')
+    .attr('id', 'gift_v2excellent')
+    .attr('href', '#')
+    .click(function() {
+        $('#gift_v2excellent').text('正在领取......');
+        giftLink = (location.origin + "/mission/daily/redeem" + RegExp("/signout(\\?once=[0-9]+)").exec($('div#Top').html())[1]);
+        $.get(giftLink, function(checkResult) {
+            var okSign = $('<output>')
+            .append($.parseHTML(checkResult))
+            .find('li.fa.fa-ok-sign');
+            if (okSign.length > 0) {
+            $.get(location.origin + '/balance', function(result) {
+                var amount = $('<output>')
+                .append($.parseHTML(result))
+                .find('table>tbody>tr:contains("每日登录"):first>td:nth(2)')
+                .text();
+                $('#gift_v2excellent').html(
+                '已领取 <strong>' + amount + '</strong> 铜币。'
+                );
+                setTimeout(function() {
+                $('#Rightbar>.sep20:nth(1)').remove();
+                $('#Rightbar>.box:nth(1)').remove();
+                }, 2000);
+            });
+            }
+        });
+        return false;
+    });
 //——————————————————————————————————一键领取登陆奖励——————————————————————————————————
+
