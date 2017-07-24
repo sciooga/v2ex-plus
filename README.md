@@ -4,7 +4,7 @@ Chrome Web Store: [v2ex plus](https://chrome.google.com/webstore/detail/daeclijm
 
 Firefox Add-ons: [v2ex plus](https://addons.mozilla.org/zh-CN/firefox/addon/v2ex-plus9/)
 
-Firefox/Offline install: [v2ex plus](https://github.com/sciooga/v2ex-plus/releases)
+Offline install: [v2ex plus](https://github.com/sciooga/v2ex-plus/releases)
 
 反馈： [点击(sciooga#gmail)](mailto:sciooga@gmail.com)
 
