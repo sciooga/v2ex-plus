@@ -20,21 +20,22 @@ const s = localStorage;
 
 browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if ( request.img_base64 ){
-
+        var post_url, patt_id, url_start, url_end, data;
+        var img_status;
         //——————————设置微博或 imgur 的信息——————————
         if ( s.getItem("imageHosting") === "weibo" ){
-            var post_url = "http://picupload.service.weibo.com/interface/pic_upload.php?\
-                        ori=1&mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog",
-                patt_id = "pid\":\"(.*?)\"",
-                url_start = "https://ws2.sinaimg.cn/large/",
-                url_end = ".jpg",
-                data = {"b64_data": request.img_base64};
+            post_url = "http://picupload.service.weibo.com/interface/pic_upload.php?\
+                    ori=1&mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog";
+            patt_id = "pid\":\"(.*?)\"";
+            url_start = "https://ws2.sinaimg.cn/large/";
+            url_end = ".jpg";
+            data = {"b64_data": request.img_base64};
         }else{
-            var post_url = "https://api.imgur.com/3/image",
-                patt_id = "id\":\"(.*?)\"",
-                url_start = "https://i.imgur.com/",
-                url_end = ".png",
-                data = {"image": request.img_base64};
+            post_url = "https://api.imgur.com/3/image";
+            patt_id = "id\":\"(.*?)\"";
+            url_start = "https://i.imgur.com/";
+            url_end = ".png";
+            data = {"image": request.img_base64};
         }
         //——————————微博或 imgur 的信息完成——————————
 
@@ -52,13 +53,13 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     img_status = url_start + RegExp(patt_id).exec(data)[1] + url_end;
                     //console.log("Succeed: "+ img_status);
                 } catch(e){
-                    console.error("Field not found");
+                    //console.error("Field not found");
                     img_status = "Failed";
                 }
             },
             error: () => {
                 img_status = "Failed";
-                console.info("Request failed");
+                //console.info("Request failed");
             },
             complete: () => {
                 sendResponse({img_status: img_status});

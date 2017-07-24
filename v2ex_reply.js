@@ -274,6 +274,7 @@ $(".replyDetailBTN").click(function(){
     var _reply_user_name = _cell.find("strong a").text();
     var _reply_content = _cell.find(".reply_content").html();
     var btn_name = _this.text();
+    var _bubble, _replyDetail;
     _this.css("visibility", "visible");
 
     //————————————————会话详情功能————————————————
@@ -282,7 +283,7 @@ $(".replyDetailBTN").click(function(){
         _this.text("加载中...");
         _cell.after("<div class='replyDetail'></div>");
 
-        var _replyDetail = _cell.next(".replyDetail");
+        _replyDetail = _cell.next(".replyDetail");
         var _reply_at_name_list = get_at_name_list( _reply_content );
 
         _replyDetail.append("<div class='smartMode' onclick=\"$(this).children('span').toggleClass('checked');$(this).siblings('.unrelated').slideToggle(300);\"><span class='checked'>智能模式</span></div>");
@@ -293,9 +294,8 @@ $(".replyDetailBTN").click(function(){
             var have_main_reply = false;
             _replyDetail.append("<p class='bubbleTitle' style='margin-top: 20px;padding-top: 20px;'>本页内 "+ _reply_user_name +" 与 "+ _reply_at_name_list[i] +" 的会话：</p>");
             while ( _reply_user_name_list[r_i] ){
-
                 if ( _reply_user_name_list[r_i] == _reply_user_name ){
-                    var _bubble = "<div class='rightBubble";
+                    _bubble = "<div class='rightBubble";
                     !related_reply( _reply_content_list[r_i], _reply_user_name, _reply_at_name_list[i] ) && (_bubble+=" unrelated");
                     _bubble += "' style='text-align: right;'>\
                                 <div>\
@@ -307,7 +307,7 @@ $(".replyDetailBTN").click(function(){
                     _replyDetail.append( _bubble );
 
                 }else if ( _reply_user_name_list[r_i] == _reply_at_name_list[i] ){
-                    var _bubble = "<div class='leftBubble";
+                    _bubble = "<div class='leftBubble";
                     !related_reply( _reply_content_list[r_i], _reply_user_name, _reply_at_name_list[i] ) && (_bubble+=" unrelated") || (have_main_reply=true);
                     _bubble += "' style='text-align: left;'>\
                                 <div>\
@@ -319,7 +319,7 @@ $(".replyDetailBTN").click(function(){
                     _replyDetail.append( _bubble );
                 }
                 //如果被@用户只有一条回复但回复是@其他不相干用户则显示这条回复
-                if ( _no-1 == r_i && !have_main_reply && /(\S+?) 回复于\d+层/.exec(_replyDetail.children(".leftBubble").last().find(".bubbleName").text())[1] == _reply_at_name_list[i] ){
+                if ( _no-1 == r_i && !have_main_reply && /(\S+?) 回复于\d+层/.exec(_replyDetail.children(".leftBubble").last().find(".bubbleName").text())[1] == _reply_at_name_list[i] ){
                     _replyDetail.children(".leftBubble").last().removeClass("unrelated");
                 }
 
@@ -343,14 +343,14 @@ $(".replyDetailBTN").click(function(){
         _this.text("加载中...");
         _cell.after("<div class='replyDetail'></div>");
 
-        var _replyDetail = _cell.next(".replyDetail");
+        _replyDetail = _cell.next(".replyDetail");
 
         r_i = 1;
         _replyDetail.append("<p class='bubbleTitle' style='margin-top: 20px;padding-top: 20px;'>本页内 "+ _reply_user_name +" 的所有回复：</p>");
         while ( _reply_user_name_list[r_i] ){
 
             if ( _reply_user_name_list[r_i] == _reply_user_name ){
-                var _bubble = "<div class='rightBubble' style='text-align: right;'>\
+                _bubble = "<div class='rightBubble' style='text-align: right;'>\
                                         <div>\
                                             "+ _reply_content_list[r_i] +"\
                                             <p class='bubbleName' style='text-align:right;'>\
@@ -380,7 +380,7 @@ $(".replyDetailBTN").click(function(){
     }else{
         _this.css("visibility", "");
         btn_name=="收起会话" && _this.text("会话详情") || _this.text("所有回复");
-        var _replyDetail = _cell.next(".replyDetail");
+        _replyDetail = _cell.next(".replyDetail");
         setTimeout(function(){
             _replyDetail.remove();
         },800);

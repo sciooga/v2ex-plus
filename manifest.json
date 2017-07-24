@@ -26,7 +26,7 @@
     {
       "matches": ["*://*.v2ex.com/t/*"],
       "css": ["v2ex_reply.css"],
-      "js": ["emoticon.js", "libs/clipboard.js", "v2ex_reply.js", "user_info.js"]
+      "js": ["emoticon.js", "clipboard.js", "v2ex_reply.js", "user_info.js"]
     },
     {
       "matches": ["*://*.v2ex.com/new"],
