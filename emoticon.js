@@ -44,6 +44,7 @@ const img_list = {
     "挖鼻":   " https://ws2.sinaimg.cn/large/62e721e4gw1et47itgo0hg200m00mglg.gif ",
     "doge":   " https://ws4.sinaimg.cn/bmiddle/62e721e4gw1et02g5wksrj200k00k3y9.jpg ",
     "滑稽"：   "https://ws1.sinaimg.cn/large/b64a58e3gy1fikr7bnfrmj200k00k0sh.jpg",
+    "斜眼笑": "https://ws1.sinaimg.cn/large/b64a58e3gy1fikro1qf4lj200k00k3y9.jpg",
 };
 
 const emoticon = Object.keys(img_list);
@@ -51,7 +52,7 @@ const emoticon = Object.keys(img_list);
 const emoticon_1 = $("<ul>"),
     emoticon_2 = $("<ul>");
 
-for (let i=1; i<=20; i++){
+for (let i=1; i<=21; i++){
     emoticon_1.append(
         $("<li>").append(
             $("<img>", {
@@ -61,7 +62,7 @@ for (let i=1; i<=20; i++){
         )
     );
 }
-for (let i=21; i<=41; i++){
+for (let i=22; i<=42; i++){
     emoticon_2.append(
         $("<li>").append(
             $("<img>", {
