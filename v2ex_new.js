@@ -81,7 +81,7 @@ document.onpaste = function(e) {
 const _upload_img_btn = $("#imgUploadBtn");
 const _imgUpload = $("#imgUpload");
 _upload_img_btn.click(function(){
-    _imgUpload.click()
+    _imgUpload.click();
 });
 
 _imgUpload.change(function(e){
