@@ -222,7 +222,7 @@ function autoMission(){
                                     type    : "basic",
                                     iconUrl : "icon/icon38_msg.png",
                                     title   : "v2ex plus 提醒您",
-                                    message : "今日的登陆奖励已领取。\nTake your passion and make it come true.",
+                                    message : "今日的登录奖励已领取。\nTake your passion and make it come true.",
                                 }
                             );
                             s.setItem( "autoMission", new Date().getUTCDate() );
