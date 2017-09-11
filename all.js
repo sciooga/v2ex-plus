@@ -24,6 +24,8 @@ $('.avatar').each(function(){
 //——————————————————————————————————方向键切换上下页——————————————————————————————————
 
 $("body").keyup(function(e) {
+    if ($('textarea').is(':focus') || $('input').is(':focus')) return
+
     if (e.keyCode == 37) {
         // 按下左键，上一页
         $("[title=上一页]").click();
