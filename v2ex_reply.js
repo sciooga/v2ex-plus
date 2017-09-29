@@ -1,40 +1,33 @@
 /*global img_list emoticon_list triangle_img setClipboardText*/
 //获取被@的用户，列表开始于 index 1
-function get_at_name_list( str ){
-    var name_list = Array();
-    var patt_at_name = RegExp("<a.*?href=\"/member/(.*?)\">", "g");
-    name_list[0] = "t";
-    for (let i=1; name_list[i-1]; ++i){
-        name_list[i] = patt_at_name.exec( str );
-        name_list[i] = name_list[i]!=null && name_list[i][1] || "";
+function get_at_name_list(comment_content){
+    const name_list = new Set(),
+        patt_at_name = RegExp("@<a href=\"/member/(.+?)\">", "g");
+    
+    let match;
+    while (match = patt_at_name.exec(comment_content)) {
+        name_list.add(match[1]);
     }
 
-    // 简单去重
-    const  unique_name_list = Array();
-    for (const i in name_list) {
-        const item = name_list[i];
-        if (unique_name_list.indexOf(item) === -1) {
-            unique_name_list.push(item);
-        }
-    }
-
-    return unique_name_list;
+    return name_list;
 }
 
 //判断是否为相关的回复
 function related_reply( reply_content, _reply_user_name, _reply_at_name ){
-    var _related_reply = false;
-    var _this_reply_at_name_list = get_at_name_list( reply_content );
-    if ( _this_reply_at_name_list[1] ){
-        for ( var i = 1;  _this_reply_at_name_list[i]; ++i){
-            if ( _this_reply_at_name_list[i] == _reply_user_name || _reply_at_name == _this_reply_at_name_list[i] ){
-                _related_reply = true;
-            }
-        }
-    }else{
-        _related_reply = true;
+    let reply_related = false;
+    const at_name_list = get_at_name_list(reply_content);
+
+    if (at_name_list.size === 0){
+        return true;
     }
-    return _related_reply;
+
+    for (let at_name of at_name_list) {
+        if (at_name == _reply_user_name || at_name == _reply_at_name){
+            reply_related = true;
+        }
+    }
+
+    return reply_related;
 }
 
 //插入图片
@@ -288,15 +281,15 @@ $(".replyDetailBTN").click(function(){
 
         _replyDetail.append("<div class='smartMode' onclick=\"$(this).children('span').toggleClass('checked');$(this).siblings('.unrelated').slideToggle(300);\"><span class='checked'>智能模式</span></div>");
 
-        for (let i=1; _reply_at_name_list[i]; ++i) {
+        for (let at_name of _reply_at_name_list) {
             r_i = 1;
             var _no = ~~(_this.closest("td").find(".no").text());
             var have_main_reply = false;
-            _replyDetail.append("<p class='bubbleTitle' style='margin-top: 20px;padding-top: 20px;'>本页内 "+ _reply_user_name +" 与 "+ _reply_at_name_list[i] +" 的会话：</p>");
+            _replyDetail.append("<p class='bubbleTitle' style='margin-top: 20px;padding-top: 20px;'>本页内 "+ _reply_user_name +" 与 "+ at_name +" 的会话：</p>");
             while ( _reply_user_name_list[r_i] ){
                 if ( _reply_user_name_list[r_i] == _reply_user_name ){
                     _bubble = "<div class='rightBubble";
-                    !related_reply( _reply_content_list[r_i], _reply_user_name, _reply_at_name_list[i] ) && (_bubble+=" unrelated");
+                    !related_reply( _reply_content_list[r_i], _reply_user_name, at_name ) && (_bubble+=" unrelated");
                     _bubble += "' style='text-align: right;'>\
                                 <div>\
                                     "+ _reply_content_list[r_i] +"\
@@ -306,20 +299,20 @@ $(".replyDetailBTN").click(function(){
                                 </div></div>";
                     _replyDetail.append( _bubble );
 
-                }else if ( _reply_user_name_list[r_i] == _reply_at_name_list[i] ){
+                }else if ( _reply_user_name_list[r_i] == at_name ){
                     _bubble = "<div class='leftBubble";
-                    !related_reply( _reply_content_list[r_i], _reply_user_name, _reply_at_name_list[i] ) && (_bubble+=" unrelated") || (have_main_reply=true);
+                    !related_reply( _reply_content_list[r_i], _reply_user_name, at_name ) && (_bubble+=" unrelated") || (have_main_reply=true);
                     _bubble += "' style='text-align: left;'>\
                                 <div>\
                                     "+ _reply_content_list[r_i] +"\
                                     <p class='bubbleName' style=''>\
-                                        "+ _reply_at_name_list[i] +"&emsp;回复于"+ (r_i+page_previous_num*100) +"层&emsp;<span class='unrelatedTip'><span>\
+                                        "+ at_name +"&emsp;回复于"+ (r_i+page_previous_num*100) +"层&emsp;<span class='unrelatedTip'><span>\
                                     </p>\
                                 </div></div>";
                     _replyDetail.append( _bubble );
                 }
                 //如果被@用户只有一条回复但回复是@其他不相干用户则显示这条回复
-                if ( _no-1 == r_i && !have_main_reply && /(\S+?) 回复于\d+层/.exec(_replyDetail.children(".leftBubble").last().find(".bubbleName").text())[1] == _reply_at_name_list[i] ){
+                if ( _no-1 == r_i && !have_main_reply && /(\S+?) 回复于\d+层/.exec(_replyDetail.children(".leftBubble").last().find(".bubbleName").text())[1] == at_name ){
                     _replyDetail.children(".leftBubble").last().removeClass("unrelated");
                 }
 
