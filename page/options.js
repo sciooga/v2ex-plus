@@ -3,14 +3,6 @@ function saveChoice(e){
     localStorage.setItem(e.target.name, e.target.value);
 }
 
-window.onresize = function(){
-    if(document.body.clientWidth < 790){
-        document.getElementById("introduction").style.display="none";
-    }else{
-        document.getElementById("introduction").style.display="";
-    }
-};
-
 window.onload = function(){
     const s = localStorage;
 
