@@ -404,7 +404,7 @@ _reply_link.mouseenter(function(){
                                                 "+ _reply_user_name_list[i] +"&emsp;回复于"+ (i+page_previous_num*100) +"层&emsp;\
                                             </p><img class='triangle' src='"+ triangle_img +"' />" );
             } else {
-                for (let i=_no; i; --i){
+                for (let i=_no - 1; i > 0; --i){
                     if ( _reply_user_name_list[i] == _hover_at_name[1] ){
                         _close_reply.html( _reply_content_list[i] + "<p class='bubbleName' style='text-align:right; padding-right:0px;'>\
                                                 "+ _reply_user_name_list[i] +"&emsp;回复于"+ (i+page_previous_num*100) +"层&emsp;\
