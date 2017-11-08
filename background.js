@@ -130,11 +130,11 @@ browser.alarms.onAlarm.addListener(function( a ){
     switch (a.name){
     case "checkMsg":
         Number(s.getItem("newMsg")) && checkMsg();
+        Number(s.getItem("followMsg")) && followMsg();
         break;
     case "autoMission":
         Number(s.getItem("autoMission")) && autoMission();
         Number(s.getItem("autoLoginWeibo")) && autoLoginWeibo();
-        Number(s.getItem("followMsg")) && followMsg();
         break;
     }
 });
@@ -144,13 +144,13 @@ browser.alarms.onAlarm.addListener(function( a ){
 
 //——————————————————————————————————检查关注人新主题——————————————————————————————————
 function followMsg() {
-    $.get('https://www.v2ex.com/?tab=members', function(data){
+    $.get('https://www.v2ex.com/my/following', function(data){
         var $html = $("<output>").append($.parseHTML(data))
         window.a = $html
         var topics = $html.find('#Main .box:nth(0) table')
         if (!topics.length) return
 
-        var $firstOne = topics.eq(0)
+        var $firstOne = topics.eq(2)
         var topicId = $firstOne.find('.item_title a').attr('href').substr(3).split('#')[0]
         var topic = $firstOne.find('.item_title').text()
         var author = $firstOne.find('.small.fade > strong:nth-child(3)').text()

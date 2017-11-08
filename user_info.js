@@ -6,7 +6,12 @@ function follow_or_bolck( _target, bash, undo, default_name ){
     var v = "撤销";
     _target.attr("value") == "撤销" && (bash = undo) && (v = default_name);
     _target.attr("value", "等待");
-    $.get( location.origin+bash+btn_key, function(){
+    var url = location.origin+bash+btn_key
+    if (bash.indexOf('follow') != -1) {
+        url = location.origin+bash+btn_once
+    }
+    console.log(url)
+    $.get(url, function(data){
         _target.attr("value", v);
     });
 }
@@ -50,6 +55,7 @@ var _user_block = $("#userBlock");
 var _triangle_img = $("#userInfo > img");
 var avatar_src;
 var btn_key;
+var btn_once;
 var display_loading_img;
 var display_userInfo;
 var hidden_userInfo;
@@ -99,10 +105,12 @@ $("#Main .avatar").mouseenter(function(){
                 var company = RegExp("building\"></li> &nbsp; <strong>(.*?)</strong> (.*?)</span>").exec(data);
                 var online = RegExp("ONLINE").exec(data);
                 btn_key = RegExp("/([0-9]+?\\?t=[0-9]+?)';").exec(data);
+                btn_once = RegExp("/([0-9]+?\\?once=[0-9]+?)';").exec(data);
                 var follow = RegExp("加入特别关注").test(data);
                 var block = RegExp("Block").test(data);
                 if(btn_key){
                     btn_key = btn_key[1];//鼠标悬浮在自己头像无法获取 key
+                    btn_once = btn_once[1]
                     follow && _user_follow.attr("value", "关注") || _user_follow.attr("value", "撤销");
                     block && _user_block.attr("value", "屏蔽") || _user_block.attr("value", "撤销");
                 }else{
