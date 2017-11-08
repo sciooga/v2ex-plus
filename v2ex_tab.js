@@ -85,9 +85,10 @@ $("a[href=\"/mission/daily\"]")
         $("#gift_v2excellent").text("正在领取......");
         var giftLink = (location.origin + "/mission/daily/redeem" + RegExp("/signout(\\?once=[0-9]+)").exec($("div#Top").html())[1]);
         $.get(giftLink, function(checkResult) {
-            var okSign = $("<output>")
-                .append($.parseHTML(checkResult))
-                .find("li.fa.fa-ok-sign");
+            var $output = $("<output>").append($.parseHTML(checkResult))
+            var okSign = $output.find("li.fa.fa-ok-sign");
+            var keepDays = $output.text().match(/已连续登录 (\d+?) 天/)[0]
+            console.log(keepDays)
             if (okSign.length > 0) {
                 $.get(location.origin + "/balance", function(result) {
                     var amount = $("<output>")
@@ -95,7 +96,7 @@ $("a[href=\"/mission/daily\"]")
                         .find("table>tbody>tr:contains(\"每日登录\"):first>td:nth(2)")
                         .text();
                     $("#gift_v2excellent").html(
-                        "已领取 <strong>" + amount + "</strong> 铜币。"
+                        "成功领取 <strong>" + amount + "</strong> 铜币，" + keepDays
                     );
                     setTimeout(function() {
                         $("#Rightbar>.sep20:nth(1)").remove();

@@ -28,6 +28,7 @@ window.onload = function(){
             "dblclickToTop": 0,
             "replyUser" : 1,
             "autoLoginWeibo": 0,
+            "followMsg": 1,
             "newWindow": 0,
             "replyColor": "#fffff9",
             "replyA": 0.4,
@@ -47,6 +48,7 @@ window.onload = function(){
         replyUser: document.replyUserSelect.replyUser,
         dblclickToTop: document.dblclickToTopSelect.dblclickToTop,
         autoLoginWeibo: document.autoLoginWeiboSelect.autoLoginWeibo,
+        followMsg: document.followMsgSelect.followMsg,
         newWindow: document.newWindowSelect.newWindow
     };
 

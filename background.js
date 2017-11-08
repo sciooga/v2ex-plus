@@ -122,6 +122,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 
 Number(s.getItem("newMsg")) && checkMsg();
+Number(s.getItem("followMsg")) && followMsg();
 browser.alarms.create("checkMsg", {periodInMinutes: 5});
 browser.alarms.create("autoMission", {periodInMinutes: 30});
 
@@ -133,11 +134,42 @@ browser.alarms.onAlarm.addListener(function( a ){
     case "autoMission":
         Number(s.getItem("autoMission")) && autoMission();
         Number(s.getItem("autoLoginWeibo")) && autoLoginWeibo();
+        Number(s.getItem("followMsg")) && followMsg();
         break;
     }
 });
 
 //——————————————————————————————————定时任务初始化——————————————————————————————————
+
+
+//——————————————————————————————————检查关注人新主题——————————————————————————————————
+function followMsg() {
+    $.get('https://www.v2ex.com/?tab=members', function(data){
+        var $html = $("<output>").append($.parseHTML(data))
+        window.a = $html
+        var topics = $html.find('#Main .box:nth(0) table')
+        if (!topics.length) return
+
+        var $firstOne = topics.eq(0)
+        var topicId = $firstOne.find('.item_title a').attr('href').substr(3).split('#')[0]
+        var topic = $firstOne.find('.item_title').text()
+        var author = $firstOne.find('.small.fade > strong:nth-child(3)').text()
+
+        if( s.getItem("followMsgTopicId") == topicId ) return
+        s.setItem( "followMsgTopicId", topicId)
+        window.newFollowTopicId = topicId
+        browser.notifications.create(
+            "newFollowTopic" ,
+        {
+            type       : "basic",
+            iconUrl    : "icon/icon38_msg.png",
+            title      : "v2ex plus 提醒您",
+            message    : `${author} 创作了新主题：${topic}`,
+        });
+    })
+}
+
+//——————————————————————————————————检查关注人新主题——————————————————————————————————
 
 
 //——————————————————————————————————通知功能——————————————————————————————————
@@ -191,6 +223,9 @@ browser.notifications.onClicked.addListener(function(notificationId){
     case "autoMission":
         browser.tabs.create({url:"https://www.v2ex.com/balance"});
         break;
+    case "newFollowTopic":
+        browser.tabs.create({url:`https://www.v2ex.com/t/${window.newFollowTopicId}?p=1`});
+        break;
     }
 });
 
@@ -205,7 +240,7 @@ function autoMission(){
         //console.log('今天已经成功领取奖励了');
         return;
     }
-    //console.log('开始签到')
+    console.log('开始签到')
     $.ajax({
         url: "https://www.v2ex.com/",
         success: function(data){
@@ -216,13 +251,14 @@ function autoMission(){
                     url: "https://www.v2ex.com/mission/daily/redeem" + sign,
                     success: function(data){
                         if ( data.search("查看我的账户余额") ){
+                            let result = data.match(/已连续登录 (\d+?) 天/)
                             browser.notifications.create(
                                 "autoMission" ,
                                 {
                                     type    : "basic",
                                     iconUrl : "icon/icon38_msg.png",
                                     title   : "v2ex plus 提醒您",
-                                    message : "今日的登录奖励已领取。\nTake your passion and make it come true.",
+                                    message : `签到成功，${result[0]}。\nTake your passion and make it come true.`,
                                 }
                             );
                             s.setItem( "autoMission", new Date().getUTCDate() );
