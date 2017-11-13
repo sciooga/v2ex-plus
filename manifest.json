@@ -26,12 +26,16 @@
     {
       "matches": ["*://*.v2ex.com/t/*"],
       "css": ["v2ex_reply.css"],
-      "js": ["emoticon.js", "clipboard.js", "v2ex_reply.js", "user_info.js"]
+      "js": ["emoticon.js", "clipboard.js", "v2ex_reply.js", "user_info.js", "sync_collect.js"]
     },
     {
       "matches": ["*://*.v2ex.com/new"],
       "css": ["v2ex_new.css"],
       "js": ["v2ex_new.js"]
+    },
+    {
+      "matches": ["*://*.v2ex.com/my/topics"],
+      "js": ["v2ex_collect.js"]
     }
   ],
   "browser_action": {

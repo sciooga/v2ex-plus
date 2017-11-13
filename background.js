@@ -110,6 +110,18 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         });
         sendResponse({blockList: "get"});
         break;
+    case "get_collectList":
+        sendResponse({cached: localStorage.collectTopicCachedReplyCountList, latest: localStorage.collectTopicLatestReplyCountList});
+        break;
+    case "clear_collect":
+        localStorage.collectTopicCachedReplyCountList = request.list;
+        localStorage.collectTopicLatestReplyCountList = request.list;
+        sendResponse(null);
+        break;
+    case "sync_collect":
+        localStorage.collectTopicCachedReplyCountList = request.cached;
+        localStorage.collectTopicLatestReplyCountList = request.latest;
+        break;
     default:
         throw "invaild action";
     }
@@ -123,6 +135,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 Number(s.getItem("newMsg")) && checkMsg();
 Number(s.getItem("followMsg")) && followMsg();
+Number(s.getItem("collectMsg")) && collectMsg();
 browser.alarms.create("checkMsg", {periodInMinutes: 5});
 browser.alarms.create("autoMission", {periodInMinutes: 30});
 
@@ -131,6 +144,7 @@ browser.alarms.onAlarm.addListener(function( a ){
     case "checkMsg":
         Number(s.getItem("newMsg")) && checkMsg();
         Number(s.getItem("followMsg")) && followMsg();
+        Number(s.getItem("collectMsg")) && collectMsg();
         break;
     case "autoMission":
         Number(s.getItem("autoMission")) && autoMission();
@@ -170,6 +184,71 @@ function followMsg() {
 }
 
 //——————————————————————————————————检查关注人新主题——————————————————————————————————
+
+
+//——————————————————————————————————检查收藏主题新回复——————————————————————————————————
+function collectMsg() {
+    $.get('https://www.v2ex.com/my/topics', function(data){
+        var $html = $("<output>").append($.parseHTML(data))
+        var topics = $html.find('div.cell.item')
+        if (!topics.length) return
+
+        var cachedReplyCountList = localStorage.collectTopicCachedReplyCountList
+        cachedReplyCountList = cachedReplyCountList ? JSON.parse(cachedReplyCountList) : {}
+        var latestReplyCountList = localStorage.collectTopicLatestReplyCountList
+        latestReplyCountList = latestReplyCountList ? JSON.parse(latestReplyCountList) : {}
+
+        var topicIds = [];
+        var newReply = false
+        var topicIndex
+        for (topicIndex = 0; topicIndex < topics.length; topicIndex++){
+            var topic = topics[topicIndex]
+            var topicReplyCountEl = $(topic).find('.count_livid, .count_orange')
+            var topicReplyCount = topicReplyCountEl.length ? Number(topicReplyCountEl[0].innerText) : 0
+            var topicId = Number($(topic).find('.item_title a')[0].href.match(/\/t\/(\d+)/)[1]);
+            topicIds.push(topicId)
+
+            if (cachedReplyCountList[topicId] === undefined){
+                cachedReplyCountList[topicId] = topicReplyCount
+            }
+            
+            if (latestReplyCountList[topicId] === undefined){
+                latestReplyCountList[topicId] = topicReplyCount
+            }else if (latestReplyCountList[topicId] != topicReplyCount){
+                latestReplyCountList[topicId] = topicReplyCount
+                newReply = true
+            }
+        }
+
+        for (topicIndex in cachedReplyCountList){
+            if(topicIds.indexOf(Number(topicIndex)) === -1){
+                delete(cachedReplyCountList[topicIndex])
+            }
+        }
+
+        for (topicIndex in latestReplyCountList){
+            if(topicIds.indexOf(Number(topicIndex)) === -1){
+                delete(latestReplyCountList[topicIndex])
+            }
+        }
+
+        localStorage.collectTopicCachedReplyCountList = JSON.stringify(cachedReplyCountList)
+        localStorage.collectTopicLatestReplyCountList = JSON.stringify(latestReplyCountList)
+
+        if (newReply){
+            browser.notifications.create(
+                "newCollectTopicReply" ,
+            {
+                type       : "basic",
+                iconUrl    : "icon/icon38_msg.png",
+                title      : "v2ex plus 提醒您",
+                message    : "您收藏的主题有了新回复，点击查看",
+            });
+        }
+    })
+}
+
+//——————————————————————————————————检查收藏主题新回复——————————————————————————————————
 
 
 //——————————————————————————————————通知功能——————————————————————————————————
@@ -225,6 +304,9 @@ browser.notifications.onClicked.addListener(function(notificationId){
         break;
     case "newFollowTopic":
         browser.tabs.create({url:`https://www.v2ex.com/t/${window.newFollowTopicId}?p=1`});
+        break;
+    case "newCollectTopicReply":
+        browser.tabs.create({url:"https://www.v2ex.com/my/topics"});
         break;
     }
 });
