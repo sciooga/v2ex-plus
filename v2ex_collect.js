@@ -5,17 +5,22 @@ chrome.runtime.sendMessage({action: "get_collectList"}, function(response) {
     var _latestReplyCountList = response.latest
     _latestReplyCountList = _latestReplyCountList ? JSON.parse(_latestReplyCountList) : {}
     
-    var _replyCountEl = $('.count_livid,.count_orange')
     var topicList = {}
+    var topicEl = $('.cell.item')
     
-    for (var _replayCountIndex = 0; _replayCountIndex < _replyCountEl.length; _replayCountIndex++){
-        var _topicId = Number(_replyCountEl[_replayCountIndex].href.match(/\/t\/(\d+)/)[1])
+    for (var _topicIndex = 0; _topicIndex < topicEl.length; _topicIndex++){
+        var _replyCountEl = $(topicEl[_topicIndex]).find('.count_livid,.count_orange')
+        var _topicId = Number($(topicEl[_topicIndex]).find('.item_title a')[0].href.match(/\/t\/(\d+)/)[1])
     
-        if (_cachedReplyCountList[_topicId] !== _latestReplyCountList[_topicId]){
-            $(_replyCountEl[_replayCountIndex]).attr('class', 'count_orange');
+        if (_replyCountEl.length){
+            if (_cachedReplyCountList[_topicId] !== _latestReplyCountList[_topicId]){
+                $(_replyCountEl[0]).attr('class', 'count_orange');
+            }
+    
+            topicList[_topicId] = Number(_replyCountEl[0].innerText)
+        }else{
+            topicList[_topicId] = 0
         }
-
-        topicList[_topicId] = Number(_replyCountEl[_replayCountIndex].innerText)
     }
     
     var _clearAll = $('<a href="#">全部标为已读</a>')

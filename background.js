@@ -111,6 +111,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         sendResponse({blockList: "get"});
         break;
     case "get_collectList":
+        window.collectNotified = false
         sendResponse({cached: localStorage.collectTopicCachedReplyCountList, latest: localStorage.collectTopicLatestReplyCountList});
         break;
     case "clear_collect":
@@ -136,7 +137,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 Number(s.getItem("newMsg")) && checkMsg();
 Number(s.getItem("followMsg")) && followMsg();
 Number(s.getItem("collectMsg")) && collectMsg();
-browser.alarms.create("checkMsg", {periodInMinutes: 5});
+browser.alarms.create("checkMsg", {periodInMinutes: 1});
 browser.alarms.create("autoMission", {periodInMinutes: 30});
 
 browser.alarms.onAlarm.addListener(function( a ){
@@ -235,7 +236,8 @@ function collectMsg() {
         localStorage.collectTopicCachedReplyCountList = JSON.stringify(cachedReplyCountList)
         localStorage.collectTopicLatestReplyCountList = JSON.stringify(latestReplyCountList)
 
-        if (newReply){
+        if (!window.collectNotified && newReply){
+            window.collectNotified = true
             browser.notifications.create(
                 "newCollectTopicReply" ,
             {
@@ -244,6 +246,10 @@ function collectMsg() {
                 title      : "v2ex plus 提醒您",
                 message    : "您收藏的主题有了新回复，点击查看",
             });
+            //20分钟内最多提示一次
+            setTimeout(function(){
+                window.collectNotified = false
+            }, 1200000)
         }
     })
 }
