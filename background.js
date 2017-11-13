@@ -137,7 +137,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 Number(s.getItem("newMsg")) && checkMsg();
 Number(s.getItem("followMsg")) && followMsg();
 Number(s.getItem("collectMsg")) && collectMsg();
-browser.alarms.create("checkMsg", {periodInMinutes: 1});
+browser.alarms.create("checkMsg", {periodInMinutes: 5});
 browser.alarms.create("autoMission", {periodInMinutes: 30});
 
 browser.alarms.onAlarm.addListener(function( a ){
