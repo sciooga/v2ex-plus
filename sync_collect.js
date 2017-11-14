@@ -22,6 +22,8 @@ chrome.runtime.sendMessage({action: "get_collectList"}, function(response) {
             shouldSync = true
         }
     
-        chrome.runtime.sendMessage({action: "sync_collect", cached: JSON.stringify(_cachedReplyCountList), latest: JSON.stringify(_latestReplyCountList)})
+        if (shouldSync){
+            chrome.runtime.sendMessage({action: "sync_collect", cached: JSON.stringify(_cachedReplyCountList), latest: JSON.stringify(_latestReplyCountList)})
+        }
     }
 })
