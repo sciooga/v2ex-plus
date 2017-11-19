@@ -227,6 +227,7 @@ browser.notifications.onClicked.addListener(function(notificationId){
         browser.tabs.create({url:`https://www.v2ex.com/t/${window.newFollowTopicId}?p=1`});
         break;
     }
+    browser.notifications.clear(notificationId);
 });
 
 
