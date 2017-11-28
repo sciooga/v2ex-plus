@@ -315,6 +315,7 @@ browser.notifications.onClicked.addListener(function(notificationId){
         browser.tabs.create({url:"https://www.v2ex.com/my/topics"});
         break;
     }
+    browser.notifications.clear(notificationId);
 });
 
 

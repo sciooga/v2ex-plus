@@ -1,126 +1,192 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="zh">
     <meta charset="UTF-8">
     <title>v2ex plus - 选项与帮助</title>
-    <style type="text/css">
-    body{
-        background: #f6f6f6;
-        color: #778087;
-        font-family: sans-serif;
-        font-size: 100%;
-        line-height: 1.6;
-    }
-    ul{
-        padding: 0;
-    }
-    li{
-        margin: 20px;
-        padding: 10px;
-        border: 1px dashed #e2e2e2;
-        list-style-type: none;
-    }
-    a{
-        color: #778087;
-    }
-    img{
-        display: block;
-        margin-top: 10px;
-        max-width: 660px;
-    }
-    div.q{
-        margin-bottom: 6px;
-    }
-    div.a{
-        margin-left: 26px;
-    }
-    .vplusBTN{
-        position: relative;
-        top: -2px;
-        background-color: #fff;
-        color: #333;
-        box-shadow: 0px 1px 0px rgba(66, 66, 77, 0.1);
-        padding: 4px 15px 4px 15px;
-        border: 1px solid rgba(80,80,90, 0.2);
-        border-bottom-color: rgba(80,80,90, 0.35);
-        border-radius: 3px;
-        font-size: 12px;
-        cursor: pointer;
-    }
-    .vplusBTN:hover{
-        background-color: #f9f9f9;
-    }
-    a.vplusBTN{
-        text-decoration: none;
-    }
-    </style>
+    <link type="text/css" href="../style/options.css" rel="stylesheet">
 </head>
+
 <body>
     <div style="margin:0 auto; width:40em;">
         <ul>
-            <li><form name="newMsgSelect">
-                消息提醒：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="newMsg" value="1" disabled="disabled"/>开启
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="newMsg" value="0" disabled="disabled"/>关闭
-            </form></li>
-            <li><form name="imageHostingSelect">
-                图床设置：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="imageHosting" value="weibo" disabled="disabled"/>微博图床
-                        &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="imageHosting" value="imgur" disabled="disabled"/>imgur
-            </form></li>
-            <li><form name="autoMissionSelect">
-                自动签到：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="autoMission" value="1" disabled="disabled"/>开启
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="autoMission" value="0" disabled="disabled"/>关闭
-            </form></li>
-            <li><form name="previewSelect">
-                主题预览：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="preview" value="1" disabled="disabled"/>开启
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="preview" value="0" disabled="disabled"/>关闭
-            </form></li>
-            <li><form name="foldSelect">
-                自动折叠：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="fold" value="1" disabled="disabled" />开启
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="fold" value="0" disabled="disabled" />关闭
-            </form></li>
-            <li><form name="replyUserSelect">
-                回复楼层号：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="replyUser" value="1" disabled="disabled" />开启
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="replyUser" value="0" disabled="disabled" />关闭&nbsp;&nbsp;&nbsp;
-            </form></li>
-            <li><form name="followMsgSelect">
-                关注提醒：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="followMsg" value="1" disabled="disabled"/>开启
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="followMsg" value="0" disabled="disabled"/>关闭
-            </form></li>
-            <li><form name="collectMsgSelect">
-                收藏提醒：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="collectMsg" value="1" disabled="disabled"/>开启
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="collectMsg" value="0" disabled="disabled"/>关闭
-            </form></li>
-            <li><form name="dblclickToTopSelect">
-                双击返回顶部：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="dblclickToTop" value="1" disabled="disabled" />开启
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="dblclickToTop" value="0" disabled="disabled" />关闭&nbsp;&nbsp;&nbsp;
-            </form></li>
-            <li><form name="newWindowSelect">
-                新标签页浏览主题：&nbsp;&nbsp;&nbsp;<input type="radio" name="newWindow" value="1" disabled="disabled" />开启
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="newWindow" value="0" disabled="disabled" />关闭
-            </form></li>
-            <li><form name="autoLoginWeiboSelect">
-                定时激活微博（实验）：&nbsp;<input type="radio" name="autoLoginWeibo" value="1" disabled="disabled" />开启
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="autoLoginWeibo" value="0" disabled="disabled" />关闭&nbsp;&nbsp;&nbsp;
-            </form></li>
-            <li><form name="replyColorSelect">
-                楼主回复背景色：&nbsp;&nbsp;&nbsp;&nbsp;<input type="color" name="replyColor" disabled="disabled" />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;透明度：<span id="replyAValue" style="display:inline-block; width:2em" >稍后</span>
-                <input type="range" name="replyA" min="0.00" max="1.00" step="0.05" disabled="disabled" style="width:100px" />
-            </form></li>
-            <li><form name="thankColorSelect">
-                感谢爱心颜色：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="color" name="thankColor" disabled="disabled" />
-            </form></li>
             <li>
-                重置所有设置：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="allDefault" class="vplusBTN">确认重置</span>
+                <label class="item">
+                    <div class="item-content">消息提醒</div>
+                    <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="newMsg" class="newMsg" type="checkbox">
+                            <div></div>
+                        </span>
+                    </div>
+                </label>
             </li>
             <li>
-                管理屏蔽名单：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="blockList" class="vplusBTN">查看屏蔽名单</span>
+                <label class="item">
+                    <div class="item-content">Imgur图床（默认使用微博图床）</div>
+                    <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="imageHosting" class="imageHosting" type="checkbox">
+                            <div></div>
+                        </span>
+                    </div>
+                </label>
             </li>
             <li>
-                使用说明及更多：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/page/about.html" class="vplusBTN" target="_blank">查看更多</a>
+                <label class="item">
+                    <div class="item-content">自动签到</div>
+                    <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="autoMission" class="autoMission" type="checkbox">
+                            <div></div>
+                        </span>
+                    </div>
+                </label>
+            </li>
+            <li>
+                <label class="item">
+                    <div class="item-content">主题预览</div>
+                    <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="preview" class="preview" type="checkbox">
+                            <div></div>
+                        </span>
+                    </div>
+                </label>
+            </li>
+            <li>
+                <label class="item">
+                    <div class="item-content">自动折叠</div>
+                    <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="fold" class="fold" type="checkbox">
+                            <div></div>
+                        </span>
+                    </div>
+                </label>
+            </li>
+            <li>
+                <label class="item">
+                    <div class="item-content">回复楼层号</div>
+                    <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="replyUser" class="replyUser" type="checkbox">
+                            <div></div>
+                        </span>
+                    </div>
+                </label>
+            </li>
+            <li>
+                <label class="item">
+                    <div class="item-content">关注提醒</div>
+                    <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="followMsg" class="followMsg" type="checkbox">
+                            <div></div>
+                        </span>
+                    </div>
+                </label>
+            </li>
+			<li>
+                <label class="item">
+                    <div class="item-content">收藏提醒</div>
+                    <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="collectMsg" class="collectMsg" type="checkbox">
+                            <div></div>
+                        </span>
+                    </div>
+                </label>
+            </li>
+            <li>
+                <label class="item">
+                    <div class="item-content">双击返回顶部</div>
+                    <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="dblclickToTop" class="dblclickToTop" type="checkbox">
+                            <div></div>
+                        </span>
+                    </div>
+                </label>
+            </li>
+            <li>
+                <label class="item">
+                    <div class="item-content">新标签页浏览主题</div>
+                    <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="newWindow" class="newWindow" type="checkbox">
+                            <div></div>
+                        </span>
+                    </div>
+                </label>
+            </li>
+            <li>
+                <label class="item">
+                    <div class="item-content">定时激活微博（实验）</div>
+                    <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="autoLoginWeibo" class="autoLoginWeibo" type="checkbox">
+                            <div></div>
+                        </span>
+                    </div>
+                </label>
+            </li>
+            <li>
+                <label class="item">
+                    <div class="item-content reply-color">楼主回复背景色</div>
+                    <div class="item-secondary">
+                        <input disabled name="replyColor" class="replyColor" type="color">
+                    </div>
+                </label>
+            </li>
+            <li>
+                <label class="item">
+                    <div class="item-content reply-a">楼主回复背景色透明度</div>
+                    <div class="item-secondary">
+                        <input disabled name="replyA" class="replyA" type="range" min="0.00" max="1.00" step="0.05">
+                        <span id="replyAValue" class="reply-value"></span>
+                    </div>
+                </label>
+            </li>
+            <li>
+                <label class="item">
+                    <div class="item-content thankText">感谢爱心颜色</div>
+                    <div class="item-secondary">
+                        <input disabled name="thankColor" class="thankColor" type="color">
+                    </div>
+                </label>
+            </li>
+            <li>
+                <label class="item">
+                    <div class="item-content">重置所有设置</div>
+                    <button class="button reset" id="allDefault">确认重置</button>
+                </label>
+            </li>
+            <li>
+                <div class="item link">
+                    <div class="item-content" id="blockList" title="前往屏蔽名单页面">管理屏蔽名单</div>
+                    <div class="next">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <title>navigate_next</title>
+                            <path d="M9.984 6l6 6-6 6-1.406-1.406 4.594-4.594-4.594-4.594z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <a class="item link" href="/page/about.html" title="前往关于页面" target="_blank">
+                    <div class="item-content" >使用说明及更多</div>
+                    <div class="next">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <title>navigate_next</title>
+                            <path d="M9.984 6l6 6-6 6-1.406-1.406 4.594-4.594-4.594-4.594z"></path>
+                        </svg>
+                    </div>
+                </a>
             </li>
         </ul>
     </div>
     <script src="options.js"></script>
 </body>
+
 </html>
