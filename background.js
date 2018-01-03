@@ -19,54 +19,57 @@ browser.runtime.onInstalled.addListener(function(e){
 const s = localStorage;
 
 browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  console.log(request);
     if ( request.img_base64 ){
         var post_url, patt_id, url_start, url_end, data;
         var img_status;
         //——————————设置微博或 imgur 的信息——————————
-        if ( s.getItem("imageHosting") === "weibo" ){
-            post_url = "http://picupload.service.weibo.com/interface/pic_upload.php?\
+      chrome.storage.sync.get(function (response) {
+        if ( response.imageHosting === "weibo" ){
+          post_url = "http://picupload.service.weibo.com/interface/pic_upload.php?\
                     ori=1&mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog";
-            patt_id = "pid\":\"(.*?)\"";
-            url_start = "https://ws2.sinaimg.cn/large/";
-            url_end = ".jpg";
-            data = {"b64_data": request.img_base64};
+          patt_id = "pid\":\"(.*?)\"";
+          url_start = "https://ws2.sinaimg.cn/large/";
+          url_end = ".jpg";
+          data = {"b64_data": request.img_base64};
         }else{
-            post_url = "https://api.imgur.com/3/image";
-            patt_id = "id\":\"(.*?)\"";
-            url_start = "https://i.imgur.com/";
-            url_end = ".png";
-            data = {"image": request.img_base64};
+          post_url = "https://api.imgur.com/3/image";
+          patt_id = "id\":\"(.*?)\"";
+          url_start = "https://i.imgur.com/";
+          url_end = ".png";
+          data = {"image": request.img_base64};
         }
-        //——————————微博或 imgur 的信息完成——————————
-
         $.ajax({
-            url: post_url,
-            method: "POST",
-            data: data,
-            dataType: "text",
-            beforeSend: (xhr) => {
-                if ( s.getItem("imageHosting") === "imgur" )
-                    xhr.setRequestHeader("Authorization", "Client-ID 9311f6be1c10160");
-            },
-            success: (data) => {
-                try{
-                    img_status = url_start + RegExp(patt_id).exec(data)[1] + url_end;
-                    //console.log("Succeed: "+ img_status);
-                } catch(e){
-                    //console.error("Field not found");
-                    img_status = "Failed";
-                }
-            },
-            error: () => {
-                img_status = "Failed";
-                //console.info("Request failed");
-            },
-            complete: () => {
-                sendResponse({img_status: img_status});
+          url: post_url,
+          method: "POST",
+          data: data,
+          dataType: "text",
+          beforeSend: (xhr) => {
+              if ( response.imageHosting === "imgur" ){
+                xhr.setRequestHeader("Authorization", "Client-ID 9311f6be1c10160");
+              }
+          },
+          success: (data) => {
+            try{
+              img_status = url_start + RegExp(patt_id).exec(data)[1] + url_end;
+              //console.log("Succeed: "+ img_status);
+            } catch(e){
+              //console.error("Field not found");
+              img_status = "Failed";
             }
+          },
+          error: () => {
+            img_status = "Failed";
+            //console.info("Request failed");
+          },
+          complete: () => {
+            sendResponse({img_status: img_status});
+          }
         });
+      });
         return true;
     }
+    //——————————微博或 imgur 的信息完成——————————
     //——————————————————————————————————接收来自页面的图片数据上传并返回——————————————————————————————————
 
 

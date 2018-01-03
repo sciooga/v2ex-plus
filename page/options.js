@@ -106,6 +106,7 @@ window.onload = function() {
                 case "replyColor":
                 case "thankColor":
                     button.value = value;
+                    setItemByKey(name,value);//如果用户从未改过，则设置一个默认值
                     button.onchange = function(e) {
                         console.log(e, this, this.value)
                         let hex = this.value.toLowerCase();
@@ -116,7 +117,7 @@ window.onload = function() {
                 case "replyA":
                     button.value = value;
                     settingButtons["replyAValue"].textContent = value;
-                    setItemByKey(name,value);
+                    setItemByKey(name,value);//如果用户从未改过，则设置一个默认值
                     button.onchange = function() {
                         settingButtons["replyAValue"].textContent = this.value;
                         setItemByKey(name, this.value);
@@ -125,7 +126,8 @@ window.onload = function() {
                     break;
                 default:
                     if (name === "imageHosting") {
-                        checked = value === "weibo";
+                        checked = value === "imgur";
+                        setItemByKey(name,value);//设置storage中imgHosting的默认值
                     } else {
                         checked = !!parseInt(value);
                     }
