@@ -116,6 +116,7 @@ window.onload = function() {
                 case "replyA":
                     button.value = value;
                     settingButtons["replyAValue"].textContent = value;
+                    setItemByKey(name,value);
                     button.onchange = function() {
                         settingButtons["replyAValue"].textContent = this.value;
                         setItemByKey(name, this.value);

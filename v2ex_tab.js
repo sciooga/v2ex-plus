@@ -2,8 +2,8 @@
 
 
 var nwe_window;
-chrome.runtime.sendMessage({action: "get_newWindow_status"}, function(response) {
-    if ( response.newWindow_status ){
+chrome.storage.sync.get(function(response) {
+    if ( response.newWindow ){
         $(".item_title a").attr("target", "_blank");
         $(".item_hot_topic_title a").attr("target", "_blank");
         nwe_window = "target='_blank'";

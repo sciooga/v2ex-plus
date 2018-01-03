@@ -158,14 +158,16 @@ $("#onlyKeyUser").click(function(){
     }
 });
 
-chrome.runtime.sendMessage({action: "get_replySetting"}, function(response) {
+
+chrome.storage.sync.get(function(response) {
+    console.log(response);
     const topic_height = _topic.height(),
         r = parseInt((response.replyColor).substring(1,3),16),
         g = parseInt((response.replyColor).substring(3,5),16),
         b = parseInt((response.replyColor).substring(5,7),16),
         replyColor = `${r},${g},${b},${response.replyA}`;
-
     $(".keyUser").css("backgroundColor", `rgba(${replyColor})`);//设置楼主回复背景颜色
+
     if (response.fold){//折叠超长主题
         if (topic_height>1800){
             _topic_content.css({maxHeight:"600px", overflow:"hidden", transition:"max-height 2s"});
