@@ -19,7 +19,6 @@ browser.runtime.onInstalled.addListener(function(e){
 const s = localStorage;
 
 browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  console.log(request);
     if ( request.img_base64 ){
         var post_url, patt_id, url_start, url_end, data;
         var img_status;

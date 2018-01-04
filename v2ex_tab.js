@@ -15,8 +15,8 @@ chrome.storage.sync.get(function(response) {
 
 //——————————————————————————————————预览功能——————————————————————————————————
 
-chrome.runtime.sendMessage({action: "get_preview_status"}, function(response) {
-    if (!response.preview_status)
+chrome.storage.sync.get(function(response) {
+    if (!response.preview)
         return;
 
     $("div#Main > div:nth-of-type(2) .cell").each(function(){

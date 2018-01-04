@@ -692,7 +692,7 @@ _r_c[0].addEventListener("drop",function(e){
 
 
 //——————————————————————————————————回复楼层号——————————————————————————————————
-chrome.runtime.sendMessage({action: "get_replyUser"}, function(response) {
+chrome.storage.sync.get(function(response) {
     if (response.replyUser){
         $("[alt=\"Reply\"]").click(function(){
             setTimeout(() => {
