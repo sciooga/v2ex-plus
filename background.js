@@ -17,13 +17,14 @@ browser.runtime.onInstalled.addListener(function(e){
 
 //——————————————————————————————————接收来自页面的图片数据上传并返回——————————————————————————————————
 const s = localStorage;
+const storage = chrome.storage.sync;
 
 browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if ( request.img_base64 ){
         var post_url, patt_id, url_start, url_end, data;
         var img_status;
         //——————————设置微博或 imgur 的信息——————————
-      chrome.storage.sync.get(function (response) {
+      storage.get(function (response) {
         if ( response.imageHosting === "weibo" ){
           post_url = "http://picupload.service.weibo.com/interface/pic_upload.php?\
                     ori=1&mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog";
@@ -135,23 +136,29 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 //——————————————————————————————————定时任务初始化——————————————————————————————————
 
+storage.get(function (response) {
+  Number(response.newMsg) && checkMsg();
+  Number(response.followMsg) && followMsg();
+  Number(response.collectMsg) && collectMsg();
+});
 
-Number(s.getItem("newMsg")) && checkMsg();
-Number(s.getItem("followMsg")) && followMsg();
-Number(s.getItem("collectMsg")) && collectMsg();
 browser.alarms.create("checkMsg", {periodInMinutes: 5});
 browser.alarms.create("autoMission", {periodInMinutes: 30});
 
 browser.alarms.onAlarm.addListener(function( a ){
     switch (a.name){
     case "checkMsg":
-        Number(s.getItem("newMsg")) && checkMsg();
-        Number(s.getItem("followMsg")) && followMsg();
-        Number(s.getItem("collectMsg")) && collectMsg();
+      storage.get(function (response) {
+        Number(response.newMsg) && checkMsg();
+        Number(response.followMsg) && followMsg();
+        Number(response.collectMsg) && collectMsg();
+      });
         break;
     case "autoMission":
-        Number(s.getItem("autoMission")) && autoMission();
-        Number(s.getItem("autoLoginWeibo")) && autoLoginWeibo();
+      storage.get(function (response) {
+        Number(response.autoMission) && autoMission();
+        Number(response.autoLoginWeibo) && autoLoginWeibo();
+      });
         break;
     }
 });
@@ -172,17 +179,20 @@ function followMsg() {
         var topic = $firstOne.find('.item_title').text()
         var author = $firstOne.find('.small.fade > strong:nth-child(3)').text()
 
-        if( s.getItem("followMsgTopicId") == topicId ) return
-        s.setItem( "followMsgTopicId", topicId)
-        window.newFollowTopicId = topicId
-        browser.notifications.create(
+        storage.get(function (response) {
+          if( response.followMsgTopicId == topicId ) return
+          storage.set({"followMsgTopicId":topicId});
+          window.newFollowTopicId = topicId
+          browser.notifications.create(
             "newFollowTopic" ,
-        {
-            type       : "basic",
-            iconUrl    : "icon/icon38_msg.png",
-            title      : "v2ex plus 提醒您",
-            message    : `${author} 创作了新主题：${topic}`,
+            {
+              type       : "basic",
+              iconUrl    : "icon/icon38_msg.png",
+              title      : "v2ex plus 提醒您",
+              message    : `${author} 创作了新主题：${topic}`,
+            });
         });
+
     })
 }
 
@@ -327,46 +337,49 @@ browser.notifications.onClicked.addListener(function(notificationId){
 
 //——————————————————————————————————自动签到——————————————————————————————————
 function autoMission(){
-    if( s.getItem("autoMission") == new Date().getUTCDate() ){
-        //console.log('今天已经成功领取奖励了');
-        return;
+  storage.get(function (response) {
+    if( response.autoMission == new Date().getUTCDate() ){
+      //console.log('今天已经成功领取奖励了');
+      return;
     }
     console.log('开始签到')
     $.ajax({
-        url: "https://www.v2ex.com/",
-        success: function(data){
-            let sign = data.match("/signout(\\?once=[0-9]+)");
-            sign = sign != null && sign[1] || "未登录";
-            if ( sign != "未登录" ){
-                $.ajax({
-                    url: "https://www.v2ex.com/mission/daily/redeem" + sign,
-                    success: function(data){
-                        if ( data.search("查看我的账户余额") ){
-                            let result = data.match(/已连续登录 (\d+?) 天/)
-                            browser.notifications.create(
-                                "autoMission" ,
-                                {
-                                    type    : "basic",
-                                    iconUrl : "icon/icon38_msg.png",
-                                    title   : "v2ex plus 提醒您",
-                                    message : `签到成功，${result[0]}。\nTake your passion and make it come true.`,
-                                }
-                            );
-                            s.setItem( "autoMission", new Date().getUTCDate() );
-                        }else{
-                            alert("罕见错误！基本可以忽略，如果你遇见两次以上请联系开发者，当该提示已打扰到您，请关闭扩展的自动签到功能。");
-                        }
-                    },
-                    error: function(){
-                        alert("网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。");
-                    }
-                });
+      url: "https://www.v2ex.com/",
+      success: function(data){
+        let sign = data.match("/signout(\\?once=[0-9]+)");
+        sign = sign != null && sign[1] || "未登录";
+        if ( sign != "未登录" ){
+          $.ajax({
+            url: "https://www.v2ex.com/mission/daily/redeem" + sign,
+            success: function(data){
+              if ( data.search("查看我的账户余额") ){
+                let result = data.match(/已连续登录 (\d+?) 天/)
+                browser.notifications.create(
+                  "autoMission" ,
+                  {
+                    type    : "basic",
+                    iconUrl : "icon/icon38_msg.png",
+                    title   : "v2ex plus 提醒您",
+                    message : `签到成功，${result[0]}。\nTake your passion and make it come true.`,
+                  }
+                );
+                storage.set( {"autoMission" : new Date().getUTCDate()} );
+              }else{
+                alert("罕见错误！基本可以忽略，如果你遇见两次以上请联系开发者，当该提示已打扰到您，请关闭扩展的自动签到功能。");
+              }
+            },
+            error: function(){
+              alert("网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。");
             }
-        },
-        error: function(){
-            alert("网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。");
+          });
         }
+      },
+      error: function(){
+        alert("网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。");
+      }
     });
+  });
+
 }
 //——————————————————————————————————自动签到——————————————————————————————————
 
