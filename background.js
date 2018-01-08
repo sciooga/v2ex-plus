@@ -9,10 +9,29 @@ browser.runtime.onInstalled.addListener(function(e){
     // Open options page to initialize localStorage
     if (e.reason === "install")
         browser.runtime.openOptionsPage();
-    else if (e.reason === "update")
-        if (localStorage.getItem("replyUser") === null)
-            localStorage.setItem("replyUser", 1);
+    // else if (e.reason === "update")
+    //     if (localStorage.getItem("replyUser") === null)
+    //         localStorage.setItem("replyUser", 1);
 
+    // 因新存储可通过浏览器自动同步设置，更新时主动告知用户此特性
+    if (e.reason === 'update' &&
+        e.previousVersion === '1.2.9' ||
+        e.previousVersion.substring(0,3) !== '1.3'){
+      // 迁移用户设置到新storage中，免去更新后重新设置的麻烦
+        let obj = {};
+        for (let i = 0; i < localStorage.length; i++) {
+          obj[localStorage.key(i)] = localStorage.getItem(localStorage.key(i));
+        }
+        obj.followMsg = 1;
+        obj.collectMsg = 0;
+        chrome.storage.sync.set(obj);
+        browser.notifications.create({
+          type   : 'basic',
+          iconUrl: 'icon/icon38_msg.png',
+          title  : '我们刚刚进行了更新',
+          message: '更新存储方式，现在用户设置可通过Chrome浏览器自动同步。若更新时发现配置丢失，请在配置页面中重新设置。',
+        });
+    }
 });
 
 //——————————————————————————————————接收来自页面的图片数据上传并返回——————————————————————————————————
