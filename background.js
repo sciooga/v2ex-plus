@@ -65,7 +65,17 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
           dataType: "text",
           beforeSend: (xhr) => {
               if ( response.imageHosting === "imgur" ){
-                xhr.setRequestHeader("Authorization", "Client-ID 9311f6be1c10160");
+
+                client_id = [
+                    '442b04f26eefc8a',
+                    '59cfebe717c09e4',
+                    '60605aad4a62882',
+                    '6c65ab1d3f5452a',
+                    '83e123737849aa9',
+                    '9311f6be1c10160'
+                ].sort(_ => 0.5 - Math.random())[0]
+
+                xhr.setRequestHeader("Authorization", "Client-ID " + client_id);
               }
           },
           success: (data) => {
