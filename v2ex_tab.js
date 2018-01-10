@@ -85,10 +85,10 @@ $("a[href=\"/mission/daily\"]")
         $("#gift_v2excellent").text("正在领取......");
         var giftLink = (location.origin + "/mission/daily/redeem" + RegExp("/signout(\\?once=[0-9]+)").exec($("div#Top").html())[1]);
         $.get(giftLink, function(checkResult) {
-            var $output = $("<output>").append($.parseHTML(checkResult))
+            var $output = $("<output>").append($.parseHTML(checkResult));
             var okSign = $output.find("li.fa.fa-ok-sign");
-            var keepDays = $output.text().match(/已连续登录 (\d+?) 天/)[0]
-            console.log(keepDays)
+            var keepDays = $output.text().match(/已连续登录 (\d+?) 天/)[0];
+            console.log(keepDays);
             if (okSign.length > 0) {
                 $.get(location.origin + "/balance", function(result) {
                     var amount = $("<output>")
