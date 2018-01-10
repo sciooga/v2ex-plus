@@ -1,5 +1,5 @@
 /*global img_list emoticon_list triangle_img setClipboardText*/
-//获取被@的用户，列表开始于 index 1
+//获取被@的用户
 function get_at_name_list(comment_content){
     const name_list = new Set(),
         patt_at_name = RegExp("@<a href=\"/member/(.+?)\">", "g");
