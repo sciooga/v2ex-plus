@@ -98,14 +98,21 @@ $("a[href=\"/mission/daily\"]")
                     $("#gift_v2excellent").html(
                         "成功领取 <strong>" + amount + "</strong> 铜币，" + keepDays
                     );
-                    setTimeout(function() {
-                        $("#Rightbar>.sep20:nth(1)").remove();
-                        $("#Rightbar>.box:nth(1)").remove();
-                    }, 2000);
+                    refreshMoney();
                 });
             }
         });
         return false;
     });
-//——————————————————————————————————一键领取登陆奖励——————————————————————————————————
 
+// refresh money
+function refreshMoney() {
+    $.post('/ajax/money', function(data) {
+        $('#money').html(data);
+        setTimeout(function() {
+            $("#Rightbar>.sep20:nth(1)").remove();
+            $("#Rightbar>.box:nth(1)").remove();
+        }, 2000);
+    });
+}
+//——————————————————————————————————一键领取登陆奖励——————————————————————————————————
