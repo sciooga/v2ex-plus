@@ -105,7 +105,7 @@ $("a[href=\"/mission/daily\"]")
         return false;
     });
 
-// refresh money
+// refresh money方法，来自V2EX源码中的v2ex.js文件
 function refreshMoney() {
     $.post('/ajax/money', function(data) {
         $('#money').html(data);
