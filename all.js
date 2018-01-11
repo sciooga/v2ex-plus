@@ -1,6 +1,6 @@
 
 //——————————————————————————————————双击回到顶部——————————————————————————————————
-chrome.runtime.sendMessage({action: "get_dblclickToTop"}, function(response) {
+chrome.storage.sync.get(function(response) {
     if (response.dblclickToTop){
         $("body").dblclick(function () {
             window.getSelection().removeAllRanges();
@@ -24,7 +24,7 @@ $('.avatar').each(function(){
 //——————————————————————————————————方向键切换上下页——————————————————————————————————
 
 $("body").keyup(function(e) {
-    if ($('textarea').is(':focus') || $('input').is(':focus')) return
+    if ($("textarea").is(":focus") || $("input").is(":focus")) return;
 
     if (e.keyCode == 37) {
         // 按下左键，上一页
@@ -55,6 +55,5 @@ if (isErrorPage) {
       window.location.reload();
     }
   }, 1000)
-}
 
 //——————————————————————————————————方向键切换上下页——————————————————————————————————

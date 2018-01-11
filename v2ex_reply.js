@@ -1,5 +1,5 @@
 /*global img_list emoticon_list triangle_img setClipboardText*/
-//获取被@的用户，列表开始于 index 1
+//获取被@的用户
 function get_at_name_list(comment_content){
     const name_list = new Set(),
         patt_at_name = RegExp("@<a href=\"/member/(.+?)\">", "g");
@@ -158,14 +158,16 @@ $("#onlyKeyUser").click(function(){
     }
 });
 
-chrome.runtime.sendMessage({action: "get_replySetting"}, function(response) {
+
+chrome.storage.sync.get(function(response) {
+    console.log(response);
     const topic_height = _topic.height(),
         r = parseInt((response.replyColor).substring(1,3),16),
         g = parseInt((response.replyColor).substring(3,5),16),
         b = parseInt((response.replyColor).substring(5,7),16),
         replyColor = `${r},${g},${b},${response.replyA}`;
-
     $(".keyUser").css("backgroundColor", `rgba(${replyColor})`);//设置楼主回复背景颜色
+
     if (response.fold){//折叠超长主题
         if (topic_height>1800){
             _topic_content.css({maxHeight:"600px", overflow:"hidden", transition:"max-height 2s"});
@@ -690,7 +692,7 @@ _r_c[0].addEventListener("drop",function(e){
 
 
 //——————————————————————————————————回复楼层号——————————————————————————————————
-chrome.runtime.sendMessage({action: "get_replyUser"}, function(response) {
+chrome.storage.sync.get(function(response) {
     if (response.replyUser){
         $("[alt=\"Reply\"]").click(function(){
             setTimeout(() => {

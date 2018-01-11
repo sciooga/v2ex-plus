@@ -54,7 +54,7 @@
   "commands": {
     "newMsg": {
       "suggested_key": {
-        "default": "Ctrl+E"
+        "default": "Ctrl+B"
       },
       "description": "查看 V2EX 消息"
     }
