@@ -1,6 +1,6 @@
 "use strict";
 function saveChoice(e){
-    console.log(e, e.target.checked)
+    console.log(e, e.target.checked);
     let name = e.target.name;
     let checked = e.target.checked;
     let value;
@@ -14,7 +14,7 @@ function saveChoice(e){
 }
 
 function setItem(obj) {
-    console.log(obj)
+    console.log(obj);
     // let obj = {};
     // obj[key] = value;
     chrome.storage.sync.set(obj);
@@ -22,7 +22,7 @@ function setItem(obj) {
 }
 
 function setItemByKey(key, value) {
-    console.log(key, value)
+    console.log(key, value);
     let obj = {};
     obj[key] = value;
     chrome.storage.sync.set(obj);
@@ -97,7 +97,7 @@ window.onload = function() {
     // Show saved settings
     function restoreSetting() {
         getItem(defaultSettings, (settings) => {
-            console.log(settings)
+            console.log(settings);
             for (let name in settings) {
                 let value = settings[name];
                 let button = settingButtons[name];
@@ -106,8 +106,9 @@ window.onload = function() {
                 case "replyColor":
                 case "thankColor":
                     button.value = value;
+                    setItemByKey(name,value);//如果用户从未改过，则设置一个默认值
                     button.onchange = function(e) {
-                        console.log(e, this, this.value)
+                        console.log(e, this, this.value);
                         let hex = this.value.toLowerCase();
                         setItemByKey(name, hex);
                     };
@@ -116,6 +117,7 @@ window.onload = function() {
                 case "replyA":
                     button.value = value;
                     settingButtons["replyAValue"].textContent = value;
+                    setItemByKey(name,value);//如果用户从未改过，则设置一个默认值
                     button.onchange = function() {
                         settingButtons["replyAValue"].textContent = this.value;
                         setItemByKey(name, this.value);
@@ -124,9 +126,11 @@ window.onload = function() {
                     break;
                 default:
                     if (name === "imageHosting") {
-                        checked = value === "weibo";
+                        checked = value === "imgur";
+                        setItemByKey(name,value);//设置storage中imgHosting的默认值
                     } else {
                         checked = !!parseInt(value);
+                        setItemByKey(name,value);//在storage中为各选项初始一个默认值
                     }
                     button.checked = checked;
                     button.onchange = saveChoice;

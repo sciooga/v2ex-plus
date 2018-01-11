@@ -2,8 +2,8 @@
 
 
 var nwe_window;
-chrome.runtime.sendMessage({action: "get_newWindow_status"}, function(response) {
-    if ( response.newWindow_status ){
+chrome.storage.sync.get(function(response) {
+    if ( response.newWindow ){
         $(".item_title a").attr("target", "_blank");
         $(".item_hot_topic_title a").attr("target", "_blank");
         nwe_window = "target='_blank'";
@@ -15,8 +15,8 @@ chrome.runtime.sendMessage({action: "get_newWindow_status"}, function(response) 
 
 //——————————————————————————————————预览功能——————————————————————————————————
 
-chrome.runtime.sendMessage({action: "get_preview_status"}, function(response) {
-    if (!response.preview_status)
+chrome.storage.sync.get(function(response) {
+    if (!response.preview)
         return;
 
     $("div#Main > div:nth-of-type(2) .cell").each(function(){
@@ -85,10 +85,10 @@ $("a[href=\"/mission/daily\"]")
         $("#gift_v2excellent").text("正在领取......");
         var giftLink = (location.origin + "/mission/daily/redeem" + RegExp("/signout(\\?once=[0-9]+)").exec($("div#Top").html())[1]);
         $.get(giftLink, function(checkResult) {
-            var $output = $("<output>").append($.parseHTML(checkResult))
+            var $output = $("<output>").append($.parseHTML(checkResult));
             var okSign = $output.find("li.fa.fa-ok-sign");
-            var keepDays = $output.text().match(/已连续登录 (\d+?) 天/)[0]
-            console.log(keepDays)
+            var keepDays = $output.text().match(/已连续登录 (\d+?) 天/)[0];
+            console.log(keepDays);
             if (okSign.length > 0) {
                 $.get(location.origin + "/balance", function(result) {
                     var amount = $("<output>")
