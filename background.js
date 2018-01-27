@@ -29,7 +29,7 @@ browser.runtime.onInstalled.addListener(function(e){
             type   : "basic",
             iconUrl: "icon/icon38_msg.png",
             title  : "我们刚刚进行了更新",
-            message: "更新存储方式，现在用户设置可通过Chrome浏览器自动同步。若更新时发现配置丢失，请在配置页面中重新设置。",
+            message: "当前用户设置可通过浏览器自动同步。若更新时发现配置丢失，请在配置页面中重新设置。",
         });
     }
 });
