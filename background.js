@@ -421,3 +421,32 @@ function autoLoginWeibo(){
 }
 
 //——————————————————————————————————自动登陆微博——————————————————————————————————
+
+//——————————————————————————————————右键使用 sov2ex 搜索——————————————————————————
+function addToContextMenu () {
+  chrome.contextMenus.create({
+    id: 'sov2ex',
+    title: "使用 sov2ex 搜索 '%s'",
+    contexts: ['selection']
+  });
+}
+chrome.storage.sync.get(function (response) {//初始时通过storage值判断是否添加
+    if(response.sov2ex){
+        addToContextMenu();
+    }
+})
+
+chrome.storage.onChanged.addListener(function (changes) {//storage值改变时动态增删
+    if(changes.sov2ex.newValue){
+        addToContextMenu();
+    } else {
+        chrome.contextMenus.remove("sov2ex");
+    }
+})
+
+chrome.contextMenus.onClicked.addListener(function (response) {//点击右键菜单相应选项触发搜索
+    if(response.menuItemId === "sov2ex"){
+        window.open("https://www.sov2ex.com/?q=" + response.selectionText);
+    }
+})
+//——————————————————————————————————右键使用 sov2ex 搜索——————————————————————————
