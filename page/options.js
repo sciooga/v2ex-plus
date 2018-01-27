@@ -45,6 +45,7 @@ function getItem(obj, callback) {
     * 双击返回顶部 默认关闭
     * 定时激活微博 默认关闭
     * 新标签页浏览主题 默认关闭
+    * 使用sov2ex搜索 默认关闭
 */
 const defaultSettings = {
     "newMsg": 1,
@@ -60,7 +61,8 @@ const defaultSettings = {
     "newWindow": 0,
     "replyColor": "#fffff9",
     "replyA": 0.4,
-    "thankColor": "#cccccc"
+    "thankColor": "#cccccc",
+    "sov2ex": 0
 };
 
 window.onload = function() {
@@ -80,7 +82,8 @@ window.onload = function() {
         replyColor: document.querySelector(".replyColor"),
         replyA: document.querySelector(".replyA"),
         thankColor: document.querySelector(".thankColor"),
-        replyAValue: document.getElementById("replyAValue")
+        replyAValue: document.getElementById("replyAValue"),
+        sov2ex: document.querySelector(".sov2ex")
     };
     
     function resetAll() {
