@@ -1,6 +1,6 @@
 "use strict";
 function saveChoice(e){
-    console.log(e, e.target.checked);
+    //console.log(e, e.target.checked);
     let name = e.target.name;
     let checked = e.target.checked;
     let value;
@@ -14,7 +14,7 @@ function saveChoice(e){
 }
 
 function setItem(obj) {
-    console.log(obj);
+    //console.log(obj);
     // let obj = {};
     // obj[key] = value;
     chrome.storage.sync.set(obj);
@@ -22,7 +22,7 @@ function setItem(obj) {
 }
 
 function setItemByKey(key, value) {
-    console.log(key, value);
+    //console.log(key, value);
     let obj = {};
     obj[key] = value;
     chrome.storage.sync.set(obj);
@@ -30,7 +30,7 @@ function setItemByKey(key, value) {
 }
 
 function getItem(obj, callback) {
-    console.log(chrome, chrome.storage);
+    //console.log(chrome, chrome.storage);
     chrome.storage.sync.get(obj, callback);
 }
 

@@ -417,7 +417,10 @@ chrome.storage.sync.get(function (response) {//初始时通过storage值判断�
     }
 })
 
-chrome.storage.onChanged.addListener(function (changes) {//storage值改变时动态增删
+chrome.storage.onChanged.addListener(function (changes,namespace) {//storage值改变时动态增删
+    if(namespace !== "sync") return;
+    if(!changes.sov2ex) return;
+    if(changes.sov2ex.oldValue == undefined) return;
     if(changes.sov2ex.newValue){
         addToContextMenu();
     } else {

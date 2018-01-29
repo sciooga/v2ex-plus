@@ -160,7 +160,6 @@ $("#onlyKeyUser").click(function(){
 
 
 chrome.storage.sync.get(function(response) {
-    console.log(response);
     const topic_height = _topic.height(),
         r = parseInt((response.replyColor).substring(1,3),16),
         g = parseInt((response.replyColor).substring(3,5),16),

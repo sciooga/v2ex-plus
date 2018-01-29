@@ -61,13 +61,15 @@ if (isErrorPage) {
 //——————————————————————————————————使用 sov2ex 搜索——————————————————————————————————
 chrome.storage.sync.get(function (response) {
   if (response.sov2ex){
-    $("#q").keyup(function () {
-      $(this).val($(this).val().replace(/[#%&]/g,""));//用户输入不能包含特殊字符#%&
-    }).keypress(function (e) {
-      if(e.which == 13){//按enter触发搜索
-        window.open("https://www.sov2ex.com/?q=" + $(this).val());
-        return false;
-      }
+    $("#q").attr("placeholder","sov2ex")
+      .keyup(function () {
+        $(this).val($(this).val().replace(/[#%&]/g,""));//用户输入不能包含特殊字符#%&
+    })
+      .keypress(function (e) {
+        if(e.which == 13){//按enter触发搜索
+          window.open("https://www.sov2ex.com/?q=" + $(this).val());
+          return false;
+        }
     })
   }
 })
