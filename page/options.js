@@ -133,7 +133,7 @@ window.onload = function() {
                         setItemByKey(name,value);//设置storage中imgHosting的默认值
                     } else {
                         checked = !!parseInt(value);
-                        setItemByKey(name,value);//在storage中为各选项初始一个默认值
+                        setItemByKey(name,parseInt(value));//在storage中为各选项初始一个默认值
                     }
                     button.checked = checked;
                     button.onchange = saveChoice;
