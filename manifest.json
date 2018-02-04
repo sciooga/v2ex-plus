@@ -44,7 +44,8 @@
     "default_icon": "icon/icon38.png"
   },
   "options_ui": {
-    "page": "page/options.html"
+    "page": "page/options.html",
+    "open_in_tab": true
   },
   "icons": {
     "16": "icon/icon16.png",

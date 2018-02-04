@@ -9,9 +9,14 @@ browser.runtime.onInstalled.addListener(function(e){
     // Open options page to initialize localStorage
     if (e.reason === "install")
         browser.runtime.openOptionsPage();
-    //fix issue 85 for version 1.3.3
-    if (e.reason === "update" && e.previousVersion === "1.3.3"){
-        browser.runtime.openOptionsPage();
+    if (e.reason === "update" && e.previousVersion === "1.3.4"){
+      browser.notifications.create({
+        type   : 'basic',
+        iconUrl: 'icon/icon38_msg.png',
+        title  : '我们刚刚进行了更新',
+        message: '更新了设置页UI界面，更美观大气上档次。'
+      });
+        // browser.runtime.openOptionsPage();
     }
 });
 
