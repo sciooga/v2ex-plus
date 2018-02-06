@@ -3,7 +3,7 @@
 function get_at_name_list(comment_content){
     const name_list = new Set(),
         patt_at_name = RegExp("@<a href=\"/member/(.+?)\">", "g");
-    
+
     let match;
     while (match = patt_at_name.exec(comment_content)) {
         name_list.add(match[1]);
@@ -77,7 +77,7 @@ $("div[id^=r_]").each(function(){
 
     //———回复空格修复———
     _reply.css("whiteSpace", "pre-wrap").html(function(i, o){
-        return o.replace(/<br>/g, "");
+        return o.replace(/\n<br>/g, "\n").replace(/<br>/g, "\n");
     });
     //———回复空格修复———
 
