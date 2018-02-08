@@ -14,7 +14,7 @@ browser.runtime.onInstalled.addListener(function(e){
         type   : 'basic',
         iconUrl: 'icon/icon38_msg.png',
         title  : '我们刚刚进行了更新',
-        message: '更新了设置页UI界面，更美观大气上档次。'
+        message: '重构了设置页UI界面，更美观大气上档次。'
       });
         // browser.runtime.openOptionsPage();
     }
