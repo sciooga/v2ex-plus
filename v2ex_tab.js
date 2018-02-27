@@ -51,7 +51,7 @@ chrome.storage.sync.get(function(response) {
                 var _next_cell = _previewWindow.next();
                 _next_cell.css("borderTop", _next_cell.css("borderBottom"));
                 _this.text("收起");
-                _previewWindow.slideDown(800);
+                _previewWindow.slideDown(300);
 
             });
         }else{
@@ -61,7 +61,7 @@ chrome.storage.sync.get(function(response) {
                 _previewWindow.next().css("borderTop", "none");
                 _previewWindow.remove();
             },800);
-            _previewWindow.slideUp(800);
+            _previewWindow.slideUp(300);
         }
     });
 
