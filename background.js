@@ -369,15 +369,17 @@ function autoMission(){
                         success: function(data){
                             if ( data.search("查看我的账户余额") ){
                                 let result = data.match(/已连续登录 (\d+?) 天/);
-                                browser.notifications.create(
-                                    "autoMission" ,
-                                    {
-                                        type    : "basic",
-                                        iconUrl : "icon/icon38_msg.png",
-                                        title   : "v2ex plus 提醒您",
-                                        message : `签到成功，${result[0]}。\nTake your passion and make it come true.`,
-                                    }
-                                );
+                                if (response.autoMissionMsg) {
+									browser.notifications.create(
+										"autoMission" ,
+										{
+											type    : "basic",
+											iconUrl : "icon/icon38_msg.png",
+											title   : "v2ex plus 提醒您",
+											message : `签到成功，${result[0]}。\nTake your passion and make it come true.`,
+										}
+									);
+                                }
                                 storage.set( {"autoMission" : new Date().getUTCDate()} );
                             }else{
                                 alert("罕见错误！基本可以忽略，如果你遇见两次以上请联系开发者，当该提示已打扰到您，请关闭扩展的自动签到功能。");
