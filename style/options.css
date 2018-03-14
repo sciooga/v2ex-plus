@@ -277,3 +277,24 @@ input[type="color"]{
 .reset:active {
   box-shadow: 0 5px 5px -3px rgba(0,0,0,.2),0 8px 5px 1px rgba(0,0,0,.14),0 3px 10px 2px rgba(0,0,0,.12);
 }
+
+.item > .dropdownMenu {
+  width: auto;
+  display: flex;
+  align-items: center;
+  -webkit-margin-end: 1.6rem;
+}
+
+.item > .dropdownMenu > select {
+  width: 10rem;
+  -webkit-appearance: none;
+  border: none;
+  border-bottom: 1px solid #E0E0E0;
+  outline: none;
+  padding-bottom: 4px;
+  -webkit-padding-start: 5px;
+  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjEycHgiIHZpZXdCb3g9IjAgMCAyNCAxMiIgZmlsbD0iIzc1NzU3NSI+PGc+PHBhdGggZD0iTSAwIDAgTCAyNCAwIEwgMTIgMTIgeiIvPjwvZz48L3N2Zz4=) center right no-repeat;
+  background-size: 0.7em;
+  font-family: inherit;
+  font-size: inherit;
+}

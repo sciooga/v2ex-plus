@@ -47,6 +47,7 @@ function getItem(obj, callback) {
     * 新标签页浏览主题 默认关闭
     * 使用sov2ex搜索 默认关闭
     * 自动签到提醒 默认开启
+    * 自定义节点 默认www(国内1)
 */
 const defaultSettings = {
     "newMsg": 1,
@@ -64,7 +65,8 @@ const defaultSettings = {
     "replyColor": "#fffff9",
     "replyA": 0.4,
     "thankColor": "#cccccc",
-    "sov2ex": 0
+    "sov2ex": 0,
+    "customNode": "www"
 };
 
 window.onload = function() {
@@ -86,7 +88,8 @@ window.onload = function() {
         replyA: document.querySelector(".replyA"),
         thankColor: document.querySelector(".thankColor"),
         replyAValue: document.getElementById("replyAValue"),
-        sov2ex: document.querySelector(".sov2ex")
+        sov2ex: document.querySelector(".sov2ex"),
+        customNode: document.getElementById("customNode")
     };
     
     function resetAll() {
@@ -111,6 +114,7 @@ window.onload = function() {
                 switch (name) {
                 case "replyColor":
                 case "thankColor":
+                case "customNode":
                     button.value = value;
                     setItemByKey(name,value);//如果用户从未改过，则设置一个默认值
                     button.onchange = function(e) {
