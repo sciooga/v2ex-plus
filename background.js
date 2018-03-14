@@ -149,12 +149,14 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 //——————————————————————————————————返回设置选项——————————————————————————————————
 
 
-//——————————————————————————————————定时任务初始化——————————————————————————————————
-
+//——————————————————————————————————定时任务初始化、获取自定义节点——————————————————————————————————
+let urlPrefix = "";
 storage.get(function (response) {
     Number(response.newMsg) && checkMsg();
     Number(response.followMsg) && followMsg();
     Number(response.collectMsg) && collectMsg();
+    urlPrefix = response.customNode || "www";
+    console.log(urlPrefix);
 });
 
 browser.alarms.create("checkMsg", {periodInMinutes: 5});
@@ -322,7 +324,7 @@ function checkMsg(){
 //清除通知图标，打开通知地址
 function clean_msg(){
     browser.browserAction.setIcon({path: "icon/icon38.png"});
-    browser.tabs.create({url:"https://www.v2ex.com/notifications"});
+    browser.tabs.create({url:`https://${urlPrefix}.v2ex.com/notifications`});
 }
 
 browser.commands.onCommand.addListener(clean_msg);
@@ -333,13 +335,13 @@ browser.notifications.onClicked.addListener(function(notificationId){
         clean_msg();
         break;
     case "autoMission":
-        browser.tabs.create({url:"https://www.v2ex.com/balance"});
+        browser.tabs.create({url:`https://${urlPrefix}.v2ex.com/balance`});
         break;
     case "newFollowTopic":
-        browser.tabs.create({url:`https://www.v2ex.com/t/${window.newFollowTopicId}?p=1`});
+        browser.tabs.create({url:`https://${urlPrefix}.v2ex.com/t/${window.newFollowTopicId}?p=1`});
         break;
     case "newCollectTopicReply":
-        browser.tabs.create({url:"https://www.v2ex.com/my/topics"});
+        browser.tabs.create({url:`https://${urlPrefix}.v2ex.com/my/topics`});
         break;
     }
     browser.notifications.clear(notificationId);
@@ -422,18 +424,40 @@ chrome.storage.sync.get(function (response) {//初始时通过storage值判断�
     if(response.sov2ex){
         addToContextMenu();
     }
-})
+});
 
-chrome.storage.onChanged.addListener(function (changes,namespace) {//storage值改变时动态增删
-    if(namespace !== "sync") return;
-    if(!changes.sov2ex) return;
-    if(changes.sov2ex.oldValue == undefined) return;
-    if(changes.sov2ex.newValue){
-        addToContextMenu();
-    } else {
-        chrome.contextMenus.remove("sov2ex");
-    }
-})
+function onChangedHandler (changes) {
+	let keys = Object.keys(changes);
+	for (let i = 0,len = keys.length; i < len; i++){
+		let index = keys[i];
+		let item = changes[index];
+		switch (index){
+			case "sov2ex":
+			{
+				if (item.newValue) {
+					addToContextMenu();
+				} else {
+					chrome.contextMenus.remove("sov2ex");
+				}
+				break;
+			}
+            case "customNode":
+            {
+                urlPrefix = item.newValue;
+            }
+		}
+	}
+}
+
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+	if (namespace !== "sync") return;
+	for(let key in changes){
+		if (changes[key].oldValue == undefined){//new install no operation
+			delete changes[key];
+		}
+	}
+	onChangedHandler(changes);
+});
 
 chrome.contextMenus.onClicked.addListener(function (response) {//点击右键菜单相应选项触发搜索
     if(response.menuItemId === "sov2ex"){
