@@ -12,6 +12,8 @@
     "notifications",
     "storage",
     "contextMenus",
+    "webRequest",
+    "webRequestBlocking",
     "*://*.v2ex.com/*",
     "*://*.imgur.com/*",
     "*://*.weibo.com/*"

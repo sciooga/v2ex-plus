@@ -324,7 +324,7 @@ function checkMsg(){
 //清除通知图标，打开通知地址
 function clean_msg(){
     browser.browserAction.setIcon({path: "icon/icon38.png"});
-    browser.tabs.create({url:`https://${urlPrefix}.v2ex.com/notifications`});
+    browser.tabs.create({url:`https://www.v2ex.com/notifications`});
 }
 
 browser.commands.onCommand.addListener(clean_msg);
@@ -335,13 +335,13 @@ browser.notifications.onClicked.addListener(function(notificationId){
         clean_msg();
         break;
     case "autoMission":
-        browser.tabs.create({url:`https://${urlPrefix}.v2ex.com/balance`});
+        browser.tabs.create({url:`https://www.v2ex.com/balance`});
         break;
     case "newFollowTopic":
-        browser.tabs.create({url:`https://${urlPrefix}.v2ex.com/t/${window.newFollowTopicId}?p=1`});
+        browser.tabs.create({url:`https://www.v2ex.com/t/${window.newFollowTopicId}?p=1`});
         break;
     case "newCollectTopicReply":
-        browser.tabs.create({url:`https://${urlPrefix}.v2ex.com/my/topics`});
+        browser.tabs.create({url:`https://www.v2ex.com/my/topics`});
         break;
     }
     browser.notifications.clear(notificationId);
@@ -465,3 +465,20 @@ chrome.contextMenus.onClicked.addListener(function (response) {//点击右键菜
     }
 })
 //——————————————————————————————————右键使用 sov2ex 搜索——————————————————————————
+
+//——————————————————————————————————跳转自定义节点————————————————————————————————
+chrome.webRequest.onBeforeRequest.addListener(function (details) {
+    //console.log(details);
+    let url = details.url.replace(/\/\/(.*?)\//, `//${urlPrefix}.v2ex.com/`);
+    //console.log(url);
+    return {
+        redirectUrl: url
+    };
+},
+    {
+        types: ["main_frame"],
+        urls: ["*://*.v2ex.com/*"]
+    },
+    ["blocking"]
+);
+//——————————————————————————————————跳转自定义节点————————————————————————————————
