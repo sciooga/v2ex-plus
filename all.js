@@ -75,3 +75,15 @@ chrome.storage.sync.get(function (response) {
 })
 
 //——————————————————————————————————使用 sov2ex 搜索——————————————————————————————————
+
+//——————————————————————————————————跳转自定义节点——————————————————————————————
+$(function () {
+    chrome.storage.sync.get(function (response) {
+        if(location.hostname === response.customNode + ".v2ex.com") return;
+        if(location.hostname.search(/.*\.v2ex\.com/) !== -1){
+            let url = "https://" + location.href.replace(/.*\.v2ex\.com/, `${response.customNode}.v2ex.com`);
+            location.replace(url);
+        }
+	})
+})
+//——————————————————————————————————跳转自定义节点——————————————————————————————
