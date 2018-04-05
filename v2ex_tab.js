@@ -13,7 +13,7 @@ chrome.storage.sync.get(function(response) {
 //——————————————————————————————————新窗口浏览主题——————————————————————————————————
 
 
-//——————————————————————————————————预览功能——————————————————————————————————
+//——————————————————————————————————预览及忽略功能——————————————————————————————————
 
 chrome.storage.sync.get(function(response) {
     if (!response.preview)
@@ -23,8 +23,19 @@ chrome.storage.sync.get(function(response) {
         if($(this).find(".fade").text().indexOf("...")!=-1){
             return ;
         }
-        $(this).find(".fade").append(" &nbsp;•&nbsp; <span class='preview'>预览</span>");
+        $(this).find(".fade").append(" &nbsp;•&nbsp; <span class='preview'>预览</span> &nbsp;•&nbsp; <span class='pass'>忽略</span>");
     });
+
+    $('.pass').click(function(){
+        var $this = $(this);
+        var url = $(this).parents('.cell').find('.item_title a').attr('href')
+        if (confirm('确定不想再看到这个主题？')) {
+            url = url.replace('/t/', '/ignore/topic/')
+            var once = /signout\?once=([0-9]+)/.exec($('#Top').html())[1]
+            url = url.replace('#', '?once=' + once + '#')
+            location.href = url;
+        }
+    })
 
     var btn_id = 0;
     $(".preview").click(function(){
@@ -67,7 +78,7 @@ chrome.storage.sync.get(function(response) {
 
 });
 
-//——————————————————————————————————预览功能——————————————————————————————————
+//——————————————————————————————————预览及忽略功能——————————————————————————————————
 
 
 //——————————————————————————————————一键领取登陆奖励——————————————————————————————————

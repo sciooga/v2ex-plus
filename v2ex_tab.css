@@ -1,9 +1,9 @@
-span.preview
+span.preview, span.pass
 {
     cursor: pointer;
 }
 
-span.preview:hover
+span.preview:hover, span.pass:hover
 {
     border-bottom: 1px solid;
 }
