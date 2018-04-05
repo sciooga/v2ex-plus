@@ -31,7 +31,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         //——————————设置微博或 imgur 的信息——————————
         storage.get(function (response) {
             if ( response.imageHosting === "weibo" ){
-                post_url = "http://picupload.service.weibo.com/interface/pic_upload.php?\
+                post_url = "https://picupload.service.weibo.com/interface/pic_upload.php?\
                     ori=1&mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog";
                 patt_id = "pid\":\"(.*?)\"";
                 url_start = "https://ws2.sinaimg.cn/large/";
