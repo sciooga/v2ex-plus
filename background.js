@@ -468,12 +468,12 @@ chrome.contextMenus.onClicked.addListener(function (response) {//点击右键菜
 
 //——————————————————————————————————跳转自定义节点————————————————————————————————
 chrome.webRequest.onBeforeRequest.addListener(function (details) {
-    //console.log(details);
-    let url = details.url.replace(/\/\/(.*?)\//, `//${urlPrefix}.v2ex.com/`);
-    //console.log(url);
-    return {
-        redirectUrl: url
-    };
+    if (details.url.indexOf(`//${urlPrefix}.v2ex.com/`) == -1) {
+        let url = details.url.replace(/\/\/(.*?)\//, `//${urlPrefix}.v2ex.com/`);
+        return {
+            redirectUrl: url
+        };
+    }
 },
     {
         types: ["main_frame"],
