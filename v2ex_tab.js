@@ -23,7 +23,7 @@ chrome.storage.sync.get(function(response) {
         if($(this).find(".fade").text().indexOf("...")!=-1){
             return ;
         }
-        $(this).find(".fade").append(" &nbsp;•&nbsp; <span class='preview'>预览</span> &nbsp;•&nbsp; <span class='pass'>忽略</span>");
+        $(this).find(".topic_info, .fade").append(" &nbsp;•&nbsp; <span class='preview'>预览</span> &nbsp;•&nbsp; <span class='pass'>忽略</span>");
     });
 
     $('.pass').click(function(){
