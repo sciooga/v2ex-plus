@@ -159,6 +159,14 @@ storage.get(function (response) {
     console.log(urlPrefix);
 });
 
+function resetAlarm (name,delayInMillisec,periodInMinutes) {
+	browser.alarms.clear(name);
+	setTimeout(function () {
+		browser.alarms.create(name, {periodInMinutes: periodInMinutes});
+		console.log(name +"定时任务重建完成");
+	},delayInMillisec);//多少毫秒后重建定时任务
+};
+
 browser.alarms.create("checkMsg", {periodInMinutes: 5});
 browser.alarms.create("autoMission", {periodInMinutes: 30});
 
@@ -207,6 +215,11 @@ function followMsg() {
                     iconUrl    : "icon/icon38_msg.png",
                     title      : "v2ex plus 提醒您",
                     message    : `${author} 创作了新主题：${topic}`,
+					buttons: [{
+						title: "半小时内免打扰"
+					}, {
+						title: "一小时内免打扰"
+					}]
                 });
         });
 
@@ -274,6 +287,11 @@ function collectMsg() {
                     iconUrl    : "icon/icon38_msg.png",
                     title      : "v2ex plus 提醒您",
                     message    : "您收藏的主题有了新回复，点击查看",
+					buttons: [{
+						title: "半小时内免打扰"
+					}, {
+						title: "一小时内免打扰"
+					}]
                 });
             //20分钟内最多提示一次
             setTimeout(function(){
@@ -305,6 +323,11 @@ function checkMsg(){
                         iconUrl    : "icon/icon38_msg.png",
                         title      : "v2ex plus 提醒您",
                         message    : "您有 V2EX 的未读新消息，点击查看。",
+						buttons: [{
+							title: "半小时内免打扰"
+						}, {
+							title: "一小时内免打扰"
+						}]
                     });
             }else{
                 browser.browserAction.setIcon({path: "icon/icon38.png"});
@@ -346,8 +369,15 @@ browser.notifications.onClicked.addListener(function(notificationId){
     }
     browser.notifications.clear(notificationId);
 });
-
-
+browser.notifications.onButtonClicked.addListener(function(notificationId, btnIdx) {
+        if(btnIdx === 0){
+            resetAlarm("checkMsg",1500000,5);//25min后重建定时任务
+			browser.notifications.clear(notificationId)
+        }else if(btnIdx === 1){
+			resetAlarm("checkMsg",3300000,5);//55min后重建定时任务
+			browser.notifications.clear(notificationId);
+        }
+});
 
 //——————————————————————————————————通知/按钮点击反馈——————————————————————————————————
 
