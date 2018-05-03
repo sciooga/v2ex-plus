@@ -48,6 +48,7 @@ function getItem(obj, callback) {
     * 使用sov2ex搜索 默认关闭
     * 自动签到提醒 默认开启
     * 自定义节点 默认www(国内1)
+    * Base64加密/解密 默认关闭
 */
 const defaultSettings = {
     "newMsg": 1,
@@ -66,7 +67,8 @@ const defaultSettings = {
     "replyA": 0.4,
     "thankColor": "#cccccc",
     "sov2ex": 0,
-    "customNode": "www"
+    "customNode": "www",
+	"base64": 0
 };
 
 window.onload = function() {
@@ -89,7 +91,8 @@ window.onload = function() {
         thankColor: document.querySelector(".thankColor"),
         replyAValue: document.getElementById("replyAValue"),
         sov2ex: document.querySelector(".sov2ex"),
-        customNode: document.getElementById("customNode")
+        customNode: document.getElementById("customNode"),
+        base64: document.querySelector(".base64")
     };
     
     function resetAll() {

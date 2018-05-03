@@ -442,19 +442,107 @@ function autoLoginWeibo(){
 
 //——————————————————————————————————自动登陆微博——————————————————————————————————
 
-//——————————————————————————————————右键使用 sov2ex 搜索——————————————————————————
-function addToContextMenu () {
-  chrome.contextMenus.create({
-    id: 'sov2ex',
-    title: "使用 sov2ex 搜索 '%s'",
-    contexts: ['selection']
-  });
-}
-chrome.storage.sync.get(function (response) {//初始时通过storage值判断是否添加
-    if(response.sov2ex){
-        addToContextMenu();
+//——————————————————————————————————右键菜单生成——————————————————————————————————
+const contextMenu = {
+	sov2ex: {
+		id: 'vplus.sov2ex',
+		title: "使用 sov2ex 搜索 '%s'",
+		contexts: ['selection']
+	},
+	base64: {
+		id: 'vplus.base64',
+		title: '使用 Base64 编码/解码',
+		contexts: ['selection']
+	}
+};
+
+const base64SubMenu = [
+    {
+		title:"编码",
+		id:"encode"
+    },
+    {
+		title:"解码",
+		id:"decode"
     }
+];
+
+function errorHandler () {
+	if (browser.runtime.lastError) {
+		console.log("Got expected error: " + browser.runtime.lastError.message);
+	}
+}
+
+function createParentMenu (obj) {
+	browser.contextMenus.create(obj,errorHandler());
+	if(obj.id == "vplus.base64"){createSubMenu(base64SubMenu,obj);}
+}
+
+function createSubMenu(arr,parent) {
+	for (let i = 0; i < arr.length; i++){
+		let obj = arr[i];
+		if(typeof obj == "string"){
+			obj = JSON.parse(obj);
+		}
+		let id = parent.id + "_" + obj.id;
+		let title = obj.title;
+		let contexts = parent.contexts;
+		browser.contextMenus.create({
+			"id": id,
+			"parentId": parent.id,
+			"title": title,
+			"contexts": contexts
+		},errorHandler());
+	}
+}
+
+function onClickedHandler (response) {
+		switch (response.menuItemId) {
+			case "vplus.sov2ex": {
+				sov2exClicked(response);
+				break;
+			}
+			case "vplus.base64_encode":
+			case "vplus.base64_decode":{
+				base64Clicked(response);
+				break;
+			}
+		}
+}
+
+//onclicked operation
+chrome.contextMenus.onClicked.addListener(function (response) {
+    //console.log(response);
+	onClickedHandler(response);
 });
+
+//initial context menu when extension updated
+storage.get(function (response) {
+	if (response.sov2ex) {createParentMenu(contextMenu.sov2ex);}
+	if (response.base64) {createParentMenu(contextMenu.base64);}
+});
+//——————————————————————————————————右键菜单生成—————————————————————————————————
+
+//——————————————————————————————————右键使用 sov2ex 搜索—————————————————————————
+function sov2exClicked(response) {
+		window.open("https://www.sov2ex.com/?q=" + response.selectionText);
+}
+//——————————————————————————————————右键使用 sov2ex 搜索——————————————————————————
+
+//——————————————————————————————————右键使用 Base64 编码/解码——————————————————————
+function base64Clicked(response) {
+	try {
+		if(response.menuItemId === "vplus.base64_encode"){
+			alert("编码结果: " + Base64.encode(response.selectionText));
+		} else {
+			alert("解码结果: " + Base64.decode(response.selectionText));
+		}
+	}catch (e) {
+		alert("错误！字符串未正确编码或暂不支持");
+	}
+
+}
+//——————————————————————————————————右键使用 Base64 编码/解码——————————————————————
 
 function onChangedHandler (changes) {
 	let keys = Object.keys(changes);
@@ -463,11 +551,14 @@ function onChangedHandler (changes) {
 		let item = changes[index];
 		switch (index){
 			case "sov2ex":
+            case "base64":
 			{
 				if (item.newValue) {
-					addToContextMenu();
+					let obj = contextMenu[index];
+					delete obj.generatedId;
+					createParentMenu(obj);
 				} else {
-					chrome.contextMenus.remove("sov2ex");
+					browser.contextMenus.remove(contextMenu[index].id);
 				}
 				break;
 			}
@@ -488,13 +579,6 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
 	}
 	onChangedHandler(changes);
 });
-
-chrome.contextMenus.onClicked.addListener(function (response) {//点击右键菜单相应选项触发搜索
-    if(response.menuItemId === "sov2ex"){
-        window.open("https://www.sov2ex.com/?q=" + response.selectionText);
-    }
-})
-//——————————————————————————————————右键使用 sov2ex 搜索——————————————————————————
 
 //——————————————————————————————————跳转自定义节点————————————————————————————————
 chrome.webRequest.onBeforeRequest.addListener(function (details) {

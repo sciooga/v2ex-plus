@@ -5,7 +5,7 @@
   "manifest_version": 2,
   "description": "优雅便捷的 V2EX 扩展",
   "background": {
-    "scripts": ["libs/jquery-3.2.0.min.js", "background.js"]
+    "scripts": ["libs/jquery-3.2.0.min.js", "libs/webtoolkit.base64.min.js","background.js"]
   },
   "permissions": [
     "alarms",
