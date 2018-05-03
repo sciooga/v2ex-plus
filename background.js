@@ -533,14 +533,25 @@ function sov2exClicked(response) {
 function base64Clicked(response) {
 	try {
 		if(response.menuItemId === "vplus.base64_encode"){
-			alert("编码结果: " + Base64.encode(response.selectionText));
+			const str = Base64.encode(response.selectionText);
+			if(prompt("编码如下，点击确定自动复制到剪贴板 ", str)) copyToClipboard(str);
 		} else {
-			alert("解码结果: " + Base64.decode(response.selectionText));
+			const str = Base64.decode(response.selectionText);
+			if(prompt("解码如下，点击确定自动复制到剪贴板", str)) copyToClipboard(str);
 		}
 	}catch (e) {
 		alert("错误！字符串未正确编码或暂不支持");
 	}
 
+}
+
+//点击确定，自动复制base64转码内容到剪贴板
+function copyToClipboard (str) {
+	document.addEventListener('copy', function(e) {
+		e.clipboardData.setData('text/plain', str);
+		e.preventDefault();
+	});
+	document.execCommand('copy')
 }
 //——————————————————————————————————右键使用 Base64 编码/解码——————————————————————
 
