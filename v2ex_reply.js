@@ -171,11 +171,16 @@ chrome.storage.sync.get(function(response) {
         if (topic_height>1800){
             _topic_content.css({maxHeight:"600px", overflow:"hidden", transition:"max-height 2s"});
             $(".subtle", _topic).hide();
-            _topic_buttons.before("<div id='showTopic' style='padding:16px; color:#778087;'>\
+            const $showTopic = $("<div id='showTopic' style='padding:16px; color:#778087;'>\
                                             <span id='topicBTN'>展开主题</span>\
                                             <div style='height:10px;'></div>\
                                             <span style='font-size:0.6em'>主题超长已自动折叠，点击按钮显示完整的主题。</span>\
                                        </div>");
+            if(_topic_buttons.length > 0){//用户未登录状态下，_topic_buttons不存在
+				_topic_buttons.before($showTopic);
+            } else {
+                _topic.append($showTopic);
+            }
             $("#topicBTN").click(function(){
                 //乘2是由于当图片未加载完成时，预先记录的高度不准确（短于实际高度）
                 _topic_content.css({maxHeight:topic_height*2});
