@@ -58,7 +58,9 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                             "60605aad4a62882",
                             "6c65ab1d3f5452a",
                             "83e123737849aa9",
-                            "9311f6be1c10160"
+                            "9311f6be1c10160",
+							"c4a4a563f698595",
+							"81be04b9e4a08ce"
                         ].sort(_ => 0.5 - Math.random())[0];
 
                         xhr.setRequestHeader("Authorization", "Client-ID " + client_id);
