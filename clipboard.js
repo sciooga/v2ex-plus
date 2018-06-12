@@ -44,9 +44,6 @@ function setClipboardText(text) {
         if (!status) {
             //console.error('Cannot copy text');
             alert("复制失败！");
-        } else {
-            //console.log('The text is now on the clipboard: '+ text);
-            alert("此楼层直链已经复制到剪切板中");
         }
     } catch (err) {
     //console.log('Unable to copy.');
