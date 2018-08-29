@@ -56,6 +56,12 @@
     "128": "icon/icon128.png"
   },
   "web_accessible_resources": ["img/*"],
+  "applications": {
+    "gecko": {
+      "id": "{690c1618-4b2c-4905-bf58-1fc82bdfd6e7}",
+      "strict_min_version": "48.0"
+    }
+  },
   "commands": {
     "newMsg": {
       "suggested_key": {

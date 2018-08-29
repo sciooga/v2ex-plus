@@ -10,8 +10,8 @@ function follow_or_bolck( _target, bash, undo, default_name ){
     if (bash.indexOf("follow") != -1) {
         url = location.origin+bash+btn_once;
     }
-    console.log(url);
-    $.get(url, function(data){
+    //console.log(url);
+    $.get(url, function(){
         _target.attr("value", v);
     });
 }

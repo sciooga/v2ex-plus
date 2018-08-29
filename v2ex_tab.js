@@ -26,16 +26,16 @@ chrome.storage.sync.get(function(response) {
         $(this).find(".topic_info, .fade").append(" &nbsp;•&nbsp; <span class='preview'>预览</span> &nbsp;•&nbsp; <span class='pass'>忽略</span>");
     });
 
-    $('.pass').click(function(){
-        var $this = $(this);
-        var url = $(this).parents('.cell').find('.item_title a').attr('href')
-        if (confirm('确定不想再看到这个主题？')) {
-            url = url.replace('/t/', '/ignore/topic/')
-            var once = /signout\?once=([0-9]+)/.exec($('#Top').html())[1]
-            url = url.replace('#', '?once=' + once + '#')
+    $(".pass").click(function(){
+        var _this = $(this);
+        var url = _this.parents(".cell").find(".item_title a").attr("href");
+        if (confirm("确定不想再看到这个主题？")) {
+            url = url.replace("/t/", "/ignore/topic/");
+            var once = /signout\?once=([0-9]+)/.exec($("#Top").html())[1];
+            url = url.replace("#", "?once=" + once + "#");
             location.href = url;
         }
-    })
+    });
 
     var btn_id = 0;
     $(".preview").click(function(){
@@ -99,7 +99,7 @@ $("a[href=\"/mission/daily\"]")
             var $output = $("<output>").append($.parseHTML(checkResult));
             var okSign = $output.find("li.fa.fa-ok-sign");
             var keepDays = $output.text().match(/已连续登录 (\d+?) 天/)[0];
-            console.log(keepDays);
+            //console.log(keepDays);
             if (okSign.length > 0) {
                 $.get(location.origin + "/balance", function(result) {
                     var amount = $("<output>")
@@ -118,8 +118,8 @@ $("a[href=\"/mission/daily\"]")
 
 // refresh money方法，来自V2EX源码中的v2ex.js文件
 function refreshMoney() {
-    $.post('/ajax/money', function(data) {
-        $('#money').html(data);
+    $.post(location.origin + "/ajax/money", function(data) {
+        $("#money").html(data);
         setTimeout(function() {
             $("#Rightbar>.sep20:nth(1)").remove();
             $("#Rightbar>.box:nth(1)").remove();
