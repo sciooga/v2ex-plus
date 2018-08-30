@@ -4,9 +4,10 @@ function get_at_name_list(comment_content){
     const name_list = new Set(),
         patt_at_name = RegExp("@<a href=\"/member/(.+?)\">", "g");
 
-    let match;
-    while (match = patt_at_name.exec(comment_content)) {
+    let match = patt_at_name.exec(comment_content);
+    while (match) {
         name_list.add(match[1]);
+        match = patt_at_name.exec(comment_content);
     }
 
     return name_list;
@@ -177,7 +178,7 @@ chrome.storage.sync.get(function(response) {
                                             <span style='font-size:0.6em'>主题超长已自动折叠，点击按钮显示完整的主题。</span>\
                                        </div>");
             if(_topic_buttons.length > 0){//用户未登录状态下，_topic_buttons不存在
-				_topic_buttons.before($showTopic);
+                _topic_buttons.before($showTopic);
             } else {
                 _topic.append($showTopic);
             }

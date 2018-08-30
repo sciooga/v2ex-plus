@@ -68,7 +68,7 @@ const defaultSettings = {
     "thankColor": "#cccccc",
     "sov2ex": 0,
     "customNode": "www",
-	"base64": 0
+    "base64": 0
 };
 
 window.onload = function() {
@@ -109,7 +109,7 @@ window.onload = function() {
     // Show saved settings
     function restoreSetting() {
         getItem(defaultSettings, (settings) => {
-            console.log(settings);
+            //console.log(settings);
             for (let name in settings) {
                 let value = settings[name];
                 let button = settingButtons[name];
@@ -121,7 +121,7 @@ window.onload = function() {
                     button.value = value;
                     setItemByKey(name,value);//如果用户从未改过，则设置一个默认值
                     button.onchange = function(e) {
-                        console.log(e, this, this.value);
+                        //console.log(e, this, this.value);
                         let hex = this.value.toLowerCase();
                         setItemByKey(name, hex);
                     };

@@ -1,3 +1,4 @@
+/*global setClipboardText Base64*/
 // Avoid `chrome` namespace
 if (typeof browser === "undefined" &&
     typeof chrome === "object"){
@@ -10,12 +11,12 @@ browser.runtime.onInstalled.addListener(function(e){
     if (e.reason === "install")
         browser.runtime.openOptionsPage();
     if (e.reason === "update" && e.previousVersion === "1.3.4"){
-      browser.notifications.create({
-        type   : 'basic',
-        iconUrl: 'icon/icon38_msg.png',
-        title  : '我们刚刚进行了更新',
-        message: '重构了设置页UI界面，更美观大气上档次。'
-      });
+        browser.notifications.create({
+            type   : "basic",
+            iconUrl: "icon/icon38_msg.png",
+            title  : "我们刚刚进行了更新",
+            message: "重构了设置页UI界面，更美观大气上档次。"
+        });
         // browser.runtime.openOptionsPage();
     }
 });
@@ -52,16 +53,16 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 beforeSend: (xhr) => {
                     if ( response.imageHosting === "imgur" ){
 
-                        client_id = [
+                        var client_id = [
                             "442b04f26eefc8a",
                             "59cfebe717c09e4",
                             "60605aad4a62882",
                             "6c65ab1d3f5452a",
                             "83e123737849aa9",
                             "9311f6be1c10160",
-							"c4a4a563f698595",
-							"81be04b9e4a08ce"
-                        ].sort(_ => 0.5 - Math.random())[0];
+                            "c4a4a563f698595",
+                            "81be04b9e4a08ce"
+                        ].sort(() => 0.5 - Math.random())[0];
 
                         xhr.setRequestHeader("Authorization", "Client-ID " + client_id);
                     }
@@ -158,16 +159,16 @@ storage.get(function (response) {
     Number(response.followMsg) && followMsg();
     Number(response.collectMsg) && collectMsg();
     urlPrefix = response.customNode || "www";
-    console.log(urlPrefix);
+    //console.log(urlPrefix);
 });
 
 function resetAlarm (name,delayInMillisec,periodInMinutes) {
-	browser.alarms.clear(name);
-	setTimeout(function () {
-		browser.alarms.create(name, {periodInMinutes: periodInMinutes});
-		console.log(name +"定时任务重建完成");
-	},delayInMillisec);//多少毫秒后重建定时任务
-};
+    browser.alarms.clear(name);
+    setTimeout(function () {
+        browser.alarms.create(name, {periodInMinutes: periodInMinutes});
+        //console.log(name +"定时任务重建完成");
+    },delayInMillisec);//多少毫秒后重建定时任务
+}
 
 browser.alarms.create("checkMsg", {periodInMinutes: 5});
 browser.alarms.create("autoMission", {periodInMinutes: 30});
@@ -217,11 +218,11 @@ function followMsg() {
                     iconUrl    : "icon/icon38_msg.png",
                     title      : "v2ex plus 提醒您",
                     message    : `${author} 创作了新主题：${topic}`,
-					buttons: [{
-						title: "半小时内免打扰"
-					}, {
-						title: "一小时内免打扰"
-					}]
+                    buttons: [{
+                        title: "半小时内免打扰"
+                    }, {
+                        title: "一小时内免打扰"
+                    }]
                 });
         });
 
@@ -253,11 +254,11 @@ function collectMsg() {
             var topicId = Number($(topic).find(".item_title a")[0].href.match(/\/t\/(\d+)/)[1]);
             topicIds.push(topicId);
 
-            if (cachedReplyCountList[topicId] === undefined){
+            if (typeof cachedReplyCountList[topicId] === "undefined"){
                 cachedReplyCountList[topicId] = topicReplyCount;
             }
             
-            if (latestReplyCountList[topicId] === undefined){
+            if (typeof latestReplyCountList[topicId] === "undefined"){
                 latestReplyCountList[topicId] = topicReplyCount;
             }else if (latestReplyCountList[topicId] != topicReplyCount){
                 latestReplyCountList[topicId] = topicReplyCount;
@@ -289,11 +290,11 @@ function collectMsg() {
                     iconUrl    : "icon/icon38_msg.png",
                     title      : "v2ex plus 提醒您",
                     message    : "您收藏的主题有了新回复，点击查看",
-					buttons: [{
-						title: "半小时内免打扰"
-					}, {
-						title: "一小时内免打扰"
-					}]
+                    buttons: [{
+                        title: "半小时内免打扰"
+                    }, {
+                        title: "一小时内免打扰"
+                    }]
                 });
             //20分钟内最多提示一次
             setTimeout(function(){
@@ -325,11 +326,11 @@ function checkMsg(){
                         iconUrl    : "icon/icon38_msg.png",
                         title      : "v2ex plus 提醒您",
                         message    : "您有 V2EX 的未读新消息，点击查看。",
-						buttons: [{
-							title: "半小时内免打扰"
-						}, {
-							title: "一小时内免打扰"
-						}]
+                        buttons: [{
+                            title: "半小时内免打扰"
+                        }, {
+                            title: "一小时内免打扰"
+                        }]
                     });
             }else{
                 browser.browserAction.setIcon({path: "icon/icon38.png"});
@@ -349,7 +350,7 @@ function checkMsg(){
 //清除通知图标，打开通知地址
 function clean_msg(){
     browser.browserAction.setIcon({path: "icon/icon38.png"});
-    browser.tabs.create({url:`https://www.v2ex.com/notifications`});
+    browser.tabs.create({url:"https://www.v2ex.com/notifications"});
 }
 
 browser.commands.onCommand.addListener(clean_msg);
@@ -360,25 +361,25 @@ browser.notifications.onClicked.addListener(function(notificationId){
         clean_msg();
         break;
     case "autoMission":
-        browser.tabs.create({url:`https://www.v2ex.com/balance`});
+        browser.tabs.create({url:"https://www.v2ex.com/balance"});
         break;
     case "newFollowTopic":
         browser.tabs.create({url:`https://www.v2ex.com/t/${window.newFollowTopicId}?p=1`});
         break;
     case "newCollectTopicReply":
-        browser.tabs.create({url:`https://www.v2ex.com/my/topics`});
+        browser.tabs.create({url:"https://www.v2ex.com/my/topics"});
         break;
     }
     browser.notifications.clear(notificationId);
 });
 browser.notifications.onButtonClicked.addListener(function(notificationId, btnIdx) {
-        if(btnIdx === 0){
-            resetAlarm("checkMsg",1500000,5);//25min后重建定时任务
-			browser.notifications.clear(notificationId)
-        }else if(btnIdx === 1){
-			resetAlarm("checkMsg",3300000,5);//55min后重建定时任务
-			browser.notifications.clear(notificationId);
-        }
+    if(btnIdx === 0){
+        resetAlarm("checkMsg",1500000,5);//25min后重建定时任务
+        browser.notifications.clear(notificationId);
+    }else if(btnIdx === 1){
+        resetAlarm("checkMsg",3300000,5);//55min后重建定时任务
+        browser.notifications.clear(notificationId);
+    }
 });
 
 //——————————————————————————————————通知/按钮点击反馈——————————————————————————————————
@@ -391,7 +392,7 @@ function autoMission(){
             //console.log('今天已经成功领取奖励了');
             return;
         }
-        console.log("开始签到");
+        //console.log("开始签到");
         $.ajax({
             url: "https://www.v2ex.com/",
             success: function(data){
@@ -404,15 +405,15 @@ function autoMission(){
                             if ( data.search("查看我的账户余额") ){
                                 let result = data.match(/已连续登录 (\d+?) 天/);
                                 if (response.autoMissionMsg) {
-									browser.notifications.create(
-										"autoMission" ,
-										{
-											type    : "basic",
-											iconUrl : "icon/icon38_msg.png",
-											title   : "v2ex plus 提醒您",
-											message : `签到成功，${result[0]}。\nTake your passion and make it come true.`,
-										}
-									);
+                                    browser.notifications.create(
+                                        "autoMission" ,
+                                        {
+                                            type    : "basic",
+                                            iconUrl : "icon/icon38_msg.png",
+                                            title   : "v2ex plus 提醒您",
+                                            message : `签到成功，${result[0]}。\nTake your passion and make it come true.`,
+                                        }
+                                    );
                                 }
                                 storage.set( {"autoMission" : new Date().getUTCDate()} );
                             }else{
@@ -446,100 +447,100 @@ function autoLoginWeibo(){
 
 //——————————————————————————————————右键菜单生成——————————————————————————————————
 const contextMenu = {
-	sov2ex: {
-		id: 'vplus.sov2ex',
-		title: "使用 sov2ex 搜索 '%s'",
-		contexts: ['selection']
-	},
-	base64: {
-		id: 'vplus.base64',
-		title: '使用 Base64 编码/解码',
-		contexts: ['selection']
-	}
+    sov2ex: {
+        id: "vplus.sov2ex",
+        title: "使用 sov2ex 搜索 '%s'",
+        contexts: ["selection"]
+    },
+    base64: {
+        id: "vplus.base64",
+        title: "使用 Base64 编码/解码",
+        contexts: ["selection"]
+    }
 };
 
 const base64SubMenu = [
     {
-		title:"编码",
-		id:"encode"
+        title:"编码",
+        id:"encode"
     },
     {
-		title:"解码",
-		id:"decode"
+        title:"解码",
+        id:"decode"
     }
 ];
 
 function errorHandler () {
-	if (browser.runtime.lastError) {
-		console.log("Got expected error: " + browser.runtime.lastError.message);
-	}
+    if (browser.runtime.lastError) {
+        //console.log("Got expected error: " + browser.runtime.lastError.message);
+    }
 }
 
 function createParentMenu (obj) {
-	browser.contextMenus.create(obj,errorHandler());
-	if(obj.id == "vplus.base64"){createSubMenu(base64SubMenu,obj);}
+    browser.contextMenus.create(obj,errorHandler());
+    if(obj.id == "vplus.base64"){createSubMenu(base64SubMenu,obj);}
 }
 
 function createSubMenu(arr,parent) {
-	for (let i = 0; i < arr.length; i++){
-		let obj = arr[i];
-		if(typeof obj == "string"){
-			obj = JSON.parse(obj);
-		}
-		let id = parent.id + "_" + obj.id;
-		let title = obj.title;
-		let contexts = parent.contexts;
-		browser.contextMenus.create({
-			"id": id,
-			"parentId": parent.id,
-			"title": title,
-			"contexts": contexts
-		},errorHandler());
-	}
+    for (let i = 0; i < arr.length; i++){
+        let obj = arr[i];
+        if(typeof obj == "string"){
+            obj = JSON.parse(obj);
+        }
+        let id = parent.id + "_" + obj.id;
+        let title = obj.title;
+        let contexts = parent.contexts;
+        browser.contextMenus.create({
+            "id": id,
+            "parentId": parent.id,
+            "title": title,
+            "contexts": contexts
+        },errorHandler());
+    }
 }
 
 function onClickedHandler (response) {
-		switch (response.menuItemId) {
-			case "vplus.sov2ex": {
-				sov2exClicked(response);
-				break;
-			}
-			case "vplus.base64_encode":
-			case "vplus.base64_decode":{
-				base64Clicked(response);
-				break;
-			}
-		}
+    switch (response.menuItemId) {
+    case "vplus.sov2ex": {
+        sov2exClicked(response);
+        break;
+    }
+    case "vplus.base64_encode":
+    case "vplus.base64_decode":{
+        base64Clicked(response);
+        break;
+    }
+    }
 }
 
 //onclicked operation
 chrome.contextMenus.onClicked.addListener(function (response) {
     //console.log(response);
-	onClickedHandler(response);
+    onClickedHandler(response);
 });
 
 //initial context menu when extension updated
 storage.get(function (response) {
-	if (response.sov2ex) {createParentMenu(contextMenu.sov2ex);}
-	if (response.base64) {createParentMenu(contextMenu.base64);}
+    if (response.sov2ex) {createParentMenu(contextMenu.sov2ex);}
+    if (response.base64) {createParentMenu(contextMenu.base64);}
 });
 //——————————————————————————————————右键菜单生成—————————————————————————————————
 
 //——————————————————————————————————右键使用 sov2ex 搜索—————————————————————————
 function sov2exClicked(response) {
-		window.open("https://www.sov2ex.com/?q=" + response.selectionText);
+    window.open("https://www.sov2ex.com/?q=" + response.selectionText);
 }
 //——————————————————————————————————右键使用 sov2ex 搜索——————————————————————————
 
 //——————————————————————————————————右键使用 Base64 编码/解码——————————————————————
 function base64Clicked(response) {
-		if(response.menuItemId === "vplus.base64_encode"){
-			const str = Base64.encode(response.selectionText);
-			if(prompt("编码如下，点击确定自动复制到剪贴板 ", str)) setClipboardText(str);
-		} else {
-			const str = Base64.decode(response.selectionText);
-			if(prompt("解码如下，点击确定自动复制到剪贴板", str)) setClipboardText(str);
-		}
+    if(response.menuItemId === "vplus.base64_encode"){
+        const str = Base64.encode(response.selectionText);
+        if(prompt("编码如下，点击确定自动复制到剪贴板 ", str)) setClipboardText(str);
+    } else {
+        const str = Base64.decode(response.selectionText);
+        if(prompt("解码如下，点击确定自动复制到剪贴板", str)) setClipboardText(str);
+    }
 }
 
 //点击确定，自动复制base64转码内容到剪贴板
@@ -553,39 +554,39 @@ function base64Clicked(response) {
 //——————————————————————————————————右键使用 Base64 编码/解码——————————————————————
 
 function onChangedHandler (changes) {
-	let keys = Object.keys(changes);
-	for (let i = 0,len = keys.length; i < len; i++){
-		let index = keys[i];
-		let item = changes[index];
-		switch (index){
-			case "sov2ex":
-            case "base64":
-			{
-				if (item.newValue) {
-					let obj = contextMenu[index];
-					delete obj.generatedId;
-					createParentMenu(obj);
-				} else {
-					browser.contextMenus.remove(contextMenu[index].id);
-				}
-				break;
-			}
-            case "customNode":
-            {
-                urlPrefix = item.newValue;
+    let keys = Object.keys(changes);
+    for (let i = 0,len = keys.length; i < len; i++){
+        let index = keys[i];
+        let item = changes[index];
+        switch (index){
+        case "sov2ex":
+        case "base64":
+        {
+            if (item.newValue) {
+                let obj = contextMenu[index];
+                delete obj.generatedId;
+                createParentMenu(obj);
+            } else {
+                browser.contextMenus.remove(contextMenu[index].id);
             }
-		}
-	}
+            break;
+        }
+        case "customNode":
+        {
+            urlPrefix = item.newValue;
+        }
+        }
+    }
 }
 
 chrome.storage.onChanged.addListener(function (changes, namespace) {
-	if (namespace !== "sync") return;
-	for(let key in changes){
-		if (changes[key].oldValue == undefined){//new install no operation
-			delete changes[key];
-		}
-	}
-	onChangedHandler(changes);
+    if (namespace !== "sync") return;
+    for(let key in changes){
+        if (typeof changes[key].oldValue == "undefined"){//new install no operation
+            delete changes[key];
+        }
+    }
+    onChangedHandler(changes);
 });
 
 //——————————————————————————————————跳转自定义节点————————————————————————————————
@@ -597,10 +598,10 @@ chrome.webRequest.onBeforeRequest.addListener(function (details) {
         };
     }
 },
-    {
-        types: ["main_frame"],
-        urls: ["*://*.v2ex.com/*"]
-    },
-    ["blocking"]
+{
+    types: ["main_frame"],
+    urls: ["*://*.v2ex.com/*"]
+},
+["blocking"]
 );
 //——————————————————————————————————跳转自定义节点————————————————————————————————
