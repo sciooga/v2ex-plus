@@ -7,7 +7,7 @@ chrome.runtime.sendMessage({action: "get_collectList"}, function(response) {
     var _latestReplyCountList = response.latest;
     _latestReplyCountList = _latestReplyCountList ? JSON.parse(_latestReplyCountList) : {};
     
-    if (_cachedReplyCountList[_topicId] !== undefined){
+    if (typeof _cachedReplyCountList[_topicId] !== "undefined"){
         var replayCountEl = $(".box .cell .gray");
         var replayCount = Number(replayCountEl[0].innerText.match(/(\d+) 回复/)[1]);
         var shouldSync = false;

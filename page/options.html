@@ -8,184 +8,280 @@
 </head>
 
 <body>
-    <div style="margin:0 auto; width:40em;">
-        <ul>
+    <header>
+        <div id="header-left">
+            <h1>v2ex plus 选项与帮助</h1>
+        </div>
+        <div id="header-center"></div>
+        <div id="header-right"></div>
+    </header>
+    <section>
+      <!--------------全局-------------->
+        <div class="setting-section">
+          <h2 class="title">全局</h2>
+          <ul class="card">
             <li>
-                <label class="item">
-                    <div class="item-content">消息提醒</div>
-                    <div class="item-secondary">
-                        <span class="toggle">
-                            <input disabled name="newMsg" class="newMsg" type="checkbox">
-                            <div></div>
-                        </span>
-                    </div>
-                </label>
-            </li>
-            <li>
-                <label class="item">
-                    <div class="item-content">Imgur图床（默认使用微博图床）</div>
-                    <div class="item-secondary">
-                        <span class="toggle">
-                            <input disabled name="imageHosting" class="imageHosting" type="checkbox">
-                            <div></div>
-                        </span>
-                    </div>
-                </label>
-            </li>
-            <li>
-                <label class="item">
-                    <div class="item-content">自动签到</div>
-                    <div class="item-secondary">
+              <label class="item">
+                <div class="item-content">自动签到</div>
+                <div class="item-secondary">
                         <span class="toggle">
                             <input disabled name="autoMission" class="autoMission" type="checkbox">
                             <div></div>
                         </span>
-                    </div>
-                </label>
+                </div>
+              </label>
             </li>
             <li>
-                <label class="item">
-                    <div class="item-content">主题预览</div>
-                    <div class="item-secondary">
+              <label class="item">
+                <div class="item-content">Imgur图床<div class="item-content-tip">默认使用微博图床</div></div>
+                <div class="item-secondary">
                         <span class="toggle">
-                            <input disabled name="preview" class="preview" type="checkbox">
+                            <input disabled name="imageHosting" class="imageHosting" type="checkbox">
                             <div></div>
                         </span>
-                    </div>
-                </label>
+                </div>
+              </label>
             </li>
             <li>
-                <label class="item">
-                    <div class="item-content">自动折叠</div>
-                    <div class="item-secondary">
-                        <span class="toggle">
-                            <input disabled name="fold" class="fold" type="checkbox">
-                            <div></div>
-                        </span>
-                    </div>
-                </label>
-            </li>
-            <li>
-                <label class="item">
-                    <div class="item-content">回复楼层号</div>
-                    <div class="item-secondary">
-                        <span class="toggle">
-                            <input disabled name="replyUser" class="replyUser" type="checkbox">
-                            <div></div>
-                        </span>
-                    </div>
-                </label>
-            </li>
-            <li>
-                <label class="item">
-                    <div class="item-content">关注提醒</div>
-                    <div class="item-secondary">
-                        <span class="toggle">
-                            <input disabled name="followMsg" class="followMsg" type="checkbox">
-                            <div></div>
-                        </span>
-                    </div>
-                </label>
-            </li>
-			<li>
-                <label class="item">
-                    <div class="item-content">收藏提醒</div>
-                    <div class="item-secondary">
-                        <span class="toggle">
-                            <input disabled name="collectMsg" class="collectMsg" type="checkbox">
-                            <div></div>
-                        </span>
-                    </div>
-                </label>
-            </li>
-            <li>
-                <label class="item">
-                    <div class="item-content">双击返回顶部</div>
-                    <div class="item-secondary">
+              <label class="item">
+                <div class="item-content">双击返回顶部</div>
+                <div class="item-secondary">
                         <span class="toggle">
                             <input disabled name="dblclickToTop" class="dblclickToTop" type="checkbox">
                             <div></div>
                         </span>
-                    </div>
-                </label>
+                </div>
+              </label>
+            </li>
+          </ul>
+        </div>
+      <!--------------提醒-------------->
+        <div class="setting-section">
+            <h2 class="title">提醒</h2>
+            <ul class="card">
+                <li>
+                    <label class="item">
+                        <div class="item-content">消息提醒</div>
+                        <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="newMsg" class="newMsg" type="checkbox">
+                            <div></div>
+                        </span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label class="item">
+                        <div class="item-content">关注提醒<div class="item-content-tip">提醒您关注的用户发表了新的主题</div></div>
+                        <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="followMsg" class="followMsg" type="checkbox">
+                            <div></div>
+                        </span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label class="item">
+                        <div class="item-content">收藏提醒<div class="item-content-tip">提醒您收藏的主题有了新的回复</div></div>
+                        <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="collectMsg" class="collectMsg" type="checkbox">
+                            <div></div>
+                        </span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label class="item">
+                        <div class="item-content">自动签到提醒<div class="item-content-tip">可选择在自动签到完成时，是否给出提醒</div></div>
+                        <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="autoMissionMsg" class="autoMissionMsg" type="checkbox">
+                            <div></div>
+                        </span>
+                        </div>
+                    </label>
+                </li>
+            </ul>
+        </div>
+      <!--------------浏览-------------->
+        <div class="setting-section">
+          <h2 class="title">浏览</h2>
+          <ul class="card">
+            <li>
+              <label class="item">
+                <div class="item-content">主题预览及忽略<div class="item-content-tip">在主题列表页增加”预览“和”忽略”按钮，点击可预览或忽略主题</div></div>
+                <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="preview" class="preview" type="checkbox">
+                            <div></div>
+                        </span>
+                </div>
+              </label>
             </li>
             <li>
-                <label class="item">
-                    <div class="item-content">新标签页浏览主题</div>
-                    <div class="item-secondary">
+              <label class="item">
+                <div class="item-content">自动折叠<div class="item-content-tip">长度超过1800px的主题/回复将被折叠</div></div>
+                <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="fold" class="fold" type="checkbox">
+                            <div></div>
+                        </span>
+                </div>
+              </label>
+            </li>
+            <li>
+              <label class="item">
+                <div class="item-content">新标签页浏览主题</div>
+                <div class="item-secondary">
                         <span class="toggle">
                             <input disabled name="newWindow" class="newWindow" type="checkbox">
                             <div></div>
                         </span>
-                    </div>
-                </label>
+                </div>
+              </label>
+            </li>
+          </ul>
+        </div>
+      <!--------------回复-------------->
+        <div class="setting-section">
+          <h2 class="title">回复</h2>
+          <ul class="card">
+            <li>
+              <label class="item">
+                <div class="item-content">回复楼层号<div class="item-content-tip">在回复时自动带上对方的楼层号</div></div>
+                <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="replyUser" class="replyUser" type="checkbox">
+                            <div></div>
+                        </span>
+                </div>
+              </label>
             </li>
             <li>
-                <label class="item">
-                    <div class="item-content">定时激活微博（实验）</div>
-                    <div class="item-secondary">
+              <label class="item">
+                <div class="item-content reply-color">楼主回复背景色<div class="item-content-tip">自定义楼主回复楼层的背景色，以突出楼主</div></div>
+                <div class="item-secondary">
+                  <input disabled name="replyColor" class="replyColor" type="color">
+                </div>
+              </label>
+            </li>
+            <li>
+              <label class="item">
+                <div class="item-content reply-a">楼主回复背景色透明度</div>
+                <div class="item-secondary" id="reply-opacity">
+                  <input disabled name="replyA" class="replyA" type="range" min="0.00" max="1.00" step="0.05">
+                  <span id="replyAValue" class="reply-value"></span>
+                </div>
+              </label>
+            </li>
+            <li>
+              <label class="item">
+                <div class="item-content thankText">感谢爱心颜色<div class="item-content-tip">自定义心形感谢图标颜色</div></div>
+                <div class="item-secondary">
+                  <input disabled name="thankColor" class="thankColor" type="color">
+                </div>
+              </label>
+            </li>
+          </ul>
+        </div>
+      <!--------------其他-------------->
+        <div class="setting-section">
+          <h2 class="title">其他</h2>
+          <ul class="card">
+            <li>
+              <label class="item">
+                <div class="item-content">使用 sov2ex 搜索<div class="item-content-tip">替换V站默认搜索为sov2ex，并在右键菜单中添加划词功能</div></div>
+                <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="sov2ex" class="sov2ex" type="checkbox">
+                            <div></div>
+                        </span>
+                </div>
+              </label>
+            </li>
+              <li>
+                  <label class="item">
+                      <div class="item-content">Base64编码/解码<div class="item-content-tip">在右键菜单添加划词并使用Base64编码/解码</div></div>
+                      <div class="item-secondary">
+                        <span class="toggle">
+                            <input disabled name="base64" class="base64" type="checkbox">
+                            <div></div>
+                        </span>
+                      </div>
+                  </label>
+              </li>
+            <li>
+              <label class="item">
+                <div class="item-content">定时激活微博（实验）</div>
+                <div class="item-secondary">
                         <span class="toggle">
                             <input disabled name="autoLoginWeibo" class="autoLoginWeibo" type="checkbox">
                             <div></div>
                         </span>
-                    </div>
-                </label>
-            </li>
-            <li>
-                <label class="item">
-                    <div class="item-content reply-color">楼主回复背景色</div>
-                    <div class="item-secondary">
-                        <input disabled name="replyColor" class="replyColor" type="color">
-                    </div>
-                </label>
-            </li>
-            <li>
-                <label class="item">
-                    <div class="item-content reply-a">楼主回复背景色透明度</div>
-                    <div class="item-secondary">
-                        <input disabled name="replyA" class="replyA" type="range" min="0.00" max="1.00" step="0.05">
-                        <span id="replyAValue" class="reply-value"></span>
-                    </div>
-                </label>
-            </li>
-            <li>
-                <label class="item">
-                    <div class="item-content thankText">感谢爱心颜色</div>
-                    <div class="item-secondary">
-                        <input disabled name="thankColor" class="thankColor" type="color">
-                    </div>
-                </label>
-            </li>
-            <li>
-                <label class="item">
-                    <div class="item-content">重置所有设置</div>
-                    <button class="button reset" id="allDefault">确认重置</button>
-                </label>
-            </li>
-            <li>
-                <div class="item link">
-                    <div class="item-content" id="blockList" title="前往屏蔽名单页面">管理屏蔽名单</div>
-                    <div class="next">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <title>navigate_next</title>
-                            <path d="M9.984 6l6 6-6 6-1.406-1.406 4.594-4.594-4.594-4.594z"></path>
-                        </svg>
-                    </div>
                 </div>
+              </label>
             </li>
+              <li>
+                  <label class="item">
+                      <div class="item-content">自定义节点<div class="item-content-tip">自定义V站入口域名，提升访问流畅度</div></div>
+                      <div class="item-secondary dropdownMenu">
+                          <select name="customNode" id="customNode">
+                              <option value="www">国内1（默认）</option>
+                              <option value="fast">国内2</option>
+                              <option value="sjc">美国1</option>
+                              <option value="uk">美国2</option>
+                              <option value="jp">日本</option>
+                              <option value="neue">全球1</option>
+                              <option value="lax">全球2</option>
+                          </select>
+                      </div>
+                  </label>
+              </li>
             <li>
-                <a class="item link" href="/page/about.html" title="前往关于页面" target="_blank">
-                    <div class="item-content" >使用说明及更多</div>
-                    <div class="next">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <title>navigate_next</title>
-                            <path d="M9.984 6l6 6-6 6-1.406-1.406 4.594-4.594-4.594-4.594z"></path>
-                        </svg>
-                    </div>
-                </a>
+              <div class="item link" id="blockList">
+                <div class="item-content" title="前往屏蔽名单页面">管理屏蔽名单</div>
+                <div class="next">
+                  <svg class="icon" viewBox="0 0 24 24">
+                    <title>navigate_next</title>
+                    <path d="M 10 9 L 10 15 L13 12 Z" fill="#757575"></path>
+                  </svg>
+                </div>
+              </div>
             </li>
-        </ul>
-    </div>
+          </ul>
+        </div>
+      <!--------------重置-------------->
+        <div class="setting-section">
+          <h2 class="title">重置</h2>
+          <ul class="card">
+            <li>
+              <label class="item">
+                <div class="item-content">重置所有设置</div>
+                <button class="button reset" id="allDefault">重置</button>
+              </label>
+            </li>
+          </ul>
+        </div>
+      <!--------------帮助-------------->
+        <div class="setting-section">
+          <h2 class="title">帮助</h2>
+          <ul class="card">
+            <li>
+              <a class="item link" href="/page/about.html" title="前往关于页面" target="_blank">
+                <div class="item-content" >使用说明及更多</div>
+                <div class="next">
+                  <svg class="icon" viewBox="0 0 24 24">
+                    <title>navigate_next</title>
+                    <path d="M 10 9 L 10 15 L13 12 Z" fill="#757575"></path>
+                  </svg>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+    </section>
     <script src="options.js"></script>
 </body>
 

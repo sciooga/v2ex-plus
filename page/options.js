@@ -1,6 +1,6 @@
 "use strict";
 function saveChoice(e){
-    console.log(e, e.target.checked);
+    //console.log(e, e.target.checked);
     let name = e.target.name;
     let checked = e.target.checked;
     let value;
@@ -14,7 +14,7 @@ function saveChoice(e){
 }
 
 function setItem(obj) {
-    console.log(obj);
+    //console.log(obj);
     // let obj = {};
     // obj[key] = value;
     chrome.storage.sync.set(obj);
@@ -22,7 +22,7 @@ function setItem(obj) {
 }
 
 function setItemByKey(key, value) {
-    console.log(key, value);
+    //console.log(key, value);
     let obj = {};
     obj[key] = value;
     chrome.storage.sync.set(obj);
@@ -30,7 +30,7 @@ function setItemByKey(key, value) {
 }
 
 function getItem(obj, callback) {
-    console.log(chrome, chrome.storage);
+    //console.log(chrome, chrome.storage);
     chrome.storage.sync.get(obj, callback);
 }
 
@@ -45,6 +45,10 @@ function getItem(obj, callback) {
     * 双击返回顶部 默认关闭
     * 定时激活微博 默认关闭
     * 新标签页浏览主题 默认关闭
+    * 使用sov2ex搜索 默认关闭
+    * 自动签到提醒 默认开启
+    * 自定义节点 默认www(国内1)
+    * Base64加密/解密 默认关闭
 */
 const defaultSettings = {
     "newMsg": 1,
@@ -57,10 +61,14 @@ const defaultSettings = {
     "autoLoginWeibo": 0,
     "followMsg": 1,
     "collectMsg": 0,
+    "autoMissionMsg": 1,
     "newWindow": 0,
     "replyColor": "#fffff9",
     "replyA": 0.4,
-    "thankColor": "#cccccc"
+    "thankColor": "#cccccc",
+    "sov2ex": 0,
+    "customNode": "www",
+    "base64": 0
 };
 
 window.onload = function() {
@@ -76,11 +84,15 @@ window.onload = function() {
         autoLoginWeibo: document.querySelector(".autoLoginWeibo"),
         followMsg: document.querySelector(".followMsg"),
         collectMsg: document.querySelector(".collectMsg"),
+        autoMissionMsg: document.querySelector(".autoMissionMsg"),
         newWindow: document.querySelector(".newWindow"),
         replyColor: document.querySelector(".replyColor"),
         replyA: document.querySelector(".replyA"),
         thankColor: document.querySelector(".thankColor"),
-        replyAValue: document.getElementById("replyAValue")
+        replyAValue: document.getElementById("replyAValue"),
+        sov2ex: document.querySelector(".sov2ex"),
+        customNode: document.getElementById("customNode"),
+        base64: document.querySelector(".base64")
     };
     
     function resetAll() {
@@ -97,7 +109,7 @@ window.onload = function() {
     // Show saved settings
     function restoreSetting() {
         getItem(defaultSettings, (settings) => {
-            console.log(settings);
+            //console.log(settings);
             for (let name in settings) {
                 let value = settings[name];
                 let button = settingButtons[name];
@@ -105,10 +117,11 @@ window.onload = function() {
                 switch (name) {
                 case "replyColor":
                 case "thankColor":
+                case "customNode":
                     button.value = value;
                     setItemByKey(name,value);//如果用户从未改过，则设置一个默认值
                     button.onchange = function(e) {
-                        console.log(e, this, this.value);
+                        //console.log(e, this, this.value);
                         let hex = this.value.toLowerCase();
                         setItemByKey(name, hex);
                     };
@@ -130,7 +143,7 @@ window.onload = function() {
                         setItemByKey(name,value);//设置storage中imgHosting的默认值
                     } else {
                         checked = !!parseInt(value);
-                        setItemByKey(name,value);//在storage中为各选项初始一个默认值
+                        setItemByKey(name,parseInt(value));//在storage中为各选项初始一个默认值
                     }
                     button.checked = checked;
                     button.onchange = saveChoice;

@@ -3,10 +3,11 @@
 function get_at_name_list(comment_content){
     const name_list = new Set(),
         patt_at_name = RegExp("@<a href=\"/member/(.+?)\">", "g");
-    
-    let match;
-    while (match = patt_at_name.exec(comment_content)) {
+
+    let match = patt_at_name.exec(comment_content);
+    while (match) {
         name_list.add(match[1]);
+        match = patt_at_name.exec(comment_content);
     }
 
     return name_list;
@@ -77,7 +78,7 @@ $("div[id^=r_]").each(function(){
 
     //———回复空格修复———
     _reply.css("whiteSpace", "pre-wrap").html(function(i, o){
-        return o.replace(/<br>/g, "");
+        return o.replace(/\n<br>/g, "\n").replace(/<br>/g, "\n");
     });
     //———回复空格修复———
 
@@ -160,7 +161,6 @@ $("#onlyKeyUser").click(function(){
 
 
 chrome.storage.sync.get(function(response) {
-    console.log(response);
     const topic_height = _topic.height(),
         r = parseInt((response.replyColor).substring(1,3),16),
         g = parseInt((response.replyColor).substring(3,5),16),
@@ -172,11 +172,16 @@ chrome.storage.sync.get(function(response) {
         if (topic_height>1800){
             _topic_content.css({maxHeight:"600px", overflow:"hidden", transition:"max-height 2s"});
             $(".subtle", _topic).hide();
-            _topic_buttons.before("<div id='showTopic' style='padding:16px; color:#778087;'>\
+            const $showTopic = $("<div id='showTopic' style='padding:16px; color:#778087;'>\
                                             <span id='topicBTN'>展开主题</span>\
                                             <div style='height:10px;'></div>\
                                             <span style='font-size:0.6em'>主题超长已自动折叠，点击按钮显示完整的主题。</span>\
                                        </div>");
+            if(_topic_buttons.length > 0){//用户未登录状态下，_topic_buttons不存在
+                _topic_buttons.before($showTopic);
+            } else {
+                _topic.append($showTopic);
+            }
             $("#topicBTN").click(function(){
                 //乘2是由于当图片未加载完成时，预先记录的高度不准确（短于实际高度）
                 _topic_content.css({maxHeight:topic_height*2});
