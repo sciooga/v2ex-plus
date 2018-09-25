@@ -1,17 +1,31 @@
 /*global setClipboardText Base64*/
 // Avoid `chrome` namespace
-if (typeof browser === "undefined" &&
-    typeof chrome === "object"){
+var platform = "notchrome";
+if (typeof browser === "undefined" && typeof chrome === "object"){
     //console.log("On Chrome");
     var browser = chrome;
+    platform = "chrome";
 }
 
+//—————————————————————————不同函数在 Firefox 和 Chrome 下的区分对待——————————————————
+function browser_notifications_create(id, options) {
+    if(platform === "chrome") {
+        browser.notifications.create(id, options);
+    } else {
+        if (typeof options["buttons"] !== "undefined") {
+            delete options["buttons"];
+        }
+        browser.notifications.create(id, options);
+    }
+}
+
+//——————————————————————————————————配置页面更新消息——————————————————————————————————
 browser.runtime.onInstalled.addListener(function(e){
     // Open options page to initialize localStorage
     if (e.reason === "install")
         browser.runtime.openOptionsPage();
     if (e.reason === "update" && e.previousVersion === "1.3.4"){
-        browser.notifications.create({
+        browser_notifications_create({
             type   : "basic",
             iconUrl: "icon/icon38_msg.png",
             title  : "我们刚刚进行了更新",
@@ -211,7 +225,7 @@ function followMsg() {
             if( response.followMsgTopicId == topicId ) return;
             storage.set({"followMsgTopicId":topicId});
             window.newFollowTopicId = topicId;
-            browser.notifications.create(
+            browser_notifications_create(
                 "newFollowTopic" ,
                 {
                     type       : "basic",
@@ -283,7 +297,7 @@ function collectMsg() {
 
         if (!window.collectNotified && newReply){
             window.collectNotified = true;
-            browser.notifications.create(
+            browser_notifications_create(
                 "newCollectTopicReply" ,
                 {
                     type       : "basic",
@@ -319,7 +333,7 @@ function checkMsg(){
                 browser.browserAction.setIcon({path: "icon/icon38_nologin.png"});
             }else if( sign!="0") {
                 browser.browserAction.setIcon({path: "icon/icon38_msg.png"});
-                browser.notifications.create(
+                browser_notifications_create(
                     "newMsg" ,
                     {
                         type       : "basic",
@@ -405,7 +419,7 @@ function autoMission(){
                             if ( data.search("查看我的账户余额") ){
                                 let result = data.match(/已连续登录 (\d+?) 天/);
                                 if (response.autoMissionMsg) {
-                                    browser.notifications.create(
+                                    browser_notifications_create(
                                         "autoMission" ,
                                         {
                                             type    : "basic",
