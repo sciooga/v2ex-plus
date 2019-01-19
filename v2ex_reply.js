@@ -429,7 +429,7 @@ _reply_link.mouseenter(function(){
                 reply_position = [0, 16];
                 _fo_triangle.css({top:"-6px", bottom:"auto", transform:"rotate(180deg)"});
             }
-            _close_reply.css({"top":(_this.offset().top - reply_position[0]*(34 + _close_reply.height()) + reply_position[1] ) + "px", "left":(_this.offset().left - 80 + _this.width()/2) + "px", "visibility":"visible", "opacity":"1", "marginTop":"10px"});
+            _close_reply.css({"top":(_this.offset().top - reply_position[0]*(34 + _close_reply.height()) + reply_position[1] ) + "px", "left":(_this.offset().left - 80 + _this.width()/2) + "px", "visibility":"visible", "opacity":"1", "marginTop":"10px", "word-break": "keep-all"});
         },300);
     }
 });
