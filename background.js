@@ -173,7 +173,6 @@ storage.get(function (response) {
     Number(response.followMsg) && followMsg();
     Number(response.collectMsg) && collectMsg();
     urlPrefix = response.customNode || "www";
-    //console.log(urlPrefix);
 });
 
 function resetAlarm (name,delayInMillisec,periodInMinutes) {
@@ -605,6 +604,7 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
 
 //——————————————————————————————————跳转自定义节点————————————————————————————————
 chrome.webRequest.onBeforeRequest.addListener(function (details) {
+    if (urlPrefix === "-1") return { redirectUrl: details.url }; //用户选择了“关闭”选项
     if (details.url.indexOf(`//${urlPrefix}.v2ex.com/`) == -1) {
         let url = details.url.replace(/\/\/(.*?)\//, `//${urlPrefix}.v2ex.com/`);
         return {
