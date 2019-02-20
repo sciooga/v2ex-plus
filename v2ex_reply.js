@@ -80,6 +80,10 @@ $("div[id^=r_]").each(function(){
     _reply.css("whiteSpace", "pre-wrap").html(function(i, o){
         return o.replace(/\n<br>/g, "\n").replace(/<br>/g, "\n");
     });
+
+    function lazyGist(element) {
+        
+    }
     //———回复空格修复———
 
     var _reply_content = _reply.html();
@@ -131,6 +135,9 @@ $("div[id^=r_]").each(function(){
           + location.origin + location.pathname + "?p=" + page_current_num + "#" + _this.attr("id")
           + "'>楼层直链</span> &nbsp; &nbsp;");
 });
+
+// 修复因为恢复回复排版导致 gist 无法加载的问题
+$('body').append("<script>$('.reply_content button').click(function(){lazyGist(this)})</script>")
 
 if (~~page_current_num > 1){
     //console.log('V2EX PLUS: 此主题有多页回复，正在加载所有回复。');
