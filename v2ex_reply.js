@@ -139,7 +139,7 @@ $("div[id^=r_]").each(function(){
 // 修复因为恢复回复排版导致 gist 无法加载的问题
 $('body').append("<script>$('.reply_content button').click(function(){lazyGist(this)})</script>")
 
-if (~~page_current_num > 1){
+// if (~~page_current_num > 1){
     //console.log('V2EX PLUS: 此主题有多页回复，正在加载所有回复。');
     $.get("https://www.v2ex.com/api/replies/show.json?topic_id="+/\/t\/([0-9]+)/.exec(window.location.href)[1],function(data){
         //console.log('V2EX PLUS: 所有回复加载完成。');
@@ -149,7 +149,7 @@ if (~~page_current_num > 1){
         }
         page_previous_num = "0";
     });
-}
+// }
 
 $(".direct").click(function () {
     setClipboardText($(this).data("clipboard-text"));
