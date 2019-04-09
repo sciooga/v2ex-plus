@@ -458,9 +458,9 @@ _reply_link.mouseleave(function(){
 
 //————————————————初始化————————————————
 
-var _reply_textarea = document.getElementById("reply_content");
-_reply_textarea.parentNode.replaceChild(_reply_textarea.cloneNode(true), _reply_textarea);
-_reply_textarea = $("#reply_content");
+//var _reply_textarea = document.getElementById("reply_content");
+//_reply_textarea.parentNode.replaceChild(_reply_textarea.cloneNode(true), _reply_textarea);
+var _reply_textarea = $("#reply_content");
 
 _reply_textarea.attr("placeholder", "你可以在文本框内直接粘贴截图或拖拽图片上传\n类似于 [:微笑:] 的图片标签可以优雅的移动");
 
