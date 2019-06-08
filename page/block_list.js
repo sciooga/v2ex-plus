@@ -16,6 +16,16 @@ function unblock(target, name, id, created){
     }
 }
 
+function getItem(obj, callback) {
+    chrome.storage.sync.get(obj, callback);
+}
+
+function initialDarkTheme () {
+    getItem(['darkTheme'], function (result) {
+        if (result.darkTheme) document.body.classList.add('dark-theme');
+    })
+}
+
 $(function(){
     if (block_list == ""){
         $("#blockList").append("<table><td>当前账号无任何屏蔽用户，请检查是否登录了正确的账号。</td></table>");
@@ -110,4 +120,6 @@ $(function(){
             });
         });
     });
+
+    initialDarkTheme();
 });

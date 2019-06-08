@@ -49,6 +49,7 @@ function getItem(obj, callback) {
     * 自动签到提醒 默认开启
     * 自定义节点 默认www(国内1)
     * Base64加密/解密 默认关闭
+    * 深色主题 默认关闭
 */
 const defaultSettings = {
     "newMsg": 1,
@@ -68,11 +69,15 @@ const defaultSettings = {
     "thankColor": "#cccccc",
     "sov2ex": 0,
     "customNode": "www",
-    "base64": 0
+    "base64": 0,
+    "darkTheme": 0
 };
 
 window.onload = function() {
     // const s = localStorage;
+
+    initialDarkTheme();
+
     const settingButtons = {
         newMsg: document.querySelector(".newMsg"),
         imageHosting: document.querySelector(".imageHosting"),
@@ -92,7 +97,8 @@ window.onload = function() {
         replyAValue: document.getElementById("replyAValue"),
         sov2ex: document.querySelector(".sov2ex"),
         customNode: document.getElementById("customNode"),
-        base64: document.querySelector(".base64")
+        base64: document.querySelector(".base64"),
+        darkTheme: document.querySelector(".darkTheme")
     };
     
     function resetAll() {
@@ -159,6 +165,17 @@ window.onload = function() {
     document.getElementById("blockList").onclick = function(){
         chrome.runtime.sendMessage({action: "get_blockList"});
     };
+
+    //切换深色主题
+    document.querySelector(".darkTheme").onclick = function(){
+        document.body.classList.toggle('dark-theme');
+    };
+
+    function initialDarkTheme () {
+        getItem(['darkTheme'], function (result) {
+            if (result.darkTheme) document.body.classList.add('dark-theme');
+        })
+    }
 
     restoreSetting();
 };

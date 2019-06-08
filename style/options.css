@@ -2,12 +2,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+	user-select: none;
 }
 
 body {
   display: flex;
   flex-direction: column;
-  background: #f1f1f1;
+  background-color: #f1f1f1;
   font-family: "Microsoft Yahei",sans-serif;
   font-size: 81.25%;
   line-height: 154%;
@@ -109,6 +110,7 @@ h2.title {
   /*line-height: 1rem;*/
   /*transition: all .45s cubic-bezier(.23,1,.32,1) 0ms;*/
   background: none;
+	cursor: pointer;
 }
 
 .item>.item-content {
@@ -177,7 +179,7 @@ input.nickname {
   width: 1.6rem;
   height: .6rem;
   border-radius: 1rem;
-  background: #eee;
+  background-color: #eee;
 }
 
 .toggle div:after {
@@ -186,14 +188,14 @@ input.nickname {
   left: 0;
   width: .8rem;
   height: .8rem;
-  background: #fff;
+  background-color: #fff;
   box-shadow: 0 1px 3px 1px rgba(0, 0, 0, .4);
   -webkit-transform: translateX(0);
   transform: translateX(0);
 }
 
 .toggle input:checked+div:before {
-  background: #90cbfe;
+  background-color: #90cbfe;
 }
 
 .toggle input:checked+div:after {
@@ -213,9 +215,46 @@ a {
 }
 
 input[type="color"]{
+	-webkit-appearance: none;
+	border: none;
   width: 1.8rem;
   height: 1.2rem;
   margin-top: -0.25rem;
+	cursor: pointer;
+	outline: none;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+	border: none;
+}
+
+input[type="range"] {
+	-webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+	height: .6rem;
+	border-radius: 10px;
+	background-color: #eee;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	width: .8rem;
+	height: .8rem;
+	border-radius: 50%;
+	margin-top: -1px;
+	background-color: #fff;
+	box-shadow: 0 1px 3px 1px rgba(0, 0, 0, .4);
+	cursor: pointer;
+}
+
+input[type="range"]:focus {
+	outline: none;
 }
 
 #reply-opacity {
@@ -269,7 +308,7 @@ input[type="color"]{
   height: 2rem;
   font-size: .8rem;
   line-height: 2rem;
-  background: #4285F4;
+  background-color: #4285F4;
   margin: .25rem .5rem;
   border-radius: 3px;
 }
@@ -293,8 +332,69 @@ input[type="color"]{
   outline: none;
   padding-bottom: 4px;
   -webkit-padding-start: 5px;
-  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjEycHgiIHZpZXdCb3g9IjAgMCAyNCAxMiIgZmlsbD0iIzc1NzU3NSI+PGc+PHBhdGggZD0iTSAwIDAgTCAyNCAwIEwgMTIgMTIgeiIvPjwvZz48L3N2Zz4=) center right no-repeat;
-  background-size: 0.7em;
+  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjEycHgiIHZpZXdCb3g9IjAgMCAyNCAxMiIgZmlsbD0iIzc1NzU3NSI+PGc+PHBhdGggZD0iTSAwIDAgTCAyNCAwIEwgMTIgMTIgeiIvPjwvZz48L3N2Zz4=) center right/0.7em no-repeat;
   font-family: inherit;
   font-size: inherit;
+}
+
+/**** Dark Theme ****/
+body.dark-theme {
+    background-color: #3A3736;
+}
+
+body.dark-theme header {
+    background-color: #3A3736;
+    color: #ccc;
+}
+
+body.dark-theme h2.title {
+    color: #ccc;
+}
+
+body.dark-theme li {
+    background-color: #3E3E3E;
+    border-top-color: #373738;
+}
+
+body.dark-theme .item>.item-content {
+    color: #ccc;
+}
+
+body.dark-theme .item>.item-secondary {
+    color: #ccc;
+}
+
+body.dark-theme .toggle div:before {
+    background-color: #333;
+}
+
+body.dark-theme .toggle div:after {
+    background-color: #3E3E3E;
+}
+
+body.dark-theme .toggle input:checked+div:before {
+    background-color: #9A9A9A;
+}
+
+body.dark-theme input[type="range"]{
+	background-color: #9A9A9A;
+	border-radius: 10px;
+}
+
+body.dark-theme input[type="range"]::-webkit-slider-runnable-track {
+	background-color: #9A9A9A;
+}
+
+body.dark-theme input[type="range"]::-webkit-slider-thumb {
+	background-color: #3E3E3E;
+}
+
+body.dark-theme .item > .dropdownMenu > select {
+	color: #ccc;
+	background: #686466 url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjEycHgiIHZpZXdCb3g9IjAgMCAyNCAxMiIgZmlsbD0iIzc1NzU3NSI+PGc+PHBhdGggZD0iTSAwIDAgTCAyNCAwIEwgMTIgMTIgeiIvPjwvZz48L3N2Zz4=) center right/0.7em no-repeat;
+	border-bottom-color: #686466;
+}
+
+body.dark-theme .reset {
+    background-color: #686466;
 }
