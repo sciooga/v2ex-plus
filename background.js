@@ -549,10 +549,10 @@ function sov2exClicked(response) {
 function base64Clicked(response) {
     if(response.menuItemId === "vplus.base64_encode"){
         const str = Base64.encode(response.selectionText);
-        if(prompt("编码如下，点击确定自动复制到剪贴板 ", str)) setClipboardText(str);
+        if(prompt("编码如下，点击确定自动复制到剪贴板：\n\n" + str, str)) setClipboardText(str);
     } else {
         const str = Base64.decode(response.selectionText);
-        if(prompt("解码如下，点击确定自动复制到剪贴板", str)) setClipboardText(str);
+        if(prompt("解码如下，点击确定自动复制到剪贴板：\n\n" + str, str)) setClipboardText(str);
     }
 }
 
