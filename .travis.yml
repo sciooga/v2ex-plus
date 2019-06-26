@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - '7'
+env:
+  - EXTENSION_ID=daeclijmnojoemooblcbfeeceopnkolo
+deploy:
+  provider: script
+  script: npm run release
+  on:
+    branch: master
+    tags: true
