@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/sciooga/v2ex-plus.svg?branch=master)](https://travis-ci.org/sciooga/v2ex-plus)
+
 扩展介绍可在 [V2EX 主题](http://www.v2ex.com/t/198074) 查看或在扩展设置页面查看各版本对应的详细介绍。
 
 Chrome Web Store: [v2ex plus](https://chrome.google.com/webstore/detail/daeclijmnojoemooblcbfeeceopnkolo)
