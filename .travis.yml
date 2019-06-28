@@ -1,11 +1,12 @@
 language: node_js
 node_js:
-  - '7'
+  - 'node'
 env:
   - EXTENSION_ID=daeclijmnojoemooblcbfeeceopnkolo
 deploy:
   provider: script
+  skip_cleanup: true
   script: npm run release
   on:
     branch: master
-    tags: true
+    tags: false
