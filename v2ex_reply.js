@@ -411,7 +411,7 @@ _reply_link.mouseenter(function(){
         display_foMouse = setTimeout(function(){
             _close_reply.html( "<div style='padding-bottom:6px;'>" + (1) + "层至" + (_no) + "层间未发现该用户的回复</div>" + "<img class='triangle' src='"+ triangle_img +"' />" );
             // 判断 @ 之后是否跟了 # 号
-            var result = RegExp("@" + _this.text() + " #(\\d+)").exec(_this.parent().text());
+            var result = RegExp(" #(\\d+)").exec(_this[0].nextSibling.data);
             if (result && _reply_user_name_list[+result[1]] == _this.text()){
                 var i = +result[1];
                 _close_reply.html( _reply_content_list[i] + "<p class='bubbleName' style='text-align:right; padding-right:0px;'>\
