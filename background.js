@@ -465,23 +465,17 @@ const contextMenu = {
         title: "使用 sov2ex 搜索 '%s'",
         contexts: ["selection"]
     },
-    base64: {
-        id: "vplus.base64",
-        title: "使用 Base64 编码/解码",
+    base64Encode: {
+        id: "vplus.base64_encode",
+        title: "使用 Base64 编码",
         contexts: ["selection"]
-    }
-};
-
-const base64SubMenu = [
-    {
-        title:"编码",
-        id:"encode"
     },
-    {
-        title:"解码",
-        id:"decode"
-    }
-];
+    base64Decode: {
+        id: "vplus.base64_decode",
+        title: "使用 Base64 解码",
+        contexts: ["selection"]
+    },
+};
 
 function errorHandler () {
     if (browser.runtime.lastError) {
@@ -491,7 +485,7 @@ function errorHandler () {
 
 function createParentMenu (obj) {
     browser.contextMenus.create(obj,errorHandler());
-    if(obj.id == "vplus.base64"){createSubMenu(base64SubMenu,obj);}
+    // if(obj.id == "vplus.base64"){createSubMenu(base64SubMenu,obj);}
 }
 
 function createSubMenu(arr,parent) {
@@ -535,7 +529,10 @@ chrome.contextMenus.onClicked.addListener(function (response) {
 //initial context menu when extension updated
 storage.get(function (response) {
     if (response.sov2ex) {createParentMenu(contextMenu.sov2ex);}
-    if (response.base64) {createParentMenu(contextMenu.base64);}
+    if (response.base64) {
+        createParentMenu(contextMenu.base64Encode);
+        createParentMenu(contextMenu.base64Decode);
+    }
 });
 //——————————————————————————————————右键菜单生成—————————————————————————————————
 
@@ -573,14 +570,22 @@ function onChangedHandler (changes) {
         let item = changes[index];
         switch (index){
         case "sov2ex":
+        {
+            if (item.newValue) {
+                createParentMenu(contextMenu.sov2ex);
+            } else {
+                browser.contextMenus.remove(contextMenu.sov2ex.id);
+            }
+            break;
+        }
         case "base64":
         {
             if (item.newValue) {
-                let obj = contextMenu[index];
-                delete obj.generatedId;
-                createParentMenu(obj);
+                createParentMenu(contextMenu.base64Encode);
+                createParentMenu(contextMenu.base64Decode);
             } else {
-                browser.contextMenus.remove(contextMenu[index].id);
+                browser.contextMenus.remove(contextMenu.base64Encode.id);
+                browser.contextMenus.remove(contextMenu.base64Decode.id);
             }
             break;
         }
