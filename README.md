@@ -1,8 +1,6 @@
-[![Build Status](https://travis-ci.org/sciooga/v2ex-plus.svg?branch=master)](https://travis-ci.org/sciooga/v2ex-plus)
+[![Build Status](https://travis-ci.org/sciooga/v2ex-plus.svg?branch=master)](https://travis-ci.org/sciooga/v2ex-plus) ![Chrome Web Store](https://img.shields.io/chrome-web-store/v/daeclijmnojoemooblcbfeeceopnkolo)
 
 扩展介绍可在 [V2EX 主题](http://www.v2ex.com/t/198074) 查看或在扩展设置页面查看各版本对应的详细介绍。
-
-Chrome Web Store: [v2ex plus](https://chrome.google.com/webstore/detail/daeclijmnojoemooblcbfeeceopnkolo)
 
 Firefox Add-ons: [v2ex plus](https://addons.mozilla.org/zh-CN/firefox/addon/v2ex-plus9/)
 
