@@ -400,11 +400,16 @@ browser.notifications.onButtonClicked.addListener(function(notificationId, btnId
 
 //——————————————————————————————————自动签到——————————————————————————————————
 function autoMission(){
-    storage.get(function (response) {
+    storage.get(async function (response) {
         if( response.autoMission == new Date().getUTCDate() ){
             //console.log('今天已经成功领取奖励了');
             return;
         }
+
+        // 没联网不签到
+        const offline = !await window.isOnline();
+        if (offline) return;
+
         //console.log("开始签到");
         $.ajax({
             url: "https://www.v2ex.com/",
