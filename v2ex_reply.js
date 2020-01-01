@@ -72,6 +72,9 @@ var maxNestDivCount = 1;
 
 _topic_buttons.append(" &nbsp;<a href='#;' id='onlyKeyUser' class='tb'>只看楼主</a>");
 
+// 图片链接正则表达式，匹配<a href="imageUrl" attr="otherAttr">imageUrl</a>， 可能覆盖不全
+const imageRegexp = /(<a[^>]+href="((https?:\/\/)(.+\.(jpg|jpeg|png|webp|gif).*))"[^>]*>)\3?\4(<\/a>)/gmi;
+
 $("div[id^=r_]").each(function(){
     var _this = $(this);
     var _reply = _this.find(".reply_content");
@@ -87,6 +90,12 @@ $("div[id^=r_]").each(function(){
     //———回复空格修复———
 
     var _reply_content = _reply.html();
+
+
+    // 将图片链接替换为<img>标签
+    _reply_content = _reply_content.replace(imageRegexp, '$1<img src="$2" class="embedded_image" referrerpolicy="no-referrer"><br>$2$6');
+    _reply.html(_reply_content);
+
     var _reply_user_name = _this.find("strong a").text();
     var _reply_at_name = RegExp("<a href=\"/member/(.*?)\">").exec(_reply_content);
 
@@ -145,7 +154,7 @@ $('body').append("<script>$('.reply_content button').click(function(){lazyGist(t
         //console.log('V2EX PLUS: 所有回复加载完成。');
         for (var i in data){
             _reply_user_name_list[~~i+1] = data[i].member.username;
-            _reply_content_list[~~i+1] = data[i].content_rendered;
+            _reply_content_list[~~i+1] = data[i].content_rendered.replace(imageRegexp, '$1<img src="$2" class="embedded_image" referrerpolicy="no-referrer"><br>$2$6');
         }
         page_previous_num = "0";
     });
