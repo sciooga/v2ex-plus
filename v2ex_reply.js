@@ -741,7 +741,6 @@ if (location.protocol == "https:"){
     }, 100);
 }
 
-//——————————————————————————————————https 新浪图床修改——————————————————————————————————
 
 
 
@@ -754,6 +753,9 @@ if (location.protocol == "https:"){
   - https://imgur.com/s9vHWcC
   - not starts with https://
 */
+
+
+// Helper functions
 var regex_common_imgurl = /\/.+\.(jpeg|jpg|gif|png)$/;
 function is_common_img_url(url){ // 常见的图片URL
     return(url.match(regex_common_imgurl) != null);
@@ -819,12 +821,33 @@ function replacer_mdimg2htmlimg(match, p1, p2, offset, string){
     return match;
 }
 
-
 var regex_html_imgtag = /&lt;img.*?src="(.*?)"[^\>]*&gt;/g;
 function replacer_plainimgtag2imgtag(match, p, offset, string){
     p = convert_img_url(p);
     return `<img src="${p}"/>`;
 }
+
+function construct_separator_html(id, tip){ // tip: 显示/隐藏
+    let html_part1 = `<p class="reply-separator">`,
+        html_part2 = `</p>`;
+    return html_part1 + 
+            `（本回复已由<a href="https://github.com/sciooga/v2ex-plus"> v2ex plus </a>重新解析）<a class="toggle_original_reply_link" reply-id="${id}">点击此处${tip}原始回复</a>`
+        + html_part2;
+}
+
+function toggle_original_reply(e){
+    setTimeout(() => {
+        let target = $(e.target),
+            id = target.attr("reply-id"),
+            div_id = `#original-reply-${id}`;
+        $(div_id).toggle();
+        $(`#reply-separator-${id}-display`).toggle();
+        $(`#reply-separator-${id}-hide`).toggle();
+    }, 100);
+}
+
+
+// Main logic and code
 /*
 针对每个回复，拷贝其html，并作如下处理：
 1. 恢复出原始文本
@@ -896,11 +919,19 @@ for(; i < n_replies; i++){ // for each reply
     }
 
     // 3. 判断是否展示
-    let seperator_html= `<p class="reply-seperator">Parsed by <a href="https://github.com/sciooga/v2ex-plus">v2ex plus</a></p>`;
     if(show_parsed || reply.find('img').length < reply_copy.find('img').length){
-        reply.append(seperator_html);
+        reply.wrapInner(`<div id="original-reply-${i}"></div>`);
+        $(`#original-reply-${i}`).toggle(false);
+
+        reply.append(`<div id="reply-separator-${i}-display"></div>`);
+        reply.append(`<div id="reply-separator-${i}-hide"></div>`);
+        $(`#reply-separator-${i}-display`).html(construct_separator_html(i, "显示"));
+        $(`#reply-separator-${i}-hide`).html(construct_separator_html(i, "隐藏"));
+        $(`#reply-separator-${i}-hide`).toggle(false);
+
+        reply_copy.wrapInner(`<div id="parsed-reply${i}"></div>`);
         reply.append(reply_copy.contents());
     }
-
-
 }
+
+$(".toggle_original_reply_link").click(toggle_original_reply);
