@@ -831,16 +831,7 @@ function construct_separator_html(id, tip){ // tip: 显示/隐藏
         + html_part2;
 }
 
-function toggle_original_reply(e){
-    setTimeout(() => {
-        let target = $(e.target),
-            id = target.attr("reply-id"),
-            div_id = `#original-reply-${id}`;
-        $(div_id).toggle();
-        $(`#reply-separator-${id}-display`).toggle();
-        $(`#reply-separator-${id}-hide`).toggle();
-    }, 100);
-}
+
 
 
 // Main logic and code
@@ -858,76 +849,104 @@ function toggle_original_reply(e){
 3. 判断是否展示
 */
 
-var show_parsed = false;
-var replies = $('.reply_content');
-let i = 0, n_replies = replies.length;
-for(; i < n_replies; i++){ // for each reply
-
-    let reply = $(replies[i]),
-        reply_copy = reply.clone(true, true),
-        j = 0;
-    show_parsed = false;
-
-    // 1. 恢复出原始文本
-    // 1.1 用<img>中的src替换<img>
-    let imgs = $(reply_copy).find('img'),
-        n_imgs = imgs.length;
-    for(j = 0; j < n_imgs; j++){
-        let img = $(imgs[j]),
-            img_url = img.attr('src');
-        img.replaceWith(img_url);
+chrome.storage.sync.get("imageParsing", function (settings){
+    var imageParsing = settings['imageParsing'];
+    if(imageParsing == 'off'){
+        return;
     }
-    // 1.2 用<a>中的text替换<a>
-    let links = $(reply_copy).find('a'),
-        n_links = links.length;
-    for(j = 0; j < n_links; j++){
-        let a = $(links[j]),
-            href = a.attr('href'),
-            text = a.text();
-        text = text.replace(/ /g, '');
-        if(is_img_url(href) && is_img_url(text)){ // or less strict: has_img_url(text)
-            url = convert_img_url(text);
-            a.replaceWith(url);
+
+    var show_parsed = false;
+    var replies = $('.reply_content');
+    let i = 0, n_replies = replies.length;
+    for(; i < n_replies; i++){ // for each reply
+
+        let reply = $(replies[i]),
+            reply_copy = reply.clone(true, true),
+            j = 0;
+        show_parsed = false;
+
+        // 1. 恢复出原始文本
+        // 1.1 用<img>中的src替换<img>
+        let imgs = $(reply_copy).find('img'),
+            n_imgs = imgs.length;
+        for(j = 0; j < n_imgs; j++){
+            let img = $(imgs[j]),
+                img_url = img.attr('src');
+            img.replaceWith(img_url);
         }
-    }
-
-    // 2. 重新解析文本
-    let html = $(reply_copy).html();
-    // 2.1 转换markdown格式的图片![]()
-    html = html.replace(regex_mdimg, replacer_mdimg2htmlimg);
-    $(reply_copy).html(html);
-    // 2.2 转换html <img>格式的图片<img />
-    html = html.replace(regex_html_imgtag, replacer_plainimgtag2imgtag);
-    $(reply_copy).html(html);
-    // 2.3 转换plain image url
-    let contents = $(reply_copy).contents(),
-        n_contents = contents.length;
-    for(j = 0; j < contents.length; j++){
-        let content = $(contents[j]);
-        if (content[0].nodeType == 3) {// text
-            let text = $(content).text();
-            if(regex_url.test(text)){
-                text = text.replace(regex_url, replacer_url2img);
-                $(contents[j]).replaceWith(text);
-
+        // 1.2 用<a>中的text替换<a>
+        let links = $(reply_copy).find('a'),
+            n_links = links.length;
+        for(j = 0; j < n_links; j++){
+            let a = $(links[j]),
+                href = a.attr('href'),
+                text = a.text();
+            text = text.replace(/ /g, '');
+            if(is_img_url(href) && is_img_url(text)){ // or less strict: has_img_url(text)
+                url = convert_img_url(text);
+                a.replaceWith(url);
             }
         }
+
+        // 2. 重新解析文本
+        let html = $(reply_copy).html();
+        // 2.1 转换markdown格式的图片![]()
+        html = html.replace(regex_mdimg, replacer_mdimg2htmlimg);
+        $(reply_copy).html(html);
+        // 2.2 转换html <img>格式的图片<img />
+        html = html.replace(regex_html_imgtag, replacer_plainimgtag2imgtag);
+        $(reply_copy).html(html);
+        // 2.3 转换plain image url
+        let contents = $(reply_copy).contents(),
+            n_contents = contents.length;
+        for(j = 0; j < contents.length; j++){
+            let content = $(contents[j]);
+            if (content[0].nodeType == 3) {// text
+                let text = $(content).text();
+                if(regex_url.test(text)){
+                    text = text.replace(regex_url, replacer_url2img);
+                    $(contents[j]).replaceWith(text);
+
+                }
+            }
+        }
+
+        // 3. 判断是否展示
+        if(show_parsed || reply.find('img').length < reply_copy.find('img').length){
+
+            reply.wrapInner(`<div id="original-reply-${i}" class="original-reply"></div>`);
+            if(imageParsing == 'auto-hide'){
+                $(`#original-reply-${i}`).toggle(false);
+            }
+
+            reply.append(`<div id="reply-separator-${i}-display"></div>`);
+            reply.append(`<div id="reply-separator-${i}-hide"></div>`);
+            $(`#reply-separator-${i}-display`).html(construct_separator_html(i, "显示"));
+            $(`#reply-separator-${i}-hide`).html(construct_separator_html(i, "隐藏"));
+            if(imageParsing == 'auto-hide'){
+                $(`#reply-separator-${i}-display`).toggle(true);
+                $(`#reply-separator-${i}-hide`).toggle(false);
+            }
+            else{
+                $(`#reply-separator-${i}-display`).toggle(false);
+                $(`#reply-separator-${i}-hide`).toggle(true);
+            }
+            
+
+            reply_copy.wrapInner(`<div id="parsed-reply${i}"></div>`);
+            reply.append(reply_copy.contents());
+        }
     }
 
-    // 3. 判断是否展示
-    if(show_parsed || reply.find('img').length < reply_copy.find('img').length){
-        reply.wrapInner(`<div id="original-reply-${i}"></div>`);
-        $(`#original-reply-${i}`).toggle(false);
+    $(".toggle_original_reply_link").click(function (e){
+        setTimeout(() => {
+            let target = $(e.target),
+                id = target.attr("reply-id"),
+                div_id = `#original-reply-${id}`;
+            $(div_id).toggle();
+            $(`#reply-separator-${id}-display`).toggle();
+            $(`#reply-separator-${id}-hide`).toggle();
+        }, 100);
+    });
+});
 
-        reply.append(`<div id="reply-separator-${i}-display"></div>`);
-        reply.append(`<div id="reply-separator-${i}-hide"></div>`);
-        $(`#reply-separator-${i}-display`).html(construct_separator_html(i, "显示"));
-        $(`#reply-separator-${i}-hide`).html(construct_separator_html(i, "隐藏"));
-        $(`#reply-separator-${i}-hide`).toggle(false);
-
-        reply_copy.wrapInner(`<div id="parsed-reply${i}"></div>`);
-        reply.append(reply_copy.contents());
-    }
-}
-
-$(".toggle_original_reply_link").click(toggle_original_reply);

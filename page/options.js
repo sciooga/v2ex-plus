@@ -70,7 +70,8 @@ const defaultSettings = {
     "sov2ex": 0,
     "customNode": "www",
     "base64": 0,
-    "darkTheme": 0
+    "darkTheme": 0,
+    "imageParsing": "auto-hide"
 };
 
 window.onload = function() {
@@ -98,7 +99,8 @@ window.onload = function() {
         sov2ex: document.querySelector(".sov2ex"),
         customNode: document.getElementById("customNode"),
         base64: document.querySelector(".base64"),
-        darkTheme: document.querySelector(".darkTheme")
+        darkTheme: document.querySelector(".darkTheme"),
+        imageParsing: document.getElementById("imageParsing")
     };
     
     function resetAll() {
@@ -128,6 +130,15 @@ window.onload = function() {
                     setItemByKey(name,value);//如果用户从未改过，则设置一个默认值
                     button.onchange = function(e) {
                         //console.log(e, this, this.value);
+                        let hex = this.value.toLowerCase();
+                        setItemByKey(name, hex);
+                    };
+                    button.disabled = false;
+                    break;
+                case "imageParsing":
+                    button.value = value;
+                    setItemByKey(name,value);//如果用户从未改过，则设置一个默认值
+                    button.onchange = function(e) {
                         let hex = this.value.toLowerCase();
                         setItemByKey(name, hex);
                     };

@@ -249,6 +249,12 @@ span[class^="inputBTN"]:hover
 
 /* used by image parser */
 
+.original-reply{
+    background-color: #f2f2f2;
+    padding: 3px;
+    border-radius: 2px;
+}
+
 p.reply-separator {
     color: #696969;
     overflow: hidden;
