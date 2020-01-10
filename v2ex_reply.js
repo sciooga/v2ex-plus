@@ -741,4 +741,217 @@ if (location.protocol == "https:"){
     }, 100);
 }
 
-//——————————————————————————————————https 新浪图床修改——————————————————————————————————
+
+
+
+//——————————————————————————————————重新解析图片——————————————————————————————————
+/*
+默认情况下，v2ex中的评论只渲染来自imgur/weibo/v2ex的图片URL，用户体验非常不好。
+需要解决两个问题：
+1. 图床限制
+2. 非标准的图片URL，以下是需要转换的URL
+  - https://imgur.com/s9vHWcC
+  - not starts with https://
+*/
+
+// Helper functions
+var regex_common_imgurl = /\/.+\.(jpeg|jpg|gif|png)$/;
+function is_common_img_url(url) { // 常见的图片URL
+    return (url.match(regex_common_imgurl) != null);
+}
+
+var regex_imgur_imgurl = /^https?:\/\/imgur\.com\/[a-zA-Z0-9]{7}$/;
+function is_imgur_url(url) { // 是否属于imgur的图片URL
+    return (url.match(regex_imgur_imgurl) != null);
+}
+
+function is_img_url(url) {
+    return (is_common_img_url(url) || is_imgur_url(url));
+}
+
+function has_img_url(text) {
+    return (
+        regex_common_imgurl.test(text) ||
+        regex_imgur_imgurl.test(text)
+    );
+}
+
+function convert_img_url(url) {
+    url = url.replace(/ /g, '');
+    // https://imgur.com/s9vHWcC
+    if (is_imgur_url(url)) {
+        url += ".png";
+    }
+    if (is_img_url(url)) {
+        // not starts with `http`
+        if (!(
+                url.startsWith('//') ||
+                url.startsWith('http://') ||
+                url.startsWith('https://')
+            )) {
+            url = 'https://' + url;
+        }
+    }
+    return url;
+}
+
+
+var regex_url = /((http(s)?:)?\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
+function replacer_url2img(match, offset, string) {
+    if (is_common_img_url(match)) {
+        let t = `<a target="_blank" href="${match}"><img src="${match}" /></a>`;
+        return t;
+    }
+    return match;
+}
+
+var regex_mdimg = /(?:!\[(.*?)\]\s*\((.*?)\))/g;
+function replacer_mdimg2htmlimg(match, p1, p2, offset, string) {
+    p2 = convert_img_url(p2);
+    if (is_common_img_url(p2)) {
+        show_parsed = true;
+        let t = `<a target="_blank" href="${p2}"><img src="${p2}" alt="${p1}" /></a>`;
+        return t;
+    }
+    return match;
+}
+
+var regex_html_imgtag = /&lt;img.*?src="(.*?)"[^\>]*&gt;/g;
+function replacer_plainimgtag2imgtag(match, p, offset, string) {
+    p = convert_img_url(p);
+    return `<a target="_blank" href="${p}"><img src="${p}" /></a>`;
+}
+
+function construct_separator_html(id, tip) { // tip: 显示/隐藏
+    let html_part1 = `<p class="reply-separator">`,
+        html_part2 = `</p>`;
+    return html_part1 +
+        `（本回复已由<a href="https://github.com/sciooga/v2ex-plus"> v2ex plus </a>重新解析）<a class="toggle_original_reply_link" reply-id="${id}">点击此处${tip}原始回复</a>` +
+        html_part2;
+}
+
+
+
+
+// Main logic and code
+/*
+针对每个回复，拷贝其html，并作如下处理：
+1. 恢复出原始文本
+  1.1 用<img>中的src替换<img>
+  1.2 用<a>中的text替换<a>
+
+2. 重新解析文本
+  2.1 转换markdown格式的图片: `![]()` -> <img />
+  2.2 转换escaped <img>格式的图片: `&lt;img &gt;` -> <img />
+  2.3 转换plain image url: *.jpg -> <img />
+
+3. 判断是否展示
+*/
+
+chrome.storage.sync.get("imageParsing", function(settings) {
+    var imageParsing = settings["imageParsing"];
+    if (imageParsing == "off") {
+        return;
+    }
+
+    var show_parsed = false;
+    var replies = $(".reply_content");
+    let i = 0,
+        n_replies = replies.length;
+    for (; i < n_replies; i++) {
+        // for each reply
+
+        let reply = $(replies[i]),
+            reply_copy = reply.clone(true, true),
+            j = 0;
+        show_parsed = false;
+
+        // 1. 恢复出原始文本
+
+        let imgs = $(reply_copy).find("img"),
+            n_imgs = imgs.length;
+        for (j = 0; j < n_imgs; j++) { // 1.1 用<img>中的src替换<img>
+            let img = $(imgs[j]),
+                img_url = img.attr("src");
+            img.replaceWith(img_url);
+        }
+        
+        let links = $(reply_copy).find("a"),
+            n_links = links.length;
+        for (j = 0; j < n_links; j++) { // 1.2 用<a>中的text替换<a>
+            let a = $(links[j]),
+                href = a.attr("href"),
+                text = a.text();
+            text = text.replace(/ /g, "");
+            if (is_img_url(href) && is_img_url(text)) {
+                // or less strict: has_img_url(text)
+                url = convert_img_url(text);
+                a.replaceWith(url);
+            }
+        }
+
+        // 2. 重新解析文本
+        let html = $(reply_copy).html();
+        html = html.replace(regex_mdimg, replacer_mdimg2htmlimg); // 2.1 转换markdown格式的图片![]()
+        $(reply_copy).html(html);
+        
+        html = html.replace(regex_html_imgtag, replacer_plainimgtag2imgtag); // 2.2 转换html <img>格式的图片<img />
+        $(reply_copy).html(html);
+        
+        let contents = $(reply_copy).contents();
+        for (j = 0; j < contents.length; j++) { // 2.3 转换plain image url
+            let content = $(contents[j]);
+            if (content[0].nodeType == 3) {
+                // text
+                let text = $(content).text();
+                if (regex_url.test(text)) {
+                    text = text.replace(regex_url, replacer_url2img);
+                    $(contents[j]).replaceWith(text);
+                }
+            }
+        }
+
+        // 3. 判断是否展示
+        if (
+            show_parsed ||
+            reply.find("img").length < reply_copy.find("img").length
+        ) {
+            reply.wrapInner(
+                `<div id="original-reply-${i}" class="original-reply"></div>`
+            );
+            if (imageParsing == "auto-hide") {
+                $(`#original-reply-${i}`).toggle(false);
+            }
+
+            reply.append(`<div id="reply-separator-${i}-display"></div>`);
+            reply.append(`<div id="reply-separator-${i}-hide"></div>`);
+            $(`#reply-separator-${i}-display`).html(
+                construct_separator_html(i, "显示")
+            );
+            $(`#reply-separator-${i}-hide`).html(
+                construct_separator_html(i, "隐藏")
+            );
+            if (imageParsing == "auto-hide") {
+                $(`#reply-separator-${i}-display`).toggle(true);
+                $(`#reply-separator-${i}-hide`).toggle(false);
+            } else {
+                $(`#reply-separator-${i}-display`).toggle(false);
+                $(`#reply-separator-${i}-hide`).toggle(true);
+            }
+
+            reply_copy.wrapInner(`<div id="parsed-reply${i}"></div>`);
+            reply.append(reply_copy.contents());
+        }
+    }
+
+    $(".toggle_original_reply_link").click(function(e) {
+        setTimeout(() => {
+            let target = $(e.target),
+                id = target.attr("reply-id");
+            $(`#original-reply-${id}`).toggle();
+            $(`#reply-separator-${id}-display`).toggle();
+            $(`#reply-separator-${id}-hide`).toggle();
+        }, 100);
+    });
+});
+

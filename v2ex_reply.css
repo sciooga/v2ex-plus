@@ -246,3 +246,42 @@ span[class^="inputBTN"]:hover
 .gist{
     white-space: normal !important;
 }
+
+/* used by image parser */
+
+.original-reply{
+    background-color: #f2f2f2;
+    padding: 3px;
+    border-radius: 2px;
+}
+
+p.reply-separator {
+    color: #696969;
+    overflow: hidden;
+    text-align: center;
+    font-size: x-small;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+p.reply-separator:before,
+p.reply-separator:after{
+    background-color: #ccc;
+    content: "";
+    display: inline-block;
+    height: 1px;
+    position: relative;
+    vertical-align: middle;
+    width: 50%;
+}
+
+p.reply-separator:before{
+    right: 0.2em;
+    margin-left: -50%;
+}
+
+p.reply-separator:after {
+    left: 0.2em;
+    margin-right: -50%;
+}
