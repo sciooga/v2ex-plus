@@ -36,7 +36,7 @@ function input_img(input_img_base64, this_img_id){
     _upload_image.append("<div class='imgId"+ this_img_id +"'>\
                                 <div><img src='"+ input_img_base64 +"' alt='上传图片'/></div>\
                                 <span>上传中</span>\
-                          </div>");
+                        </div>");
     _upload_image.slideDown(700);
 
     const img_base64 = input_img_base64.match("base64,(.*)")[1];
@@ -52,7 +52,7 @@ function input_img(input_img_base64, this_img_id){
             alert("图片上传失败，可能是未登录微博/受 imgur 上传次数限制");
             _img_preview.find("span").text("请重新上传");
         }
-        _upload_img_btn.text(" › 插入图片");
+        _upload_img_btn.text(" ᕀ 插入图片");
     });
 }
 
@@ -82,7 +82,7 @@ $("div[id^=r_]").each(function(){
     });
 
     function lazyGist(element) {
-        
+
     }
     //———回复空格修复———
 
@@ -465,7 +465,7 @@ var _reply_textarea = $("#reply_content");
 _reply_textarea.attr("placeholder", "你可以在文本框内直接粘贴截图或拖拽图片上传\n类似于 [:微笑:] 的图片标签可以优雅的移动");
 
 var _reply_textarea_top_btn = _reply_textarea.parents(".box").children(".cell:first-of-type");
-_reply_textarea_top_btn.append("<span class='inputBTN1'> › 表情</span><span class='inputBTN2'> › 插入图片</span><input type='file' style='display: none' id='imgUpload' accept='image/*' />");
+_reply_textarea_top_btn.append("<span class='inputBTN1'> ᕀ 表情</span><span class='inputBTN2'> ᕀ 插入图片</span><input type='file' style='display: none' id='imgUpload' accept='image/*' />");
 
 $("script").each(function(){
     var $this = $(this);
@@ -875,7 +875,7 @@ chrome.storage.sync.get("imageParsing", function(settings) {
                 img_url = img.attr("src");
             img.replaceWith(img_url);
         }
-        
+
         let links = $(reply_copy).find("a"),
             n_links = links.length;
         for (j = 0; j < n_links; j++) { // 1.2 用<a>中的text替换<a>
@@ -894,10 +894,10 @@ chrome.storage.sync.get("imageParsing", function(settings) {
         let html = $(reply_copy).html();
         html = html.replace(regex_mdimg, replacer_mdimg2htmlimg); // 2.1 转换markdown格式的图片![]()
         $(reply_copy).html(html);
-        
+
         html = html.replace(regex_html_imgtag, replacer_plainimgtag2imgtag); // 2.2 转换html <img>格式的图片<img />
         $(reply_copy).html(html);
-        
+
         let contents = $(reply_copy).contents();
         for (j = 0; j < contents.length; j++) { // 2.3 转换plain image url
             let content = $(contents[j]);
