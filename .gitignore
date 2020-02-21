@@ -21,6 +21,7 @@ npm-debug.log
 deployments.log
 yarn-error.log
 package-lock.json
+yarn.lock
 lerna-debug.log
 .prettierrc
 
