@@ -70,6 +70,9 @@ var _reply_content_list = Array();
 var r_i = 1;
 var maxNestDivCount = 1;
 
+//Add reply button to the topic
+_topic_buttons.append(" &nbsp;<a href='#;' id='topic_reply' class='tb' onclick=document.getElementById('reply_content').focus();>Reply</a>");
+
 _topic_buttons.append(" &nbsp;<a href='#;' id='onlyKeyUser' class='tb'>只看楼主</a>");
 
 $("div[id^=r_]").each(function(){
