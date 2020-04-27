@@ -61,6 +61,11 @@
       "strict_min_version": "48.0"
     }
   },
+  "browser_specific_settings": {
+    "gecko": {
+      "strict_min_version": "68.0"
+    }
+  },
   "commands": {
     "newMsg": {
       "suggested_key": {
