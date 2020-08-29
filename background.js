@@ -629,3 +629,22 @@ chrome.webRequest.onBeforeRequest.addListener(function (details) {
 ["blocking"]
 );
 //——————————————————————————————————跳转自定义节点————————————————————————————————
+
+//———————————————————————————————正常显示新浪图床图片——————————————————————————————
+chrome.webRequest.onBeforeSendHeaders.addListener(function (details) {
+    const requestHeaders = details.requestHeaders;
+    const refererHeaderIndex = requestHeaders.findIndex(header => header.name.toLowerCase() === "referer");
+    if (refererHeaderIndex > -1 && /^https?:\/\/([a-z]+\.)?v2ex\.com[\/$]/i.test(requestHeaders[refererHeaderIndex].value)) {
+        details.requestHeaders.splice(refererHeaderIndex, 1);
+        break;
+    }
+
+    return {requestHeaders: details.requestHeaders};
+},
+{
+    types: ["image"],
+    urls: ["*://*.sinaimg.cn/*"]
+},
+["blocking"]
+);
+//———————————————————————————————正常显示新浪图床图片——————————————————————————————
