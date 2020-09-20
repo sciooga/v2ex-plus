@@ -1,6 +1,6 @@
 {
   "name": "v2ex plus",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "manifest_version": 2,
   "description": "优雅便捷的 V2EX 扩展",
   "background": {
@@ -12,7 +12,6 @@
     "storage",
     "contextMenus",
     "webRequest",
-    "webRequestBlocking",
     "*://*.v2ex.com/*",
     "*://*.imgur.com/*",
     "*://*.weibo.com/*"
@@ -59,6 +58,11 @@
     "gecko": {
       "id": "{690c1618-4b2c-4905-bf58-1fc82bdfd6e7}",
       "strict_min_version": "48.0"
+    }
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "strict_min_version": "68.0"
     }
   },
   "commands": {

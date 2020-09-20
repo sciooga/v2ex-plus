@@ -822,6 +822,11 @@ function replacer_plainimgtag2imgtag(match, p, offset, string) {
     return `<a target="_blank" href="${p}"><img src="${p}" /></a>`;
 }
 
+var regex_dirty_html = /<(?:\/|)script>/g;
+function replace_dirty2escape(p, offset, string) {
+    return p.startsWith("<s") ? "&lt;script&gt;" : "&lt;\/script&gt;";
+}
+
 function construct_separator_html(id, tip) { // tip: 显示/隐藏
     let html_part1 = `<p class="reply-separator">`,
         html_part2 = `</p>`;
@@ -845,7 +850,9 @@ function construct_separator_html(id, tip) { // tip: 显示/隐藏
   2.2 转换escaped <img>格式的图片: `&lt;img &gt;` -> <img />
   2.3 转换plain image url: *.jpg -> <img />
 
-3. 判断是否展示
+3.替换脏字符为转义字符
+
+4. 判断是否展示
 */
 
 chrome.storage.sync.get("imageParsing", function(settings) {
@@ -911,7 +918,13 @@ chrome.storage.sync.get("imageParsing", function(settings) {
             }
         }
 
-        // 3. 判断是否展示
+        //3.替换脏字符为转义字符
+        html = $(reply_copy).html();
+        html = html.replace(regex_dirty_html, replace_dirty2escape); // 3.1 将脏字符替换为转义字符
+        $(reply_copy).html(html);
+
+
+        // 4. 判断是否展示
         if (
             show_parsed ||
             reply.find("img").length < reply_copy.find("img").length
