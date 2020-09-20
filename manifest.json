@@ -14,7 +14,8 @@
     "webRequest",
     "*://*.v2ex.com/*",
     "*://*.imgur.com/*",
-    "*://*.weibo.com/*"
+    "*://*.weibo.com/*",
+    "*://*.sinaimg.cn/*"
   ],
   "content_scripts": [
     {
