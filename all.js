@@ -61,7 +61,7 @@ if (isErrorPage) {
 //——————————————————————————————————使用 sov2ex 搜索——————————————————————————————————
 chrome.storage.sync.get(function (response) {
     if (response.sov2ex){
-        $("#q").attr("placeholder","sov2ex")
+        $("#search").attr("placeholder","sov2ex")
             .keyup(function () {
                 $(this).val($(this).val().replace(/[#%&]/g,""));//用户输入不能包含特殊字符#%&
             })
