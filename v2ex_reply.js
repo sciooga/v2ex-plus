@@ -737,6 +737,7 @@ if (location.protocol == "https:"){
             if ($this[0].src.indexOf(".sinaimg.cn") != -1 && $this[0].src.indexOf("http://") != -1) {
                 $this[0].src = "https" + $this[0].src.substr(4);
             }
+            $this[0].src = $this[0].src.replace("https://ws2.sinaimg.cn","https://ww1.sinaimg.cn")
         });
     }, 100);
 }

@@ -14,7 +14,7 @@ Offline install: [v2ex plus](https://github.com/sciooga/v2ex-plus/releases)
 
 感谢设计师 [Sheep](http://sheephe.com) 画了新图标以及一些界面上的指导，很赞！
 
-感谢 GPU、ghost404、肉饼、[xhhjin](http://xuhehuan.com/)、[Creabine](http://blog.csdn.net/creabine) 的热心支持和共同维护本项目。
+感谢 GPU、ghost404、肉饼、[xhhjin](http://xuhehuan.com/)、[Creabine](http://blog.csdn.net/creabine)、[yaerda](https://github.com/yaerda)、[Sneezry](https://github.com/Sneezry)的热心支持和共同维护本项目。
 
 感谢 [Vito Van](https://github.com/VitoVan) 提供了 v2excellent.js 签到[代码](https://gist.github.com/VitoVan/bf00ce496b44c56417a675c521fe67e8)的独立协议授权。
 

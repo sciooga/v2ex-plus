@@ -46,10 +46,10 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         //——————————设置微博或 imgur 的信息——————————
         storage.get(function (response) {
             if ( response.imageHosting === "weibo" ){
-                post_url = "http://picupload.service.weibo.com/interface/pic_upload.php?\
+                post_url = "https://picupload.weibo.com/interface/pic_upload.php?\
                     ori=1&mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog";
                 patt_id = "pid\":\"(.*?)\"";
-                url_start = "https://ws2.sinaimg.cn/large/";
+                url_start = "https://ww1.sinaimg.cn/large/";
                 url_end = ".jpg";
                 data = {"b64_data": request.img_base64};
             }else{
@@ -629,3 +629,22 @@ chrome.webRequest.onBeforeRequest.addListener(function (details) {
 ["blocking"]
 );
 //——————————————————————————————————跳转自定义节点————————————————————————————————
+
+//———————————————————————————————正常显示新浪图床图片——————————————————————————————
+chrome.webRequest.onBeforeSendHeaders.addListener(function (details) {
+    const requestHeaders = details.requestHeaders;
+    const refererHeaderIndex = requestHeaders.findIndex(header => header.name.toLowerCase() === "referer");
+    if (refererHeaderIndex > -1 && /^https?:\/\/([a-z]+\.)?v2ex\.com[\/$]/i.test(requestHeaders[refererHeaderIndex].value)) {
+        details.requestHeaders.splice(refererHeaderIndex, 1);
+        break;
+    }
+
+    return {requestHeaders: details.requestHeaders};
+},
+{
+    types: ["image"],
+    urls: ["*://*.sinaimg.cn/*"]
+},
+["blocking"]
+);
+//———————————————————————————————正常显示新浪图床图片——————————————————————————————
