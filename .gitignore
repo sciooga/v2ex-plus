@@ -24,4 +24,6 @@ package-lock.json
 yarn.lock
 lerna-debug.log
 .prettierrc
+.vscode
+
 
