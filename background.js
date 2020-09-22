@@ -636,7 +636,6 @@ chrome.webRequest.onBeforeSendHeaders.addListener(function (details) {
     const refererHeaderIndex = requestHeaders.findIndex(header => header.name.toLowerCase() === "referer");
     if (refererHeaderIndex > -1 && /^https?:\/\/([a-z]+\.)?v2ex\.com[\/$]/i.test(requestHeaders[refererHeaderIndex].value)) {
         details.requestHeaders.splice(refererHeaderIndex, 1);
-        break;
     }
 
     return {requestHeaders: details.requestHeaders};
