@@ -12,6 +12,7 @@
     "storage",
     "contextMenus",
     "webRequest",
+    "webBlockRequest",
     "*://*.v2ex.com/*",
     "*://*.imgur.com/*",
     "*://*.weibo.com/*",
