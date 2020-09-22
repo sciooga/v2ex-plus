@@ -158,16 +158,26 @@ div#closeReply > img.triangle
     left: 74px;
 }
 
+div.inputBTN {
+    flex: auto;
+}
+
 span[class^="inputBTN"]
 {
     margin-left:6px;
     cursor: pointer;
+    /* flex: none; */
 }
 
 span[class^="inputBTN"]:hover
 {
     border-bottom: 1px solid;
 }
+
+/* span[class^="inputBTN"]:last-of-type
+{
+    flex: auto;
+} */
 
 .emoticon ul
 {

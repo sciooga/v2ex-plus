@@ -463,9 +463,15 @@ _reply_link.mouseleave(function(){
 var _reply_textarea = $("#reply_content");
 
 _reply_textarea.attr("placeholder", "你可以在文本框内直接粘贴截图或拖拽图片上传\n类似于 [:微笑:] 的图片标签可以优雅的移动");
+var _reply_textarea_top_btn = _reply_textarea
+    .parents(".box")
+    .children(".cell:first-of-type");
 
-var _reply_textarea_top_btn = _reply_textarea.parents(".box").children(".cell:first-of-type");
-_reply_textarea_top_btn.append("<span class='inputBTN1'> ᕀ 表情</span><span class='inputBTN2'> ᕀ 插入图片</span><input type='file' style='display: none' id='imgUpload' accept='image/*' />");
+_reply_textarea_top_btn
+    .children("div:first")
+    .after(
+        "<div class='inputBTN'><span class='inputBTN1'> ᕀ 表情</span><span class='inputBTN2'> ᕀ 插入图片</span><input type='file' style='display: none' id='imgUpload' accept='image/*' /></div>"
+    );
 
 $("script").each(function(){
     var $this = $(this);
