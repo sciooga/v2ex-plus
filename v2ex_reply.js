@@ -470,7 +470,7 @@ var _reply_textarea_top_btn = _reply_textarea
 _reply_textarea_top_btn
     .children("div:first")
     .after(
-        "<span class='inputBTN1'> ᕀ 表情</span><span class='inputBTN2'> ᕀ 插入图片</span><input type='file' style='display: none' id='imgUpload' accept='image/*' />"
+        "<div class='inputBTN'><span class='inputBTN1'> ᕀ 表情</span><span class='inputBTN2'> ᕀ 插入图片</span><input type='file' style='display: none' id='imgUpload' accept='image/*' /></div>"
     );
 
 $("script").each(function(){
