@@ -644,6 +644,6 @@ chrome.webRequest.onBeforeSendHeaders.addListener(function (details) {
     types: ["image"],
     urls: ["*://*.sinaimg.cn/*"]
 },
-["blocking"]
+["blocking", "requestHeaders", chrome.webRequest.OnSendHeadersOptions.EXTRA_HEADERS]
 );
 //———————————————————————————————正常显示新浪图床图片——————————————————————————————
