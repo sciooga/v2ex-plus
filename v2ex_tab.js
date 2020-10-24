@@ -83,9 +83,12 @@ chrome.storage.sync.get(function(response) {
 
 //——————————————————————————————————一键领取登陆奖励——————————————————————————————————
 var _mission_btn = $("div#Rightbar > div:nth-of-type(4) a");
-if ( _mission_btn.text() == "领取今日的登录奖励" ){
-    _mission_btn.html("一键领取今日的登录奖励 by vPlus<br/>Take your passion and make it come true. ");
-}
+$.get(location.origin + "/mission/daily/redeem", function(checkResult) {
+    if (checkResult.indexOf("每日登录奖励已领取") == -1 && _mission_btn.text() == "领取今日的登录奖励") {
+        _mission_btn.html("一键领取今日的登录奖励 by vPlus<br/>Take your passion and make it come true. ");
+        $(".sep20:nth-child(5) , #Rightbar .box:nth-child(4) .inner").css("display","block");
+    }
+});
 
 //Enable Gift ClickOnce Feature from v2excellent.js
 //Standalone MIT License from https://gist.github.com/VitoVan/bf00ce496b44c56417a675c521fe67e8
