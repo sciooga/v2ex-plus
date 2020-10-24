@@ -1,6 +1,6 @@
 {
   "name": "v2ex plus",
-  "version": "1.4.8",
+  "version": "1.5.0",
   "manifest_version": 2,
   "description": "优雅便捷的 V2EX 扩展",
   "background": {
@@ -20,6 +20,10 @@
   ],
   "content_scripts": [
     {
+      "matches": ["*://*.v2ex.com/"],
+      "css": ["hideCheck.css"]
+    },
+    {
       "matches": ["*://*.v2ex.com/*"],
       "js": ["libs/jquery-3.2.0.min.js", "all.js"]
     },
@@ -31,7 +35,7 @@
     {
       "matches": ["*://*.v2ex.com/t/*"],
       "css": ["v2ex_reply.css"],
-      "js": ["emoticon.js", "clipboard.js", "v2ex_reply.js", "user_info.js", "sync_collect.js"]
+      "js": ["emoticon.js", "clipboard.js", "v2ex_reply.js", "user_info.js", "sync_collect.js","v2ex_date.js"]
     },
     {
       "matches": ["*://*.v2ex.com/new"],
