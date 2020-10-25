@@ -45,9 +45,19 @@ function input_img(input_img_base64, this_img_id){
 
         if (res.img_status !== "Failed"){
             img_list["图片"+this_img_id] = ` ${res.img_status} `;
-            _reply_textarea.val((i,origText) => origText+"[:图片"+this_img_id+":]");
-            _img_preview.find("span").text("[:图片"+ this_img_id +":]");
+            let img_lable = "[:图片"+this_img_id+":]";
+            let start = _reply_textarea.get(0).selectionStart;
+            let end = _reply_textarea.get(0).selectionEnd;
+            _reply_textarea.val(function(i,origText){
+                //返回替换选区后的内容
+                origText = origText.slice(0, start) + img_lable + origText.slice(end);
+                return origText;
+            });
+            _img_preview.find("span").text(img_lable);
             _img_preview.css({"background": "rgba(246, 246, 246, 0.5)","borderColor": "#A4FF94"});
+            _reply_textarea.focus();
+            _reply_textarea.get(0).selectionStart = start + img_lable.length;
+            _reply_textarea.get(0).selectionEnd = start + img_lable.length;
         } else{
             alert("图片上传失败，可能是未登录微博/受 imgur 上传次数限制");
             _img_preview.find("span").text("请重新上传");
@@ -504,10 +514,16 @@ $(".inputBTN1").click(function(){
 $(".emoticon img").click(function(){
     var _this = $(this);
     var _emoticon_name = _this.attr("alt");
+    let start = _reply_textarea.get(0).selectionStart;
+    let end = _reply_textarea.get(0).selectionEnd;
     _reply_textarea.val(function(i,origText){
-        return origText + "[:"+ _emoticon_name +":]";
+        //返回替换选区后的内容
+        origText = origText.slice(0, start) + _emoticon + origText.slice(end);
+        return origText;
     });
     _reply_textarea.focus();
+    _reply_textarea.get(0).selectionStart = start + _emoticon.length;
+    _reply_textarea.get(0).selectionEnd = start + _emoticon.length;
 });
 
 //————————————————表情功能————————————————
@@ -548,22 +564,18 @@ _upload_img_btn.click(function(){
     _imgUpload.click();
 });
 _imgUpload.change(function(e){
-    var files = e.target.files || (e.dataTransfer && e.dataTransfer.files);
-    if (files){
-        var img_file = files[0];
-        //Chrome input file 支持 accepts 属性
-        //            if(!/image\/\w+/.test(img_file.type)){
-        //                alert("请上传图片文件");
-        //                return false;
-        //            }else{
+    if(window.FileReader) {
+        var file  = e.target.files[0];
         var reader = new FileReader();
-        reader.onload = function() {
-            input_img( this.result, img_id++ );
-        };
-        reader.readAsDataURL(img_file);
-        //            }
+        if (file && file.type.match('image.*')) {
+          reader.readAsDataURL(file);
+        }
+        
+        reader.onloadend = function (e) {
+            input_img( reader.result, img_id++ );
+        }
     }else{
-        alert("出错了，获取不到文件。");
+        alert("似乎出现了一点问题，请重试。")
     }
 });
 
