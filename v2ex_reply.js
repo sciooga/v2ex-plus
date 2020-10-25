@@ -503,7 +503,7 @@ $(".inputBTN1").click(function(){
 
 $(".emoticon li").click(function(){
     var _this = $(this);
-    var _emoticon = _this.text();
+    var _emoticon = window.navigator.userAgent.toLowerCase().indexOf("macos")>-1 ? " " + _this.text() + " " : _this.text();
     _reply_textarea.val(function(i,origText){
         return origText + _emoticon;//TODO:根据光标位置插入而不是直接追加到原有内容末尾
     });
