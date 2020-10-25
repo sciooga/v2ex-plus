@@ -47,16 +47,32 @@ const img_list = {
     "斜眼笑": " https://i.v2ex.co/oJ951Htz.jpeg ",
 };
 
-const emoticon_ = $("<ul>",{style:"white-space：normal;word-wrap：break-word;word-break：break-all;"});
-const emoticon_list = $("<div>", {class: "emoticon", style: "display: none;padding-top: 8px;"});
-for(let i=0x1F601;i<=0x1F64F; i++){//十六进制为Emoji所对应的Unicode编码
-    emoticon_.append(
-        $("<li>").html("&#x" + i.toString(16))
+const emoticon = Object.keys(img_list);
+
+const emoticon_1 = $("<ul>"),
+    emoticon_2 = $("<ul>");
+
+for (let i=1; i<=21; i++){
+    emoticon_1.append(
+        $("<li>").append(
+            $("<img>", {
+                src: chrome.extension.getURL("img/emoticon/"+i+".jpg"),
+                alt: emoticon[i]
+            })
+        )
     );
 }
-emoticon_.append(
-    $("<a>", {
-    href: "https://uutool.cn/info-emoji/",
-    target: "_blank"
-}).text("more→"));
-emoticon_list.append(emoticon_);
+for (let i=22; i<=42; i++){
+    emoticon_2.append(
+        $("<li>").append(
+            $("<img>", {
+                src: chrome.extension.getURL("img/emoticon/"+i+".jpg"),
+                alt: emoticon[i]
+            })
+        )
+    );
+}
+
+// eslint-disable-next-line no-unused-vars
+const emoticon_list = $("<div>", {class: "emoticon", style: "display: none;padding-top: 8px;"})
+    .append(emoticon_1).append(emoticon_2);

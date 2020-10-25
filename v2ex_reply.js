@@ -462,7 +462,7 @@ _reply_link.mouseleave(function(){
 //_reply_textarea.parentNode.replaceChild(_reply_textarea.cloneNode(true), _reply_textarea);
 var _reply_textarea = $("#reply_content");
 
-_reply_textarea.attr("placeholder", "你可以在文本框内直接粘贴截图或拖拽图片上传");
+_reply_textarea.attr("placeholder", "你可以在文本框内直接粘贴截图或拖拽图片上传\n类似于 [:微笑:] 的图片标签可以优雅的移动");
 var _reply_textarea_top_btn = _reply_textarea
     .parents(".box")
     .children(".cell:first-of-type");
@@ -490,22 +490,22 @@ $("script").each(function(){
 //————————————————表情功能————————————————
 
 _reply_textarea_top_btn.before(emoticon_list);
-var _emoticon_board = $(".emoticon");
+var _emoticon = $(".emoticon");
 _reply_textarea_top_btn.after("<div class = 'uploadImage'></div>");
 var _upload_image = $(".uploadImage");
 
 $(".inputBTN1").click(function(){
     var _emoticon_switch = -1;
-    _emoticon_board.is(":visible") || (_emoticon_switch=1);
-    _emoticon_board.slideToggle(300);
+    _emoticon.is(":visible") || (_emoticon_switch=1);
+    _emoticon.slideToggle(300);
     $("html, body").animate({scrollTop: ($(document).scrollTop()+66*_emoticon_switch)}, 300);
 });
 
-$(".emoticon li").click(function(){
+$(".emoticon img").click(function(){
     var _this = $(this);
-    var _emoticon = window.navigator.userAgent.toLowerCase().indexOf("mac","iphone","ipod","ipad")>-1 ? " " + _this.text() + " " : _this.text();
+    var _emoticon_name = _this.attr("alt");
     _reply_textarea.val(function(i,origText){
-        return origText + _emoticon;//TODO:根据光标位置插入而不是直接追加到原有内容末尾
+        return origText + "[:"+ _emoticon_name +":]";
     });
     _reply_textarea.focus();
 });
