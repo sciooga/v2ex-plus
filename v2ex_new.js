@@ -59,14 +59,15 @@ document.onpaste = function(e) {
     for (let item of e.clipboardData.items) {
         if ( item.kind === "file" && /image\/\w+/.test(item.type) ) {
             _imgFunBtn.text() === " >" && _imgFunBtn.click();
-            const imageFile = item.getAsFile();
-
-            const fileReader = new FileReader();
-            fileReader.onloadend = function() {
-                input_img( this.result, img_id++ );
-            };
-
-            fileReader.readAsDataURL(imageFile);
+            const file  = item.getAsFile();
+            const reader = new FileReader();
+            if (file && file.type.match('image.*')) {
+                reader.readAsDataURL(file);
+            }
+            
+            reader.onloadend = function (e) {
+                input_img( reader.result, img_id++ );
+            }
             //阻止原有的粘贴事件以屏蔽文字
             e.preventDefault();
             //只黏贴一张图片
@@ -85,16 +86,18 @@ _upload_img_btn.click(function(){
 });
 
 _imgUpload.change(function(e){
-    const files = e.target.files || (e.dataTransfer && e.dataTransfer.files);
-    if (files){
-        const img_file = files[0];
-        const reader = new FileReader();
-        reader.onload = function() {
-            input_img( this.result, img_id++ );
-        };
-        reader.readAsDataURL(img_file);
+    if(window.FileReader) {
+        var file  = e.target.files[0];
+        var reader = new FileReader();
+        if (file && file.type.match('image.*')) {
+          reader.readAsDataURL(file);
+        }
+        
+        reader.onloadend = function (e) {
+            input_img( reader.result, img_id++ );
+        }
     }else{
-        alert("出错了，获取不到文件。");
+        alert("似乎出现了一点问题，请重试。")
     }
 });
 //————————————————选择图片上传————————————————
