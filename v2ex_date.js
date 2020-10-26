@@ -3,7 +3,7 @@ var gray = $(".header .gray");
 var grayText = gray.text();
 chrome.storage.sync.get(function(response) {
     if(response.displayPostDate && grayText.indexOf("天前") > -1){
-        var distance = grayText.match(/[0-9]* 天前/g)[0].substring(0,1);
+        var distance = parseInt(grayText.match(/[0-9]* 天前/g)[0]);
         var date=new Date();
         date.setDate(date.getDate()-distance);
         var month = date.getMonth() + 1;
