@@ -61,16 +61,32 @@ if (isErrorPage) {
 //——————————————————————————————————使用 sov2ex 搜索——————————————————————————————————
 chrome.storage.sync.get(function (response) {
     if (response.sov2ex){
-        $("#search").attr("placeholder","sov2ex")
-            .keyup(function () {
-                $(this).val($(this).val().replace(/[#%&]/g,""));//用户输入不能包含特殊字符#%&
-            })
-            .keypress(function (e) {
-                if(e.which == 13){//按enter触发搜索
+        var inspectJS = `
+        var $search = $('#search')
+        var searchEvents = $._data($search[0], "events" )
+        var oKeydownEvent = searchEvents['keydown'][0]['handler']
+        var oInputEvent = searchEvents['input'][0]['handler']
+
+        $search.attr("placeholder","sov2ex")
+        $search.unbind('keydown', oKeydownEvent)
+        $search.unbind('input', oInputEvent)
+
+        $search.on('input', function(e) {
+            oInputEvent(e)
+            $('.search-item:last').attr('href', 'https://www.sov2ex.com/?q=' + $search.val()).text('sov2ex ' +$search.val());
+        })
+        $search.keydown(function(e) {
+            if (e.code == 'Enter' || e.code == 'NumpadEnter' || e.keyCode === 13) {
+                if ($('.search-item:last').is('.active')) {
+                    $(this).val($(this).val().replace(/[#%&]/g,""));//用户输入不能包含特殊字符#%&
                     window.open("https://www.sov2ex.com/?q=" + $(this).val());
-                    return false;
+                    return 0
                 }
-            });
+            }
+            oKeydownEvent(e)
+        })
+        `
+        $('body').append(`<script>${inspectJS}</script>`)
     }
 });
 
