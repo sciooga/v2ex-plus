@@ -43,7 +43,7 @@ $(function(){
                             $("<tbody>").append(
                                 $("<tr>").append(
                                     $("<td>", {"style":"width:48px;"}).append(
-                                        $("<img>", {"src":"https://"+data.avatar_large, "class":"avatar"})
+                                        $("<img>", {"src": data.avatar_large, "class":"avatar"})
                                     )
                                 ).append(
                                     $("<td>", {"style":"width:230px; font-size:90%;"}).append(

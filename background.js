@@ -131,7 +131,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         $.get("https://www.v2ex.com",function(data,status){
             if(status == "success"){
                 var block_list = /blocked = \[(.*?)\];/.exec(data);
-                var username = /首页<\/a>&nbsp;&nbsp;&nbsp;<a href="\/member\/(.+?)"/.exec(data);
+                var username = /首页<\/a>\n<a href="\/member\/(.+?)"/.exec(data);
                 if ( block_list && username ){
                     block_list = block_list[1];
                     username = username[1];
@@ -270,7 +270,7 @@ function collectMsg() {
             if (typeof cachedReplyCountList[topicId] === "undefined"){
                 cachedReplyCountList[topicId] = topicReplyCount;
             }
-            
+
             if (typeof latestReplyCountList[topicId] === "undefined"){
                 latestReplyCountList[topicId] = topicReplyCount;
             }else if (latestReplyCountList[topicId] != topicReplyCount){
