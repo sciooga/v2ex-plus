@@ -128,12 +128,12 @@ $("div[id^=r_]").each(function(){
         _append_place = _this.find(item1).prev();
     }
     if ( btn_name ){
-        _append_place.before(" &nbsp;<span class='replyDetailBTN'>"+ btn_name +"</span> &nbsp; &nbsp;");
+        _append_place.before(" &nbsp;<a role='button' tabindex='0' class='replyDetailBTN'>"+ btn_name +"</a> &nbsp; &nbsp;");
     }
     // console.log(page_current_num)
-    _append_place.before(" &nbsp;<span class='direct' data-clipboard-text='"
+    _append_place.before(" &nbsp;<a role='button' tabindex='0' class='direct' data-clipboard-text='"
           + location.origin + location.pathname + "?p=" + page_current_num + "#" + _this.attr("id")
-          + "'>楼层直链</span> &nbsp; &nbsp;");
+          + "'>楼层直链</a> &nbsp; &nbsp;");
 });
 
 // 修复因为恢复回复排版导致 gist 无法加载的问题
@@ -180,7 +180,7 @@ chrome.storage.sync.get(function(response) {
             _topic_content.css({maxHeight:"600px", overflow:"hidden", transition:"max-height 2s"});
             $(".subtle", _topic).hide();
             const $showTopic = $("<div id='showTopic' style='padding:16px; color:#778087;'>\
-                                            <span id='topicBTN'>展开主题</span>\
+                                            <button id='topicBTN'>展开主题</button>\
                                             <div style='height:10px;'></div>\
                                             <span style='font-size:0.6em'>主题超长已自动折叠，点击按钮显示完整的主题。</span>\
                                        </div>");
