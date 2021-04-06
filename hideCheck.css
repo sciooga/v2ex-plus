@@ -1,0 +1,4 @@
+/*隐藏签到*/
+.sep20:nth-child(5) , #Rightbar .box:nth-child(4) .inner{
+    display: none;
+}

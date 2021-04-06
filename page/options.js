@@ -71,7 +71,8 @@ const defaultSettings = {
     "customNode": "www",
     "base64": 0,
     "darkTheme": 0,
-    "imageParsing": "auto-hide"
+    "imageParsing": "auto-hide",
+    "displayPostDate": 1
 };
 
 window.onload = function() {
@@ -100,7 +101,8 @@ window.onload = function() {
         customNode: document.getElementById("customNode"),
         base64: document.querySelector(".base64"),
         darkTheme: document.querySelector(".darkTheme"),
-        imageParsing: document.getElementById("imageParsing")
+        imageParsing: document.getElementById("imageParsing"),
+        displayPostDate: document.querySelector(".displayPostDate")
     };
     
     function resetAll() {
