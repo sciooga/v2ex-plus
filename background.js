@@ -168,6 +168,8 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 //——————————————————————————————————定时任务初始化、获取自定义节点——————————————————————————————————
 let urlPrefix = "";
+const URL_WHITELIST = ['livid.v2ex.com','cdn.v2ex.com'];
+
 storage.get(function (response) {
     Number(response.newMsg) && checkMsg();
     Number(response.followMsg) && followMsg();
@@ -614,9 +616,11 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
 
 //——————————————————————————————————跳转自定义节点————————————————————————————————
 chrome.webRequest.onBeforeRequest.addListener(function (details) {
-    if (urlPrefix === "-1" || details.url.includes('signin') || details.url.includes('signout')) return; //用户选择了“关闭”选项，或者正在登录登出
+        const regExp = /\/\/(.*?)\//;
+        const host = details.url.match(regExp)[1];
+    if (urlPrefix === "-1" || details.url.includes('signin') || details.url.includes('signout') || URL_WHITELIST.includes(host)) return; //用户选择了“关闭”选项，或者正在登录登出，或者请求的域名在白名单中
     if (details.url.indexOf(`//${urlPrefix}.v2ex.com/`) == -1) {
-        let url = details.url.replace(/\/\/(.*?)\//, `//${urlPrefix}.v2ex.com/`);
+        let url = details.url.replace(regExp, `//${urlPrefix}.v2ex.com/`);
         return {
             redirectUrl: url
         };
