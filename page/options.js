@@ -68,7 +68,7 @@ const defaultSettings = {
     "replyA": 0.4,
     "thankColor": "#cccccc",
     "sov2ex": 0,
-    "customNode": "www",
+    "customNode": "-1",
     "base64": 0,
     "darkTheme": 0,
     "imageParsing": "auto-hide",
