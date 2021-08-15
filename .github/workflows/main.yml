@@ -16,13 +16,15 @@ jobs:
       with:
         node-version: 12
     - name: Build
-      run: |
-        npm ci
-        npm run build
+      uses: thedoctor0/zip-release@master
+      with:
+        type: 'zip'
+        filename: 'release.zip'
+        exclusions: '*.git* /*node_modules/* .editorconfig'
     - name: Upload & release
       uses: mnao305/chrome-extension-upload@1.1.1
       with:
-        file-path: dist/file.zip
+        file-path: release.zip
         extension-id: daeclijmnojoemooblcbfeeceopnkolo
         client-id: ${{ secrets.CLIENT_ID }}
         client-secret: ${{ secrets.CLIENT_SECRET }}
