@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/sciooga/v2ex-plus.svg?branch=master)](https://travis-ci.org/sciooga/v2ex-plus) ![Chrome Web Store](https://img.shields.io/chrome-web-store/v/daeclijmnojoemooblcbfeeceopnkolo)
+[![Publish](https://github.com/sciooga/v2ex-plus/actions/workflows/main.yml/badge.svg)](https://github.com/sciooga/v2ex-plus/actions/workflows/main.yml) ![Chrome Web Store](https://img.shields.io/chrome-web-store/v/daeclijmnojoemooblcbfeeceopnkolo)
 
 ### 本扩展原有开发者一段时间内都没空更新，如有其他新功能建议的话建议提交 PR 加入到一起开发
 
