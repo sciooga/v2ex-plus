@@ -20,7 +20,7 @@ jobs:
       with:
         type: 'zip'
         filename: 'release.zip'
-        exclusions: '*.git* /*node_modules/* .editorconfig'
+        exclusions: '*.git* /*node_modules/* .eslint*'
     - name: Upload & release
       uses: mnao305/chrome-extension-upload@1.1.1
       with:
