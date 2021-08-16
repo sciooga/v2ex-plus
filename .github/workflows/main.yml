@@ -9,6 +9,7 @@ jobs:
   build:
     name: Publish webextension
     runs-on: ubuntu-latest
+    environment: product
 
     steps:
     - uses: actions/checkout@v1
