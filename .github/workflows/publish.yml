@@ -84,9 +84,7 @@ jobs:
 
       - name: Abort on Google Web Store error
         if: "!steps.gWebStoreUpload.outputs.newVersion && steps.gWebStoreUpload.outputs.inReviewError != 'true'"
-        run: |
-          echo "WebStore newVersion: ${{ steps.gWebStoreUpload.outputs.newVersion }}"
-          echo "WebStore inReviewError: ${{ steps.gWebStoreUpload.outputs.inReviewError }}"
+        run: exit 1
 
       - name: Download published crx file
         id: gWebStoreDownloadCrx
