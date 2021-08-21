@@ -5,11 +5,7 @@ on:
     tags:
       - '*.*.*'
   workflow_dispatch:
-    inputs:
-      ssh:
-        description: 'SSH connection to Actions'
-        required: false
-        default: 'false'
+
 
 # ref: https://github.com/cardinalby/memrise-audio-uploader/blob/master/.github/workflows/buildAndDeploy.yml
 jobs:
@@ -52,7 +48,8 @@ jobs:
           zipFilePath: ${{ env.PACKED_ZIP_PATH }}
           zipIgnore: '*.git*|/*node_modules/*|*.eslint*'
 
-      - uses: actions/upload-artifact@v2
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
         with:
           name: v2ex-plus-${{ steps.tagName.outputs.tag }}
           path: ${{ env.PACKED_ZIP_PATH }}        
@@ -91,7 +88,7 @@ jobs:
         if: steps.gWebStorePublish.outcome == 'success'
         uses: cardinalby/webext-buildtools-chrome-webstore-download-crx-action@master
         with:
-          extensionId: ${{ secrets.G_EXTENSION_ID }}
+          extensionId: ${{ env.G_EXTENSION_ID }}
           crxFilePath: ${{ env.WEBSTORE_PUBLISHED_CRX_PATH }}
 
       - name: Deploy to Firefox Addons
