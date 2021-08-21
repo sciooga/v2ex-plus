@@ -24,8 +24,6 @@ jobs:
 
       WEBSTORE_PUBLISHED_CRX_PATH: 'extension.webstore.crx'
       WEBSTORE_PUBLISHED_CRX_ASSET_NAME: 'extension.webstore.crx'
-
-      DELAYED_CHROME_WEBSTORE_DEPLOY_TAG: 'deploy-to-chrome-webstore'
     
     runs-on: ubuntu-latest
 
@@ -99,16 +97,6 @@ jobs:
           jwtIssuer: ${{ secrets.FF_JWT_ISSUER }}
           jwtSecret: ${{ secrets.FF_JWT_SECRET }}
 
-      - name: Sign Firefox xpi for offline distribution
-        id: ffSignXpi
-        uses: cardinalby/webext-buildtools-firefox-sign-xpi-action@master
-        with:
-          timeoutMs: 300000
-          zipFilePath: ${{ env.PACKED_ZIP_PATH }}
-          xpiFilePath: ${{ env.OFFLINE_XPI_PATH }}
-          jwtIssuer: ${{ secrets.FF_JWT_ISSUER }}
-          jwtSecret: ${{ secrets.FF_JWT_SECRET }}
-
       - name: Create Release
         id: createRelease
         uses: actions/create-release@v1
@@ -131,13 +119,3 @@ jobs:
           asset_path: ${{ steps.gWebStoreDownloadCrx.outputs.crxFilePath }}
           asset_name: ${{ env.WEBSTORE_PUBLISHED_CRX_ASSET_NAME }}
           asset_content_type: application/x-chrome-extension
-
-      - name: Upload offline xpi release asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.createRelease.outputs.upload_url }}
-          asset_path: ${{ steps.ffSignXpi.outputs.xpiFilePath }}
-          asset_name: ${{ env.OFFLINE_XPI_ASSET_NAME }}
-          asset_content_type: application/x-xpinstall
