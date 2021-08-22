@@ -1,10 +1,16 @@
-[![Publish](https://github.com/sciooga/v2ex-plus/actions/workflows/main.yml/badge.svg)](https://github.com/sciooga/v2ex-plus/actions/workflows/main.yml) ![Chrome Web Store](https://img.shields.io/chrome-web-store/v/daeclijmnojoemooblcbfeeceopnkolo)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/sciooga/v2ex-plus/buildAndDeploy?label=publish&style=flat-square)
+![Chrome Web Store](https://img.shields.io/chrome-web-store/v/daeclijmnojoemooblcbfeeceopnkolo?style=flat-square)
+![Mozilla Add-on](https://img.shields.io/amo/v/%7B690c1618-4b2c-4905-bf58-1fc82bdfd6e7%7D?style=flat-square)
+[![Edge Add-on](https://img.shields.io/badge/dynamic/json?label=edge%20add-on&prefix=v&query=%24.version&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Foejdifclmfffbginmbgndmkjbephefgd&style=flat-square)](https://microsoftedge.microsoft.com/addons/detail/v2ex-plus/oejdifclmfffbginmbgndmkjbephefgd)
+
 
 ### 本扩展原有开发者一段时间内都没空更新，如有其他新功能建议的话建议提交 PR 加入到一起开发
 
 扩展介绍可在 [V2EX 主题](http://www.v2ex.com/t/198074) 查看或在扩展设置页面查看各版本对应的详细介绍。
 
 Firefox Add-ons: [v2ex plus](https://addons.mozilla.org/zh-CN/firefox/addon/v2ex-plus9/)
+
+Edge Add-on: [v2ex plus](https://microsoftedge.microsoft.com/addons/detail/v2ex-plus/oejdifclmfffbginmbgndmkjbephefgd)
 
 Offline install: [v2ex plus](https://github.com/sciooga/v2ex-plus/releases)
 
