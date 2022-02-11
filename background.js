@@ -441,13 +441,27 @@ function autoMission(){
                             }
                         },
                         error: function(){
-                            alert("网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。");
+                            // alert("网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。");
+			
+                            browser_notifications_create({
+                                type   : "basic",
+                                iconUrl: "icon/icon38_msg.png",
+                                title  : "网络错误！",
+                                message: "今日奖励领取失败，等待一小时后自动重试或现在手动领取。"
+                            });
                         }
                     });
                 }
             },
             error: function(){
-                alert("网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。");
+                // alert("网络错误！今日奖励领取失败，等待一小时后自动重试或现在手动领取。");
+			
+                browser_notifications_create({
+                    type   : "basic",
+		    iconUrl: "icon/icon38_msg.png",
+		    title  : "网络错误！",
+		    message: "今日奖励领取失败，等待一小时后自动重试或现在手动领取。"
+		});
             }
         });
     });
