@@ -298,3 +298,8 @@ p.reply-separator:after {
     left: 0.2em;
     margin-right: -50%;
 }
+
+/* 楼内图片限制宽度 */
+.reply_content img {
+	max-width: 100%;
+}
