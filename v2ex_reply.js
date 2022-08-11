@@ -805,7 +805,7 @@ function convert_img_url(url) {
 var regex_url = /((http(s)?:)?\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
 function replacer_url2img(match, offset, string) {
     if (is_common_img_url(match)) {
-        let t = `<a target="_blank" href="${match}"><img src="${match}" /></a>`;
+        let t = `<a target="_blank" href="${match}"><img src="${match}" style="max-width: 100%" /></a>`;
         return t;
     }
     return match;
@@ -816,7 +816,7 @@ function replacer_mdimg2htmlimg(match, p1, p2, offset, string) {
     p2 = convert_img_url(p2);
     if (is_common_img_url(p2)) {
         show_parsed = true;
-        let t = `<a target="_blank" href="${p2}"><img src="${p2}" alt="${p1}" /></a>`;
+        let t = `<a target="_blank" href="${p2}"><img src="${p2}" alt="${p1}" style="max-width: 100%" /></a>`;
         return t;
     }
     return match;
@@ -825,7 +825,7 @@ function replacer_mdimg2htmlimg(match, p1, p2, offset, string) {
 var regex_html_imgtag = /&lt;img.*?src="(.*?)"[^\>]*&gt;/g;
 function replacer_plainimgtag2imgtag(match, p, offset, string) {
     p = convert_img_url(p);
-    return `<a target="_blank" href="${p}"><img src="${p}" /></a>`;
+    return `<a target="_blank" href="${p}"><img src="${p}" style="max-width: 100%" /></a>`;
 }
 
 var regex_dirty_html = /<(?:\/|)script>/g;
