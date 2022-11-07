@@ -38,7 +38,7 @@
       "js": ["emoticon.js", "clipboard.js", "v2ex_reply.js", "user_info.js", "sync_collect.js","v2ex_date.js"]
     },
     {
-      "matches": ["*://*.v2ex.com/new","*://*.v2ex.com/wirte"],
+      "matches": ["*://*.v2ex.com/new*","*://*.v2ex.com/wirte*"],
       "css": ["v2ex_new.css"],
       "js": ["v2ex_new.js"]
     },
