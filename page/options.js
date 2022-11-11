@@ -47,6 +47,7 @@ function getItem(obj, callback) {
     * 新标签页浏览主题 默认关闭
     * 使用sov2ex搜索 默认关闭
     * 自动签到提醒 默认开启
+    * 自动签到失败提醒 默认开启
     * 自定义节点 默认www(国内1)
     * Base64加密/解密 默认关闭
     * 深色主题 默认关闭
@@ -63,6 +64,7 @@ const defaultSettings = {
     "followMsg": 1,
     "collectMsg": 0,
     "autoMissionMsg": 1,
+    "autoMissionFailedMsg": 1,
     "newWindow": 0,
     "replyColor": "#fffff9",
     "replyA": 0.4,
@@ -92,6 +94,7 @@ window.onload = function() {
         followMsg: document.querySelector(".followMsg"),
         collectMsg: document.querySelector(".collectMsg"),
         autoMissionMsg: document.querySelector(".autoMissionMsg"),
+        autoMissionFailedMsg: document.querySelector(".autoMissionFailedMsg"),
         newWindow: document.querySelector(".newWindow"),
         replyColor: document.querySelector(".replyColor"),
         replyA: document.querySelector(".replyA"),
