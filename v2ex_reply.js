@@ -678,7 +678,7 @@ var tab_switch = false;
 
 $(document).keydown(function(event) {
     var keyCode = event.which;
-    if (keyCode == 9 && _r_c.length > 0 && bottom.length > 0) {
+    if (keyCode == 9 && !(event.shiftKey || event.ctrlKey || event.altKey) && _r_c.length > 0 && bottom.length > 0) {
         if (!_r_c.attr("id") || tab_switch){
             $("html, body").animate({scrollTop: 0}, 300);
             _r_c.blur();
