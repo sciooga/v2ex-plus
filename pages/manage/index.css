@@ -1,0 +1,13 @@
+a {
+    display: inline-block;
+    border: 1px solid #ccc;
+    margin: 8px;
+    border-radius: 3px;
+    padding: 8px;
+    text-align: center;
+}
+
+a img {
+    border-radius: 3px;
+    width: 72px;
+}
