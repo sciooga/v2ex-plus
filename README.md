@@ -1,4 +1,3 @@
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/sciooga/v2ex-plus/buildAndDeploy?label=publish&style=flat-square)
 ![Chrome Web Store](https://img.shields.io/chrome-web-store/v/daeclijmnojoemooblcbfeeceopnkolo?style=flat-square)
 ![Mozilla Add-on](https://img.shields.io/amo/v/%7B690c1618-4b2c-4905-bf58-1fc82bdfd6e7%7D?style=flat-square)
 [![Edge Add-on](https://img.shields.io/badge/dynamic/json?label=edge%20add-on&prefix=v&query=%24.version&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Foejdifclmfffbginmbgndmkjbephefgd&style=flat-square)](https://microsoftedge.microsoft.com/addons/detail/v2ex-plus/oejdifclmfffbginmbgndmkjbephefgd)
