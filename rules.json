@@ -1,0 +1,13 @@
+[
+    {
+      "id": 1,
+      "priority": 1,
+      "action": {
+        "type": "modifyHeaders",
+        "requestHeaders": [
+          { "header": "referer", "operation": "set", "value": "https://weibo.com" }
+        ]
+      },
+      "condition": { "urlFilter": "*://*.sinaimg.cn/*", "resourceTypes": ["image"] }
+    }
+  ]

@@ -1,0 +1,55 @@
+.userinfo {
+    position: absolute;
+    opacity: 0;
+    min-width: 260px;
+    padding: 8px;
+    max-width: 520px;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 12s ease infinite;
+    box-shadow: 0px 0px 20px #8e8e8e;
+    transition: opacity .3s, margin .3s;
+    color: #eee;
+    border-radius: 3px;
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.userinfo img {
+    position: absolute;
+    left: 16px;
+    width: 48px;
+    border-radius: 4px;
+}
+
+.userinfo p {
+    line-height: 20px;
+    margin: 6px 0;
+}
+
+.userdesc {
+    padding: 2px 0 12px 66px;
+    margin: 0;
+    text-align: left;
+    line-height: 24px;
+    border-bottom: 1px dashed rgba(255, 255, 255, .3);
+}
+
+.userinfo .button {
+margin: 0 6px;
+}

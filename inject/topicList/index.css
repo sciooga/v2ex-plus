@@ -1,0 +1,17 @@
+.topic_info span.btn {
+    cursor: pointer;
+}
+
+.topic_info span.btn:hover {
+    border-bottom: 1px solid;
+    color: #778087;
+}
+
+.preview {
+    border: 1px solid #e2e2e2;
+    border-radius: 3px;
+    margin: 10px;
+    padding: 12px;
+    max-height: 300px;
+    overflow: auto;
+}

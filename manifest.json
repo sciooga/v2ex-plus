@@ -1,57 +1,79 @@
 {
   "name": "v2ex plus",
-  "version": "1.6.5",
-  "manifest_version": 2,
+  "version": "2.0.0",
+  "manifest_version": 3,
   "description": "优雅便捷的 V2EX 扩展",
   "background": {
-    "scripts": ["libs/jquery-3.2.0.min.js", "libs/webtoolkit.base64.min.js", "libs/isOnline.min.js", "background.js","clipboard.js"]
+    "service_worker": "background.js",
+    "type": "module"
   },
   "permissions": [
     "alarms",
     "notifications",
     "storage",
-    "contextMenus",
-    "webRequest",
-    "webRequestBlocking",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
     "*://*.v2ex.com/*",
     "*://*.imgur.com/*",
-    "*://*.weibo.com/*",
     "*://*.sinaimg.cn/*"
   ],
   "content_scripts": [
     {
-      "matches": ["*://*.v2ex.com/"],
-      "css": ["hideCheck.css"]
+      "matches": [
+        "*://*.v2ex.com/*"
+      ],
+      "js": [
+        "./inject/base64decode.js",
+        "./inject/sov2ex.js"
+      ]
     },
     {
-      "matches": ["*://*.v2ex.com/*"],
-      "js": ["libs/jquery-3.2.0.min.js", "all.js"]
+      "matches": [
+        "*://*.v2ex.com/",
+        "*://*.v2ex.com/?tab=*",
+        "*://*.v2ex.com/go/*",
+        "*://*.v2ex.com/my/*",
+        "*://*.v2ex.com/recent*",
+        "*://*.v2ex.com/changes*"
+      ],
+      "css": [
+        "./inject/topicList/index.css",
+        "./inject/userinfo/index.css"
+      ],
+      "js": [
+        "./inject/topicList/index.js",
+        "./inject/userinfo/index.js"
+      ]
     },
     {
-      "matches": ["*://*.v2ex.com/", "*://*.v2ex.com/?tab=*", "*://*.v2ex.com/go/*", "*://*.v2ex.com/my/*", "*://*.v2ex.com/recent*", "*://*.v2ex.com/changes*"],
-      "css": ["v2ex_tab.css"],
-      "js": ["v2ex_tab.js", "user_info.js"]
-    },
-    {
-      "matches": ["*://*.v2ex.com/t/*"],
-      "css": ["v2ex_reply.css"],
-      "js": ["emoticon.js", "clipboard.js", "v2ex_reply.js", "user_info.js", "sync_collect.js","v2ex_date.js"]
-    },
-    {
-      "matches": ["*://*.v2ex.com/new"],
-      "css": ["v2ex_new.css"],
-      "js": ["v2ex_new.js"]
-    },
-    {
-      "matches": ["*://*.v2ex.com/my/topics"],
-      "js": ["v2ex_collect.js"]
+      "matches": [
+        "*://*.v2ex.com/t/*"
+      ],
+      "css": [
+        "./inject/topicDetail/index.css",
+        "./inject/userinfo/index.css"
+      ],
+      "js": [
+        "./inject/topicDetail/index.js",
+        "./inject/userinfo/index.js"
+      ]
     }
   ],
-  "browser_action": {
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "weibo",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "action": {
     "default_icon": "icon/icon38.png"
   },
   "options_ui": {
-    "page": "page/options.html",
+    "page": "pages/options/index.html",
     "open_in_tab": true
   },
   "icons": {
@@ -59,23 +81,11 @@
     "48": "icon/icon48.png",
     "128": "icon/icon128.png"
   },
-  "web_accessible_resources": ["img/*"],
-  "applications": {
-    "gecko": {
-      "id": "{690c1618-4b2c-4905-bf58-1fc82bdfd6e7}",
-      "strict_min_version": "48.0"
-    }
-  },
-  "browser_specific_settings": {
-    "gecko": {
-      "strict_min_version": "68.0"
-    }
-  },
   "commands": {
+    "newV2EX": {
+      "description": "打开 V2EX"
+    },
     "newMsg": {
-      "suggested_key": {
-        "default": "Ctrl+B"
-      },
       "description": "查看 V2EX 消息"
     }
   }

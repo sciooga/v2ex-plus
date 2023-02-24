@@ -1,33 +1,53 @@
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/sciooga/v2ex-plus/buildAndDeploy?label=publish&style=flat-square)
 ![Chrome Web Store](https://img.shields.io/chrome-web-store/v/daeclijmnojoemooblcbfeeceopnkolo?style=flat-square)
 ![Mozilla Add-on](https://img.shields.io/amo/v/%7B690c1618-4b2c-4905-bf58-1fc82bdfd6e7%7D?style=flat-square)
 [![Edge Add-on](https://img.shields.io/badge/dynamic/json?label=edge%20add-on&prefix=v&query=%24.version&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Foejdifclmfffbginmbgndmkjbephefgd&style=flat-square)](https://microsoftedge.microsoft.com/addons/detail/v2ex-plus/oejdifclmfffbginmbgndmkjbephefgd)
 
+## 已更新至 2.0 版本
 
-### 本扩展原有开发者一段时间内都没空更新，如有其他新功能建议的话建议提交 PR 加入到一起开发
+功能简介：
+* 通知功能：更新提醒、未读消息
+* 登录态判断：未登录 icon 提醒
+* 半小时自动签到
+* 主题列表预览及忽略功能
+* 新窗口浏览主题
+* 快捷键打开 V 站
+* 快捷键查看未读消息
+* 悬浮头像查看用户基础信息
+* 评论悬浮@用户查看最近回复
+* 高亮楼主回复
+* 高亮回复感谢爱心
+* 会话详情（关联对话）
+* 回复指定用户添加楼层号
+* 划词 base64 解码
+* 评论发图 imgur 图床
+* 表情
+* 标记用户：高亮头像
+* 淡化注册时间一个月内的用户
+* 管理标记用户列表
+* 管理屏蔽用户列表
+* 管理忽略主题列表
+* 折叠超长主题、回复
+* 翻页自动跳过主题至回复
+* 修复历史微博图片显示
+* 集成 sov2ex
 
-扩展介绍可在 [V2EX 主题](http://www.v2ex.com/t/198074) 查看或在扩展设置页面查看各版本对应的详细介绍。
+安装地址：
+* [Chrome Webstore](https://chrome.google.com/webstore/detail/v2ex-plus/daeclijmnojoemooblcbfeeceopnkolo)
 
-Firefox Add-ons: [v2ex plus](https://addons.mozilla.org/zh-CN/firefox/addon/v2ex-plus9/)
+* [Firefox Add-ons](https://addons.mozilla.org/zh-CN/firefox/addon/v2ex-plus9/)
 
-Edge Add-on: [v2ex plus](https://microsoftedge.microsoft.com/addons/detail/v2ex-plus/oejdifclmfffbginmbgndmkjbephefgd)
+* [Edge Add-on](https://microsoftedge.microsoft.com/addons/detail/v2ex-plus/oejdifclmfffbginmbgndmkjbephefgd)
 
-Offline install: [v2ex plus](https://github.com/sciooga/v2ex-plus/releases)
+* [Offline install](https://github.com/sciooga/v2ex-plus/releases)
 
-反馈： [点击(sciooga#gmail)](mailto:sciooga@gmail.com)
+其他：
 
-感谢 [ldong](https://github.com/ldong) 和 [GPU](https://www.v2ex.com/member/GPU) 发布 Chrome 版扩展。
+* 反馈： [sciooga@gmail.com](mailto:sciooga@gmail.com)
+* 感谢 [GPU](https://www.v2ex.com/member/GPU) 共同维护及发布扩展
+* 感谢设计师 [Sheep](http://sheephe.com) 设计 Logo
+* 感谢各位贡献代码、反馈建议、帮忙测试的小伙伴
 
-感谢设计师 [Sheep](http://sheephe.com) 画了新图标以及一些界面上的指导，很赞！
-
-感谢 GPU、ghost404、肉饼、[xhhjin](http://xuhehuan.com/)、[Creabine](http://blog.csdn.net/creabine)、[yaerda](https://github.com/yaerda)、[Sneezry](https://github.com/Sneezry)的热心支持和共同维护本项目。
-
-感谢 [Vito Van](https://github.com/VitoVan) 提供了 v2excellent.js 签到[代码](https://gist.github.com/VitoVan/bf00ce496b44c56417a675c521fe67e8)的独立协议授权。
-
-感谢各位贡献代码、反馈建议、帮忙测试的同学！
-
-生活愉快~
-
+祝大家生活愉快~
 
 
 # License
