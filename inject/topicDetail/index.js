@@ -80,8 +80,19 @@ chrome.storage.sync.get("options", async (data) => {
 
     // 感谢爱心颜色
     document.querySelectorAll('.small.fade').forEach((el) => {
-        el.style.color = data.options.thankColor
-    })
+        let imgDOM = el.querySelector('img');
+        if (imgDOM) {
+            el.querySelector('img').remove();
+            const div = document.createElement('div');
+            div.innerHTML = `<svg width='12' height='12' viewBox='0,0,200,200' preserveAspectRatio='xMinYMin meet'  style=" display: inline-block; transform: rotate(45deg);">
+            <circle cx='75' cy='125'  r='50' fill='${data.options.thankColor}' />
+            <rect x='75' y='75' fill='${data.options.thankColor}' width='100' height='100' />
+            <circle  cx='125' cy='75' r='50' fill='${data.options.thankColor}' />
+            </svg>`;
+            el.style.color = data.options.thankColor;
+            el.insertBefore(div.childNodes[0], el.firstChild);
+        }
+    });
 
     let replyHead = document.querySelector('#reply-box .flex-one-row div:nth-child(1)')
     // 回复表情
