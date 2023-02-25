@@ -82,7 +82,7 @@ chrome.storage.sync.get("options", async (data) => {
     document.querySelectorAll('.small.fade').forEach((el) => {
         let imgDOM = el.querySelector('img');
         if (imgDOM) {
-            el.querySelector('img').remove();
+            imgDOM.remove();
             const div = document.createElement('div');
             div.innerHTML = `<svg width='12' height='12' viewBox='0,0,200,200' preserveAspectRatio='xMinYMin meet'  style=" display: inline-block; transform: rotate(45deg);">
             <circle cx='75' cy='125'  r='50' fill='${data.options.thankColor}' />
