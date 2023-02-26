@@ -15,15 +15,13 @@
   ],
   "host_permissions": [
     "*://*.v2ex.com/*",
-    "*://v2ex.com/*",
     "*://*.imgur.com/*",
     "*://*.sinaimg.cn/*"
   ],
   "content_scripts": [
     {
       "matches": [
-        "*://*.v2ex.com/*",
-        "*://v2ex.com/*"
+        "*://*.v2ex.com/*"
       ],
       "js": [
         "./inject/base64decode.js",
@@ -33,17 +31,11 @@
     {
       "matches": [
         "*://*.v2ex.com/",
-        "*://v2ex.com/",
         "*://*.v2ex.com/?tab=*",
-        "*://v2ex.com/?tab=*",
         "*://*.v2ex.com/go/*",
-        "*://v2ex.com/go/*",
         "*://*.v2ex.com/my/*",
-        "*://v2ex.com/my/*",
         "*://*.v2ex.com/recent*",
-        "*://v2ex.com/recent*",
-        "*://*.v2ex.com/changes*",
-        "*://v2ex.com/changes*"
+        "*://*.v2ex.com/changes*"
       ],
       "css": [
         "./inject/topicList/index.css",
@@ -56,8 +48,7 @@
     },
     {
       "matches": [
-        "*://*.v2ex.com/t/*",
-        "*://v2ex.com/t/*"
+        "*://*.v2ex.com/t/*"
       ],
       "css": [
         "./inject/topicDetail/index.css",
