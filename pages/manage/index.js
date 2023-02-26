@@ -1,10 +1,11 @@
 let title = document.querySelector('h2')
+let orginUrl = window.location.origin
 if (location.search == '?highlight') {
     title.innerText = '高亮用户列表'
     chrome.storage.sync.get("options", async (data) => {
         if (!data.options.userMarkList.length) return document.body.append('无高亮用户')
         data.options.userMarkList.map((username) => {
-            fetch("https://www.v2ex.com/api/members/show.json?username=" + username)
+            fetch(orginUrl + "/api/members/show.json?username=" + username)
                 .then(rep => rep.json())
                 .then(userinfo => {
                     let avatar = document.createElement('img')
@@ -39,7 +40,7 @@ if (location.search == '?highlight') {
 
 if (location.search == '?blockuser') {
     title.innerText = '屏蔽用户列表'
-    fetch('https://www.v2ex.com')
+    fetch(orginUrl)
         .then(rep => rep.text())
         .then(text => {
             let blockList = /blocked = \[(.*?)\];/.exec(text)
@@ -47,7 +48,7 @@ if (location.search == '?blockuser') {
             blockList = blockList[1].split(',')
             console.log(blockList)
             blockList.map(i => {
-                fetch("https://www.v2ex.com/api/members/show.json?id=" + i)
+                fetch(orginUrl + "/api/members/show.json?id=" + i)
                     .then(rep => rep.json())
                     .then(userinfo => {
                         let avatar = document.createElement('img')
@@ -69,7 +70,7 @@ if (location.search == '?blockuser') {
 if (location.search == '?ignoretopic') {
     title.innerText = '忽略主题列表'
 
-    fetch('https://www.v2ex.com')
+    fetch(orginUrl)
         .then(rep => rep.text())
         .then(text => {
             let ignoreList = /ignored_topics = \[(.*?)\];/.exec(text)
@@ -77,7 +78,7 @@ if (location.search == '?ignoretopic') {
             ignoreList = ignoreList[1].split(',')
             console.log(ignoreList)
             ignoreList.map(i => {
-                fetch("https://www.v2ex.com/api/topics/show.json?id=" + i)
+                fetch(orginUrl + "/api/topics/show.json?id=" + i)
                     .then(rep => rep.json())
                     .then(toppicInfo => {
                         toppicInfo = toppicInfo[0]

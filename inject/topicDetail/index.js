@@ -1,6 +1,6 @@
 chrome.storage.sync.get("options", async (data) => {
     // 获取帖子所有回复
-    let url = "https://www.v2ex.com/api/replies/show.json?topic_id=" + /\/t\/([0-9]+)/.exec(window.location.href)[1]
+    let url = window.location.origin + "/api/replies/show.json?topic_id=" + /\/t\/([0-9]+)/.exec(window.location.href)[1]
     let rep = await fetch(url)
     const replies = await rep.json()
 

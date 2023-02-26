@@ -1,5 +1,6 @@
 chrome.storage.sync.get("options", (data) => {
     if (data.options.userinfo) {
+        let orginUrl = window.location.origin
         document.querySelectorAll('.avatar').forEach((el) => {
             // TODO 函数去抖
             el.addEventListener('mouseenter', async (e) => {
@@ -12,7 +13,7 @@ chrome.storage.sync.get("options", (data) => {
                     username = el.closest('.cell').querySelector('strong a').innerText
                 }
 
-                let rep = await fetch(`https://www.v2ex.com/member/${username}`)
+                let rep = await fetch(`${orginUrl}/member/${username}`)
                 let text = await rep.text()
 
                 // 解析用户信息

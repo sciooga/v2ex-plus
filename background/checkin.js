@@ -27,14 +27,15 @@ async function checkin() {
     }
 
     console.log('开始签到')
-    let rep = await fetch('https://www.v2ex.com/mission/daily/redeem')
+    let originUrl = window.location.origin
+    let rep = await fetch(originUrl+'/mission/daily/redeem')
     let text = await rep.text()
     let sign = text.match("/signout(\\?once=[0-9]+)")
     sign = sign != null && sign[1] || "未登录"
     if (sign == "未登录") {
         return console.log('用户未登录，等待登录后重试')
     }
-    rep = await fetch(`https://www.v2ex.com/mission/daily/redeem${sign}`)
+    rep = await fetch(`${originUrl}/mission/daily/redeem${sign}`)
     text = await rep.text()
 
     if (text.search("查看我的账户余额")) {
