@@ -6,6 +6,7 @@ let options = {
     // 提醒
     msgNote: 1, // 消息提醒 默认开启
     chickinNote: 1, // 签到成功提醒 默认开启
+    chickinFailedNote: 1, // 签到失败提醒 默认开启
 
     // 浏览
     preview: 1, // 主题预览 默认开启

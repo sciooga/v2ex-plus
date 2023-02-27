@@ -52,5 +52,19 @@ async function checkin() {
             )
         }
         chrome.storage.sync.set({checkinDate: new Date().getUTCDate()})
+    } else {
+        console.log('签到失败')
+        let data = await chrome.storage.sync.get("options")
+        if (data.options.chickinFailedNote) {
+            chrome.notifications.create(
+                "checkin",
+                {
+                    type: "basic",
+                    iconUrl: "icon/icon38_msg.png",
+                    title: "v2ex plus 提醒您",
+                    message: `签到失败，请手动签到。`,
+                }
+            )
+        }
     }
 }
