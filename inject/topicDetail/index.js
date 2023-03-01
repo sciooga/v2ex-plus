@@ -66,7 +66,7 @@ chrome.storage.sync.get("options", async (data) => {
         g = parseInt((data.options.replyColor).substring(3, 5), 16),
         b = parseInt((data.options.replyColor).substring(5, 7), 16),
         replyColor = `${r},${g},${b},${data.options.replyA}`
-    document.querySelectorAll('.op').forEach((el) => {
+    document.querySelectorAll('.badge.op').forEach((el) => {
         let cell = el.closest('.cell')
         cell.style.background = `rgba(${replyColor})`
     })
