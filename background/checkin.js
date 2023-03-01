@@ -1,8 +1,8 @@
-// 每半小时自动签到一次
+// 每 5 分钟尝试自动签到一次（Service Worker最多保持 5 分钟）
 
 chrome.alarms.create(
     "checkin",
-    { periodInMinutes: 30 }
+    { periodInMinutes: 4.9 }
 )
 
 chrome.alarms.onAlarm.addListener(

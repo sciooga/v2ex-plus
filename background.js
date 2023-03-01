@@ -4,7 +4,7 @@ import './background/checkin.js'; // 自动签到
 console.log('hello world')
 
 // 更新提醒
-chrome.runtime.onInstalled.addListener((e) => {
+chrome.runtime.onInstalled.addListener(async (e) => {
     // 首次安装仅打开选项页
     if (e.reason === "install")
         chrome.runtime.openOptionsPage();
@@ -15,6 +15,14 @@ chrome.runtime.onInstalled.addListener((e) => {
             title: "我们刚刚进行了更新",
             message: "更新至了 2.0.0 版本，保留了核心功能且移除了部分已经失效的功能，如需反馈欢迎 @sciooga"
         });
+
+        // 2.0.0 checkin typo
+        let data = await chrome.storage.sync.get("options")
+        if (data.options.chickin) {
+            let options = data.options
+            options.checkin = options.chickin
+            chrome.storage.sync.set({ options })
+        }
     }
 });
 

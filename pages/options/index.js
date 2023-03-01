@@ -1,7 +1,7 @@
 // 默认配置
 let options = {
     // 签到
-    chickin: 1, // 自动签到 默认开启
+    checkin: 1, // 自动签到 默认开启
 
     // 提醒
     msgNote: 1, // 消息提醒 默认开启
