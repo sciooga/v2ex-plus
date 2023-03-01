@@ -12,8 +12,8 @@ chrome.runtime.onInstalled.addListener(async (e) => {
         chrome.notifications.create({
             type: "basic",
             iconUrl: "icon/icon38_msg.png",
-            title: "我们刚刚进行了更新",
-            message: "更新至了 2.0.0 版本，保留了核心功能且移除了部分已经失效的功能，如需反馈欢迎 @sciooga"
+            title: "更新至 2.0.1",
+            message: "增加双击返回顶部、右键 sov2ex、修复了自动签到失败的问题，如需反馈欢迎 @sciooga"
         });
 
         // 2.0.0 checkin typo
