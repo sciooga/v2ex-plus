@@ -13,7 +13,6 @@ let options = {
     fold: 1, // 自动折叠 默认开启
     jump: 1, // 跳过主题 默认开启
     newWindow: 0, // 新标签页浏览主题 默认关闭
-    displayPostDate: 1, // 显示主题发帖日期 默认开启
 
     // 回复    
     replyUserNum: 1, // 回复时增加楼层号 默认开启
