@@ -33,6 +33,9 @@ chrome.storage.sync.get("options", (data) => {
     }
 
     function setupSearchSortcut() {
+        // add slash icon to the search input
+        const slashIcon = addSlashIcon();
+
         // setup
         const searchContainer = document.getElementById('search-container');
         const search = document.getElementById('search');
@@ -54,6 +57,7 @@ chrome.storage.sync.get("options", (data) => {
                 if (document.activeElement.id !== 'search') {
                     // add class 'active' to search-container
                     searchContainer.classList.add('active');
+                    slashIcon.style.display = 'none';
                     search.focus();
                     search.addEventListener('keydown', function (e) {
                         if (e.keyCode === 27) {
@@ -80,6 +84,43 @@ chrome.storage.sync.get("options", (data) => {
         function shrinkSearchBox() {
             // set the width of the search-container to the original width
             searchContainer.style.width = searchContainerWidth + 'px';
+            slashIcon.style.display = 'block';
         }
+    }
+
+    function addSlashIcon() {
+        const searchContainer = document.getElementById('search-container');
+
+        // create a new SVG element
+        const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svgElement.setAttribute('width', '22');
+        svgElement.setAttribute('height', '20');
+        svgElement.setAttribute('aria-hidden', 'true');
+        svgElement.classList.add('mr-1', 'header-search-key-slash');
+
+        // create the path elements for the SVG
+        const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path1.setAttribute('fill', 'none');
+        path1.setAttribute('stroke', '#979A9C');
+        path1.setAttribute('opacity', '.4');
+        path1.setAttribute('d', 'M3.5.5h12c1.7 0 3 1.3 3 3v13c0 1.7-1.3 3-3 3h-12c-1.7 0-3-1.3-3-3v-13c0-1.7 1.3-3 3-3z');
+        svgElement.appendChild(path1);
+
+        const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path2.setAttribute('fill', '#979A9C');
+        path2.setAttribute('d', 'M11.8 6L8 15.1h-.9L10.8 6h1z');
+        svgElement.appendChild(path2);
+
+        // append the SVG element to the search container
+        searchContainer.appendChild(svgElement);
+
+        // set the CSS for the SVG element
+        svgElement.style.position = 'absolute';
+        svgElement.style.top = '50%';
+        svgElement.style.right = '10px';
+        svgElement.style.transform = 'translateY(-50%)';
+        svgElement.style.zIndex = '1';
+
+        return svgElement;
     }
 });
