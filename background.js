@@ -44,3 +44,15 @@ chrome.action.onClicked.addListener(() => {
     chrome.action.setBadgeText({ text: '' })
     chrome.tabs.create({ url: 'https://www.v2ex.com/notifications' })
 })
+
+// 增加 sov2ex 右键菜单
+chrome.contextMenus.create({
+    id: "vplus.sov2ex",
+    title: "使用 sov2ex 搜索 '%s'",
+    contexts: ["selection"],
+})
+
+chrome.contextMenus.onClicked.addListener(e => {
+    if (e.menuItemId != 'vplus.sov2ex') return
+    chrome.tabs.create({ url: "https://www.sov2ex.com/?q=" + e.selectionText })
+})

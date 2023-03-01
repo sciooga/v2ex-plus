@@ -11,7 +11,8 @@
     "alarms",
     "notifications",
     "storage",
-    "declarativeNetRequest"
+    "declarativeNetRequest",
+    "contextMenus"
   ],
   "host_permissions": [
     "*://*.v2ex.com/*",
