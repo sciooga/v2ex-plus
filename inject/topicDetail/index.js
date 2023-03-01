@@ -1,8 +1,25 @@
 chrome.storage.sync.get("options", async (data) => {
+    let replies = []
+    // 通过 HTML 解析当前页的回复数据（接口返回的数据偶尔滞后，会导致最后一页数据不完整）
+    document.querySelectorAll('.no').forEach(el => {
+        let noNum = el.innerText - 1
+        let cell = el.closest('.cell')
+        replies[noNum] = {
+            member: {
+                created: 0,
+                username: cell.querySelector('.avatar').alt
+            },
+            content_rendered: cell.querySelector('.reply_content').innerHTML
+        }
+    })
+
     // 获取帖子所有回复
     let url = "https://www.v2ex.com/api/replies/show.json?topic_id=" + /\/t\/([0-9]+)/.exec(window.location.href)[1]
     let rep = await fetch(url)
-    const replies = await rep.json()
+    let allReplies = await rep.json()
+    allReplies.map((i, idx) => {
+        replies[idx] = i
+    })
 
     let replyContent = document.querySelector("#reply_content")
     replyContent.placeholder = '您可以在回复框内直接粘贴图片或拖拽图片文件至回复框内上传'
@@ -218,7 +235,7 @@ chrome.storage.sync.get("options", async (data) => {
                 }
                 if (noNum >= 0) {
                     content = replies[noNum].content_rendered
-                    content += `<div class="relateReplyInfo"><a>查看双方对话</a>${username[1]} 回复于${noNum}层</div>`
+                    content += `<div class="relateReplyInfo"><a>查看双方对话</a>${username} 回复于${noNum + 1}层</div>`
                 }
 
                 // TODO 兼容 darktheme
@@ -249,9 +266,9 @@ chrome.storage.sync.get("options", async (data) => {
                         if (sign == 1) {
                             reply.style.float = 'left'
                         }
-                        if (i['content'].indexOf('@') != -1) {
-                            if (i['content'].indexOf(`@${selfUsername}`) == -1) {
-                                if (i['content'].indexOf(`@${username}`) == -1) {
+                        if (i['content_rendered'].indexOf('@') != -1) {
+                            if (i['content_rendered'].indexOf(selfUsername) == -1) {
+                                if (i['content_rendered'].indexOf(username) == -1) {
                                     reply.style.opacity = 0.3
                                 }
                             }
