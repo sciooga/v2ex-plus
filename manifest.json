@@ -25,6 +25,7 @@
       ],
       "js": [
         "./inject/base64decode.js",
+        "./inject/dbclickToTop.js",
         "./inject/sov2ex.js"
       ]
     },
