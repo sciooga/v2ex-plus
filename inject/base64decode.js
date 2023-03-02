@@ -5,7 +5,7 @@ chrome.storage.sync.get("options", (data) => {
             let selectionText = selection.toString()
             if (selectionText) {
                 // 12 个文字以内的不解析
-                if (selectionText.length <= 12) return
+                if (selectionText.length < 12) return
                 // 不是 4 的倍数跳过
                 if (selectionText.length % 4) return
 
@@ -13,7 +13,7 @@ chrome.storage.sync.get("options", (data) => {
                 try {
                     let result = atob(selectionText)
                     try {
-                        result = decodeURI(result)
+                        result = decodeURIComponent(escape(result)) 
                     }
                     catch (err) {
 
