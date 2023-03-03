@@ -1,5 +1,17 @@
-import './background/notifications.js'; // 通知相关
-import './background/checkin.js'; // 自动签到
+// 通知相关
+try {
+    importScripts('./background/notifications.js')
+} catch (error) {
+    console.error(error)
+}
+
+// 自动签到
+try {
+    importScripts('./background/checkin.js')
+} catch (error) {
+    console.error(error)
+}
+
 
 console.log('hello world')
 
@@ -24,7 +36,19 @@ chrome.runtime.onInstalled.addListener(async (e) => {
             chrome.storage.sync.set({ options })
         }
     }
-});
+
+    try {
+        // 增加 sov2ex 右键菜单
+        chrome.contextMenus.create({
+            id: "vplus.sov2ex",
+            title: "使用 sov2ex 搜索 '%s'",
+            contexts: ["selection"],
+        })
+    } catch (error) {
+        console.log('此错误可忽略')
+        console.error(error)
+    }
+})
 
 // 监听快捷键
 chrome.commands.onCommand.addListener((command) => {
@@ -45,13 +69,7 @@ chrome.action.onClicked.addListener(() => {
     chrome.tabs.create({ url: 'https://www.v2ex.com/notifications' })
 })
 
-// 增加 sov2ex 右键菜单
-chrome.contextMenus.create({
-    id: "vplus.sov2ex",
-    title: "使用 sov2ex 搜索 '%s'",
-    contexts: ["selection"],
-})
-
+// 右键 sov2ex 搜索
 chrome.contextMenus.onClicked.addListener(e => {
     if (e.menuItemId != 'vplus.sov2ex') return
     chrome.tabs.create({ url: "https://www.sov2ex.com/?q=" + e.selectionText })

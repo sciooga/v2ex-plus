@@ -4,8 +4,7 @@
   "manifest_version": 3,
   "description": "优雅便捷的 V2EX 扩展",
   "background": {
-    "service_worker": "background.js",
-    "type": "module"
+    "service_worker": "background.js"
   },
   "permissions": [
     "alarms",
