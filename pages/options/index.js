@@ -1,7 +1,7 @@
 // 默认配置
 let options = {
     // 签到
-    chickin: 1, // 自动签到 默认开启
+    checkin: 1, // 自动签到 默认开启
 
     // 提醒
     msgNote: 1, // 消息提醒 默认开启
@@ -13,7 +13,6 @@ let options = {
     fold: 1, // 自动折叠 默认开启
     jump: 1, // 跳过主题 默认开启
     newWindow: 0, // 新标签页浏览主题 默认关闭
-    displayPostDate: 1, // 显示主题发帖日期 默认开启
 
     // 回复    
     replyUserNum: 1, // 回复时增加楼层号 默认开启
@@ -28,6 +27,7 @@ let options = {
     userinfo: 1, // 查看用户信息 默认打开
     userMarkList: [], // 标记用户列表
     sov2ex: 1, // 使用sov2ex搜索 默认关闭
+    dblclickToTop: 0, // 双击返回顶部 默认关闭
     base64: 1, // Base64解码 默认关闭
 }
 

@@ -12,7 +12,7 @@ chrome.storage.sync.get("options", (data) => {
                     username = el.closest('.cell').querySelector('strong a').innerText
                 }
 
-                let rep = await fetch(`https://www.v2ex.com/member/${username}`)
+                let rep = await fetch(`/member/${username}`)
                 let text = await rep.text()
 
                 // 解析用户信息

@@ -1,9 +1,12 @@
-// 每半小时自动签到一次
+// 每 5 分钟尝试自动签到一次（Service Worker最多保持 5 分钟）
 
-chrome.alarms.create(
-    "checkin",
-    { periodInMinutes: 30 }
-)
+chrome.alarms.get('checkin', alarms => {
+    if (alarms) return
+    chrome.alarms.create(
+        "checkin",
+        { periodInMinutes: 4.9 }
+    )
+})
 
 chrome.alarms.onAlarm.addListener(
     async (e) => {
@@ -51,6 +54,6 @@ async function checkin() {
                 }
             )
         }
-        chrome.storage.sync.set({checkinDate: new Date().getUTCDate()})
+        chrome.storage.sync.set({ checkinDate: new Date().getUTCDate() })
     }
 }

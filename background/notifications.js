@@ -1,8 +1,10 @@
-// 每 5 分钟检查一次未读消息、关注用户新帖、收藏主题新回复，同时判断登录状态
-chrome.alarms.create(
-    "notifications",
-    { periodInMinutes: 5 }
-)
+// 每 3 分钟检查一次未读消息、关注用户新帖、收藏主题新回复，同时判断登录状态
+chrome.alarms.get('notifications', alarms => {
+    chrome.alarms.create(
+        "notifications",
+        { periodInMinutes: 3 }
+    )
+})
 
 chrome.alarms.onAlarm.addListener(
     async (e) => {
