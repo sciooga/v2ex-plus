@@ -24,8 +24,8 @@ chrome.runtime.onInstalled.addListener(async (e) => {
         chrome.notifications.create({
             type: "basic",
             iconUrl: "icon/icon38_msg.png",
-            title: "更新至 2.0.1",
-            message: "增加双击返回顶部、右键 sov2ex、修复了自动签到失败的问题，如需反馈欢迎 @sciooga"
+            title: "更新至 2.0.3",
+            message: "增加 vDaily 推荐主题及评论，数据在不断完善，如需反馈欢迎 @sciooga"
         });
 
         // 2.0.0 checkin typo
@@ -33,6 +33,13 @@ chrome.runtime.onInstalled.addListener(async (e) => {
         if (data.options.chickin) {
             let options = data.options
             options.checkin = options.chickin
+            chrome.storage.sync.set({ options })
+        }
+
+        // 2.0.3 增加新功能
+        if (!data.options.vDaily) {
+            let options = data.options
+            options.vDaily = 1
             chrome.storage.sync.set({ options })
         }
     }

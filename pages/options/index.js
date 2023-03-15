@@ -24,6 +24,7 @@ let options = {
     weekNewuser: 0, // 淡化新用户回复
 
     // 其他
+    vDaily: 1, // 启用 vDaily 默认打开
     userinfo: 1, // 查看用户信息 默认打开
     userMarkList: [], // 标记用户列表
     sov2ex: 1, // 使用sov2ex搜索 默认关闭

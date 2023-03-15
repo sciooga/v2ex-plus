@@ -1,12 +1,12 @@
 
-chrome.storage.sync.get("options", (data) => {
+chrome.storage.sync.get("options", async (data) => {
     // 高亮被标记用户
     data.options.userMarkList.map((item) => {
         document.querySelectorAll(`img[alt="${item}"]`).forEach(el => {
             el.style.outline = '3px solid red'
         })
     })
-    
+
     // 主题新窗口打开
     if (data.options.newWindow) {
         document.querySelectorAll('.item_title a, .item_hot_topic_title a').forEach((el) => {
@@ -71,6 +71,61 @@ chrome.storage.sync.get("options", (data) => {
                 }
             })
         })
+    }
 
+    // vDaily 推荐主题和回复
+
+    if (data.options.vDaily) {
+        let TopicsHot = document.querySelector('#TopicsHot')
+        if (!TopicsHot) return
+
+
+        let replyBox = document.createElement('div')
+        replyBox.classList.add('box')
+        TopicsHot.after(replyBox)
+
+        let replyTitle = document.createElement('div')
+        replyTitle.classList.add('cell', 'fade')
+        replyTitle.innerText = 'vDaily 高赞回复'
+        replyBox.append(replyTitle)
+
+        let sep20 = document.createElement('div')
+        sep20.classList.add('sep20')
+        TopicsHot.after(sep20)
+
+        let topicBox = replyBox.cloneNode()
+        TopicsHot.after(topicBox)
+        TopicsHot.after(sep20.cloneNode())
+
+        let topicTitle = replyTitle.cloneNode()
+        topicTitle.innerText = 'vDaily 推荐主题'
+        topicBox.append(topicTitle)
+
+        let topicList = await fetch('https://vdaily.huguotao.com/api/topic/recommend')
+        topicList = await topicList.json()
+        topicList.map(i => {
+            let cell = document.createElement('div')
+            cell.classList.add('cell')
+            let a = document.createElement('a')
+            a.classList.add('item_hot_topic_title')
+            cell.append(a)
+            a.href = `/t/${i['id']}`
+            a.innerText = `${i['score']} - ${i['name']}`
+            topicBox.append(cell)
+        })
+
+        let replyList = await fetch('https://vdaily.huguotao.com/api/reply/recommend')
+        replyList = await replyList.json()
+        replyList.map(i => {
+            console.log(i)
+            let cell = document.createElement('div')
+            cell.classList.add('cell', 'thank_reply')
+            let a = document.createElement('a')
+            a.classList.add('item_hot_topic_title')
+            cell.append(a)
+            a.href = `/t/${i['topicId']}?p=${i['topicPage']}#r_${i['id']}`
+            a.innerHTML = `${i['thank']} - ${i['content']}`.replaceAll('<br>', ' ')
+            replyBox.append(cell)
+        })
     }
 })

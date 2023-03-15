@@ -15,3 +15,13 @@
     max-height: 300px;
     overflow: auto;
 }
+
+.cell.thank_reply {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.cell.thank_reply img {
+    display: none;
+}
