@@ -44,10 +44,7 @@ chrome.storage.sync.get("options", (data) => {
 
         searchContainer.style.transition = 'width 0.3s ease-in-out';
 
-        console.log(search);
-
         search.addEventListener('focus', enlargeSearchBox);
-
         search.addEventListener('blur', shrinkSearchBox);
 
         // listen to '/' keydown event on the document
