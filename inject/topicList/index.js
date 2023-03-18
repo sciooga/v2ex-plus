@@ -117,7 +117,6 @@ chrome.storage.sync.get("options", async (data) => {
         let replyList = await fetch('https://vdaily.huguotao.com/api/reply/recommend')
         replyList = await replyList.json()
         replyList.map(i => {
-            console.log(i)
             let cell = document.createElement('div')
             cell.classList.add('cell', 'thank_reply')
             let a = document.createElement('a')
