@@ -117,6 +117,17 @@ chrome.storage.sync.get("options", async (data) => {
         let id = +regexGet(/\/t\/(\d+)/, location.pathname)
         let page = +regexGet(/p=(\d+)/, location.search, 1)
         let topic = spider(document.body, id, page)
+        chrome.storage.sync.get('recentTopics', async (data) => {
+            let recentTopics = data.recentTopics || []
+            recentTopics.unshift({
+                author: topic.author,
+                avatar: topic.avatar,
+                id: topic.id,
+                name: topic.name
+            })
+            recentTopics = recentTopics.slice(0, 5)
+            chrome.storage.sync.set({ recentTopics })
+        })
         await postTopicInfo(topic)
 
         let rep = await get(`${endpoint}/api/topic/task`)

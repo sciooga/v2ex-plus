@@ -74,8 +74,36 @@ chrome.storage.sync.get("options", async (data) => {
     }
 
     // vDaily 推荐主题和回复
-
     if (data.options.vDaily) {
+        // 修复最近浏览
+        let recentTopics = document.querySelector('#my-recent-topics .box')
+        if (recentTopics) {
+            let cellMeta
+            recentTopics.querySelectorAll('.cell.from_').forEach(el => {
+                cellMeta = el
+                el.remove()
+            })
+            chrome.storage.sync.get('recentTopics', async (data) => {
+                let topics = data.recentTopics || []
+                topics.forEach(i => {
+                    let cell = cellMeta.cloneNode(1)
+                    let user = cell.querySelector('a[href^="/member/"]')
+                    let avatar = user.querySelector('img')
+                    let title = cell.querySelector('.item_hot_topic_title a')
+                    user.href = `/member/${i['author']}`
+                    avatar.src = i['avatar']
+                    avatar.alt = i['username']
+                    title.href = `/t/${i['id']}`
+                    title.innerText = i['name']
+                    recentTopics.append(cell)
+                    document.querySelector('#my-recent-topics').style.display = 'block'
+                })
+            })
+            recentTopics.querySelector('a[href="#;"]').addEventListener('click', e => {
+                chrome.storage.sync.set({ recentTopics: [] })
+            })
+        }
+
         let TopicsHot = document.querySelector('#TopicsHot')
         if (!TopicsHot) return
 
@@ -126,5 +154,7 @@ chrome.storage.sync.get("options", async (data) => {
             a.innerHTML = `${i['thank']} - ${i['content']}`.replaceAll('<br>', ' ')
             replyBox.append(cell)
         })
+    } else {
+        document.querySelector('#my-recent-topics').style.display = 'block'
     }
 })

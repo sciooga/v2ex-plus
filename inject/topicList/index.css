@@ -25,3 +25,7 @@
 .cell.thank_reply img {
     display: none;
 }
+
+#my-recent-topics {
+    display: none;
+}
