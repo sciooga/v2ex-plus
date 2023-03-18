@@ -27,7 +27,8 @@ let options = {
     vDaily: 1, // 启用 vDaily 默认打开
     userinfo: 1, // 查看用户信息 默认打开
     userMarkList: [], // 标记用户列表
-    sov2ex: 1, // 使用sov2ex搜索 默认关闭
+    sov2ex: 0, // 使用sov2ex搜索 默认关闭
+    sov2exMenu: 0, // 右键 sov2ex 搜索 默认关闭
     searchShortcut: 1, // 搜索快捷键 默认开启
     dblclickToTop: 0, // 双击返回顶部 默认关闭
     base64: 1, // Base64解码 默认关闭
@@ -41,7 +42,6 @@ window.onload = async function () {
         chrome.storage.sync.set({ options })
     }
     document.querySelectorAll('input').forEach((el) => {
-        console.log(el.name)
         // 加载保存的配置
         if (el.type == "checkbox") {
             el.checked = options[el.name]
@@ -56,6 +56,25 @@ window.onload = async function () {
         }
     })
 
+    document.querySelector('input[name=sov2exMenu]').addEventListener('change', e => {
+        try {
+            if (e.target.checked) {
+                // 增加 sov2ex 右键菜单
+                chrome.contextMenus.create({
+                    id: "sov2ex",
+                    title: "使用 sov2ex 搜索 '%s'",
+                    contexts: ["selection"],
+                    documentUrlPatterns: ['*://*.v2ex.com/*']
+                })
+            } else {
+                // 移除
+                chrome.contextMenus.remove("sov2ex")
+            }
+        } catch (error) {
+            console.error('此错误可忽略', error)
+        }
+    })
+
     // 设置快捷键
     document.getElementById("shortcuts").onclick = function () {
         chrome.tabs.create({ url: "chrome://extensions/shortcuts" })
@@ -63,17 +82,17 @@ window.onload = async function () {
 
     // 管理标记用户列表
     document.getElementById("highlightList").onclick = function () {
-        chrome.tabs.create({url:"/pages/manage/index.html?highlight"})
+        chrome.tabs.create({ url: "/pages/manage/index.html?highlight" })
     }
 
     // 管理屏蔽用户列表
     document.getElementById("blockUserList").onclick = function () {
-        chrome.tabs.create({url:"/pages/manage/index.html?blockuser"})
+        chrome.tabs.create({ url: "/pages/manage/index.html?blockuser" })
     }
 
     // 管理屏蔽主题列表
     document.getElementById("blockTopicList").onclick = function () {
-        chrome.tabs.create({url:"/pages/manage/index.html?ignoretopic"})
+        chrome.tabs.create({ url: "/pages/manage/index.html?ignoretopic" })
     }
 
     // 重置设置
