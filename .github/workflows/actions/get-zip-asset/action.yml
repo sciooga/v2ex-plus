@@ -1,0 +1,67 @@
+# Assumes that:
+# 1. the following env variables are set:
+# - ZIP_ASSET_NAME
+# - ZIP_FILE_PATH
+# - ZIP_FILE_NAME
+# - EXTENSION_DIR
+# 2. repository checked out
+# Effects:
+# - extension.zip saved to env.ZIP_FILE_PATH
+# - outputs.releaseUploadUrl is set if ref_type == 'tag' and release exists
+# - extension.zip uploaded as build artifact to the job if it wasn't found in release
+
+name: "Obtain extension.zip asset"
+description: "Downloads zip asset from a release (if exists) or builds it from the scratch"
+inputs:
+  githubToken:
+    description: GitHub token
+    required: true
+outputs:
+  releaseUploadUrl:
+    description: Release upload url, if exists
+    value: ${{ steps.getRelease.outputs.upload_url }}
+runs:
+  using: "composite"
+  steps:
+    - name: Get release
+      id: getRelease
+      if: github.ref_type == 'tag'
+      uses: cardinalby/git-get-release-action@v1
+      env:
+        GITHUB_TOKEN: ${{ inputs.githubToken }}
+      with:
+        tag: ${{ github.ref_name }}
+        doNotFailIfNotFound: true
+
+    - name: Find out zip asset id from assets JSON
+      if: steps.getRelease.outputs.assets
+      id: readAssetIdFromRelease
+      uses: cardinalby/js-eval-action@v1
+      env:
+        ASSETS_JSON: ${{ steps.getRelease.outputs.assets }}
+        ASSET_NAME: ${{ env.ZIP_ASSET_NAME }}
+      with:
+        expression: |
+          JSON.parse(env.ASSETS_JSON)
+            .find(asset => asset.name == env.ZIP_ASSET_NAME)?.id || ''
+
+    - name: Download found zip release asset
+      id: downloadZipAsset
+      if: steps.readAssetIdFromRelease.outputs.result
+      uses: cardinalby/download-release-asset-action@v1
+      with:
+        token: ${{ inputs.githubToken }}
+        assetId: ${{ steps.readAssetIdFromRelease.outputs.result }}
+        targetPath: ${{ env.ZIP_FILE_PATH }}
+
+    - name: Build and pack zip
+      id: buildZip
+      if: steps.downloadZipAsset.outcome != 'success'
+      uses: ./.github/workflows/actions/build-test-pack
+
+    - name: Upload zip file artifact
+      if: steps.buildZip.outcome == 'success'
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ env.ZIP_FILE_NAME }}
+        path: ${{ env.ZIP_FILE_PATH }}

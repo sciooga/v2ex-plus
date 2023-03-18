@@ -1,0 +1,14 @@
+name: Touch google token
+on:
+  schedule:
+    - cron:  '0 3 2 * *' # At 03:00 on day-of-month 2
+  workflow_dispatch:
+jobs:
+  fetchToken:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: cardinalby/google-api-fetch-token-action@v1
+        with:
+          clientId: ${{ secrets.G_CLIENT_ID }}
+          clientSecret: ${{ secrets.G_CLIENT_SECRET }}
+          refreshToken: ${{ secrets.G_REFRESH_TOKEN }}

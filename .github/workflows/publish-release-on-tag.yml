@@ -1,0 +1,84 @@
+# Actions Workflows from https://cardinalby.github.io/blog/post/github-actions/webext/1-introduction/
+name: Release and publish on tag
+on:
+  push:
+    tags:
+      - '*.*.*'
+  workflow_dispatch:
+jobs:
+  build-release-publish:
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: cardinalby/export-env-action@v1
+        with:
+          envFile: './.github/workflows/constants.env'
+          expand: true
+
+      - name: Look for existing release
+        id: getRelease
+        uses: cardinalby/git-get-release-action@v1
+        continue-on-error: true
+        with:
+          tag: ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Build, test and pack to zip
+        id: buildPack
+        if: steps.getRelease.outcome != 'success'
+        uses: ./.github/workflows/actions/build-test-pack
+
+      - name: Create Release
+        id: createRelease
+        if: steps.getRelease.outcome != 'success'
+        uses: ncipollo/release-action@58ae73b360456532aafd58ee170c045abbeaee37 # pin@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: 'true'
+
+      - name: Upload zip asset to the release
+        if: steps.getRelease.outcome != 'success'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.createRelease.outputs.upload_url }}
+          asset_path: ${{ env.ZIP_FILE_PATH }}
+          asset_name: ${{ env.ZIP_FILE_NAME }}
+          asset_content_type: application/zip
+
+      # Should trigger build-assets-on-release.yml
+      - name: Publish release
+        if: steps.getRelease.outcome != 'success'
+        uses: eregon/publish-release@c2c0552ef2dd8209aea2a95c940a156eb8f6e9c1 # pin@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOWS_TOKEN }}
+        with:
+          release_id: ${{ steps.createRelease.outputs.id }}
+
+      - name: Publish on Chrome Webstore
+        uses: benc-uk/workflow-dispatch@4c044c1613fabbe5250deadc65452d54c4ad4fc7 # pin@v1
+        if: "!contains(github.event.head_commit.message, '[skip chrome]')"
+        with:
+          workflow: publish-on-chrome-web-store
+          token: ${{ secrets.WORKFLOWS_TOKEN }}
+          wait-for-completion: false
+
+      - name: Publish on Firefox Add-ons
+        uses: benc-uk/workflow-dispatch@4c044c1613fabbe5250deadc65452d54c4ad4fc7 # pin@v1
+        if: "!contains(github.event.head_commit.message, '[skip firefox]')"
+        with:
+          workflow: publish-on-firefox-add-ons
+          token: ${{ secrets.WORKFLOWS_TOKEN }}
+          wait-for-completion: false
+
+      - name: Publish on Edge Add-ons
+        uses: benc-uk/workflow-dispatch@4c044c1613fabbe5250deadc65452d54c4ad4fc7 # pin@v1
+        if: "!contains(github.event.head_commit.message, '[skip edge]')"
+        with:
+          workflow: publish-on-edge-add-ons
+          token: ${{ secrets.WORKFLOWS_TOKEN }}
+          wait-for-completion: false

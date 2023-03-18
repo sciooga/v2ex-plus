@@ -1,0 +1,34 @@
+# Assumes that:
+# 1. the following env variables are set:
+# - ZIP_FILE_PATH
+# - EXTENSION_DIR
+# 2. repository checked out
+# Effects:
+# - builds and tests an extension, fails on error
+# - packed extension.zip saved to env.ZIP_FILE_PATH if inputs.doNotPackZip == 'false'
+
+name: "Build, test and pack WebExtension"
+description: "Builds, tests, and packs extension dir into zip file"
+
+inputs:
+  doNotPackZip:
+    description: 'Set `true` to omit pack step'
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    # Add additional build and test steps here
+
+    - name: Validate manifest.json of the extension
+      uses: cardinalby/schema-validator-action@v1
+      with:
+        file: ${{ env.EXTENSION_DIR }}manifest.json
+        schema: 'https://json.schemastore.org/webextension.json'
+
+    - name: Pack directory to zip
+      if: inputs.doNotPackZip != 'true'
+      uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
+      with:
+        extensionDir: ${{ env.EXTENSION_DIR }}
+        zipFilePath: ${{ env.ZIP_FILE_PATH }}
