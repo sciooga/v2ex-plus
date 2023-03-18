@@ -23,7 +23,8 @@
 }
 
 .cell.thank_reply img {
-    display: none;
+    display: inline-block;
+    height: 2em;
 }
 
 #my-recent-topics {
