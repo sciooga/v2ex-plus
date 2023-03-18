@@ -60,7 +60,7 @@ function spider(dom, topicId, topicPage) {
         thank: +regexGet(/(\d+) 人感谢/, dom.querySelector('.topic_buttons').innerText, 0),
         score: 0, //评分
 
-        content: dom.querySelector('.topic_content').innerHTML,
+        content: dom.querySelector('.topic_content') ? dom.querySelector('.topic_content').innerHTML : '',
         append: Array.prototype.map.call(dom.querySelectorAll('.subtle'), el => el.innerHTML),
         replys: Array.prototype.map.call(dom.querySelectorAll('[alt="❤️"]'), el => {
             let cell = el.closest('.cell')
