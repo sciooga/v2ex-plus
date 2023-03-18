@@ -61,14 +61,14 @@ window.onload = async function () {
             if (e.target.checked) {
                 // 增加 sov2ex 右键菜单
                 chrome.contextMenus.create({
-                    id: "sov2ex",
+                    id: "vplus.sov2ex",
                     title: "使用 sov2ex 搜索 '%s'",
                     contexts: ["selection"],
                     documentUrlPatterns: ['*://*.v2ex.com/*']
                 })
             } else {
                 // 移除
-                chrome.contextMenus.remove("sov2ex")
+                chrome.contextMenus.remove("vplus.sov2ex")
             }
         } catch (error) {
             console.error('此错误可忽略', error)
