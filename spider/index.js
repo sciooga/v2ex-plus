@@ -110,10 +110,9 @@ let endpoint = 'https://vdaily.huguotao.com'
 chrome.storage.sync.get("options", async (data) => {
 
     if (!data.options.vDaily) return
-    if (document.querySelector('.tools [href="/"]').innerHTML != '首页') return // 非中文语言
+    if (document.querySelector('.tools [href="/notes"]').innerHTML != '记事本') return // 非中文语言、未登录
 
     try {
-        let errorType = 'read' // 浏览
         let id = +regexGet(/\/t\/(\d+)/, location.pathname)
         let page = +regexGet(/p=(\d+)/, location.search, 1)
         let topic = spider(document.body, id, page)
