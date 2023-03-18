@@ -118,6 +118,7 @@ chrome.storage.sync.get("options", async (data) => {
         let topic = spider(document.body, id, page)
         chrome.storage.sync.get('recentTopics', async (data) => {
             let recentTopics = data.recentTopics || []
+            if (recentTopics.find(i => i.id == topic.id)) return
             recentTopics.unshift({
                 author: topic.author,
                 avatar: topic.avatar,
