@@ -28,6 +28,7 @@ let options = {
     userinfo: 1, // 查看用户信息 默认打开
     userMarkList: [], // 标记用户列表
     sov2ex: 1, // 使用sov2ex搜索 默认关闭
+    searchShortcut: 1, // 搜索快捷键 默认开启
     dblclickToTop: 0, // 双击返回顶部 默认关闭
     base64: 1, // Base64解码 默认关闭
 }
