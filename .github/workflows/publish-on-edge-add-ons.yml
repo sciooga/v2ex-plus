@@ -1,0 +1,27 @@
+name: publish-on-edge-add-ons
+on:
+  workflow_dispatch:
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: cardinalby/export-env-action@v1
+        with:
+          envFile: './.github/workflows/constants.env'
+          expand: true
+
+      - name: Obtain packed zip
+        uses: ./.github/workflows/actions/get-zip-asset
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy to Edge Addons
+        uses: wdzeng/edge-addon@fe088a3bb9bf7c3f1cab08df6269664b9f7bf4fd # pin@v1.0.3
+        with:
+          product-id: ${{ secrets.EDGE_PRODUCT_ID }}
+          zip-path: ${{ env.ZIP_FILE_PATH }}
+          client-id: ${{ secrets.EDGE_CLIENT_ID }}
+          client-secret: ${{ secrets.EDGE_CLIENT_SECRET }}
+          access-token-url: ${{ secrets.EDGE_ACCESS_TOKEN_URL }}

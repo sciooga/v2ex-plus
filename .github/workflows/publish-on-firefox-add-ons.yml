@@ -1,0 +1,35 @@
+name: publish-on-firefox-add-ons
+on:
+  workflow_dispatch:
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: cardinalby/export-env-action@v1
+        with:
+          envFile: './.github/workflows/constants.env'
+          expand: true
+
+      - name: Obtain packed zip
+        uses: ./.github/workflows/actions/get-zip-asset
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy to Firefox Addons
+        id: addonsDeploy
+        uses: cardinalby/webext-buildtools-firefox-addons-action@v1
+        continue-on-error: true
+        with:
+          zipFilePath: ${{ env.ZIP_FILE_PATH }}
+          extensionId: ${{ secrets.FF_EXTENSION_ID }}
+          jwtIssuer: ${{ secrets.FF_JWT_ISSUER }}
+          jwtSecret: ${{ secrets.FF_JWT_SECRET }}
+
+      - name: Abort on upload error
+        if: |
+          steps.addonsDeploy.outcome == 'failure' &&
+          steps.addonsDeploy.outputs.sameVersionAlreadyUploadedError != 'true' &&
+          steps.addonsDeploy.outputs.timeoutError != 'true'
+        run: exit 1
