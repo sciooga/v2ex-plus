@@ -128,25 +128,38 @@ chrome.storage.sync.get("options", async (data) => {
             chrome.storage.sync.set({ recentTopics })
         })
         await postTopicInfo(topic)
-
-        let rep = await get(`${endpoint}/api/topic/task`)
-        let task = await rep.json()
-        if (!task.url) return
-
-        errorType = 'task' // 任务
-        let repHTML = await (await get(task.url)).text()
-        let dom = document.createElement('div')
-        dom.innerHTML = repHTML
-
-        topic = spider(dom, task.id, task.page)
-        await postTopicInfo(topic, task.sign)
     } catch (error) {
         console.error(error)
         await post(`${endpoint}/api/error/info`, {
-            type: errorType,
-            url: task.url,
+            type: 'read', // 浏览
+            url: location.href,
             error: error.stack,
             time: new Date()
         })
     }
+
+    // 每 30 秒爬取一个新的主题，最多执行 3 次
+    let taskSpider = async () => {
+        let task = await (await get(`${endpoint}/api/topic/task`)).json()
+        if (!task.url) return
+        try {
+            let dom = document.createElement('div')
+            dom.innerHTML = await (await get(task.url)).text()
+            let topic = spider(dom, task.id, task.page)
+            await postTopicInfo(topic, task.sign)
+        } catch (error) {
+            console.error(error)
+            await post(`${endpoint}/api/error/info`, {
+                type: 'task', // 浏览
+                url: task.url,
+                error: error.stack,
+                time: new Date()
+            })
+        }
+    }
+    await taskSpider()
+    let times = 3
+    setInterval(async () => {
+        if (times--) await taskSpider()
+    }, 30000)
 })
