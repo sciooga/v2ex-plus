@@ -213,11 +213,49 @@ chrome.storage.sync.get("options", async (data) => {
             let username = RegExp("/member/(.+)").exec(el.href)
             if (!username) return
             username = username[1]
+            let cell = el.closest('.cell')
+            let btn = document.createElement('a')
+            btn.classList.add('thank')
+            btn.href = '#;'
+            btn.innerText = '会话详情'
+            cell.querySelector('.thank').after(' \u00A0 \u00A0 ', btn)
+            btn.addEventListener('click', () => {
+                let wrapper = document.createElement('div')
+                wrapper.classList.add('wrapper')
+                wrapper.innerHTML = '<div class="btn close">✕</div>'
+
+                let selfUsername = cell.querySelector('.avatar').alt
+                replies.map((i, idx) => {
+                    let sign = [selfUsername, username].indexOf(i['member']['username'])
+                    if (sign == -1) return
+                    let reply = document.createElement('div')
+                    reply.classList.add('reply')
+                    reply.innerHTML = i['content_rendered']
+                    reply.innerHTML += `<div class="relateReplyInfo">${i['member']['username']} 回复于${idx + 1}层</div>`
+                    wrapper.append(reply)
+                    if (sign == 1) {
+                        reply.style.float = 'left'
+                    }
+                    if (i['content_rendered'].indexOf('@') != -1) {
+                        if (i['content_rendered'].indexOf(selfUsername) == -1) {
+                            if (i['content_rendered'].indexOf(username) == -1) {
+                                reply.style.opacity = 0.3
+                            }
+                        }
+                    }
+                })
+
+                Array().forEach.call(document.body.children, el => el.style.filter = 'blur(6px)')
+                document.body.append(wrapper)
+                document.querySelector('.close').addEventListener('click', () => {
+                    wrapper.remove()
+                    Array().forEach.call(document.body.children, el => el.style.filter = '')
+                })
+            })
             el.addEventListener('mouseenter', (e) => {
                 if (el.dataset.isPopup) return clearTimeout(el.dataset.hidePopup)
                 el.dataset.isPopup = true
                 let content = '未找到相关回复'
-                let cell = el.closest('.cell')
                 let noNum = -1 // 初始化负一
 
                 // 如果有 #楼层号 则先判断楼层号是否为相关回复优先显示
@@ -238,7 +276,6 @@ chrome.storage.sync.get("options", async (data) => {
                     content += `<div class="relateReplyInfo"><a>查看双方对话</a>${username} 回复于${noNum + 1}层</div>`
                 }
 
-                // TODO 兼容 darktheme
                 // 显示弹框
                 let relateReply = document.createElement('div')
                 relateReply.classList.add("relateReply")
@@ -250,37 +287,7 @@ chrome.storage.sync.get("options", async (data) => {
                 relateReply.style.marginTop = '-8px'
 
                 document.querySelector('.relateReplyInfo a').addEventListener('click', () => {
-                    let wrapper = document.createElement('div')
-                    wrapper.classList.add('wrapper')
-                    wrapper.innerHTML = '<div class="btn close">✕</div>'
-
-                    let selfUsername = cell.querySelector('.avatar').alt
-                    replies.map((i, idx) => {
-                        let sign = [selfUsername, username].indexOf(i['member']['username'])
-                        if (sign == -1) return
-                        let reply = document.createElement('div')
-                        reply.classList.add('reply')
-                        reply.innerHTML = i['content_rendered']
-                        reply.innerHTML += `<div class="relateReplyInfo">${i['member']['username']} 回复于${idx + 1}层</div>`
-                        wrapper.append(reply)
-                        if (sign == 1) {
-                            reply.style.float = 'left'
-                        }
-                        if (i['content_rendered'].indexOf('@') != -1) {
-                            if (i['content_rendered'].indexOf(selfUsername) == -1) {
-                                if (i['content_rendered'].indexOf(username) == -1) {
-                                    reply.style.opacity = 0.3
-                                }
-                            }
-                        }
-                    })
-
-                    Array().forEach.call(document.body.children, el => el.style.filter = 'blur(6px)')
-                    document.body.append(wrapper)
-                    document.querySelector('.close').addEventListener('click', () => {
-                        wrapper.remove()
-                        Array().forEach.call(document.body.children, el => el.style.filter = '')
-                    })
+                    btn.click()
                 })
 
                 relateReply.addEventListener('mouseenter', (e) => {
