@@ -24,8 +24,8 @@ chrome.runtime.onInstalled.addListener(async (e) => {
         chrome.notifications.create({
             type: "basic",
             iconUrl: "icon/icon38_msg.png",
-            title: "更新至 2.0.3",
-            message: "增加 vDaily 推荐主题及评论，数据在不断完善，如需反馈欢迎 @sciooga"
+            title: "更新至 2.0.4",
+            message: "增加搜索框[/]快捷键、 sov2ex 右键菜单开关，优化黑暗模式，修复部分 bug，如需反馈欢迎 @sciooga"
         });
 
         // 2.0.0 checkin typo
@@ -42,18 +42,13 @@ chrome.runtime.onInstalled.addListener(async (e) => {
             options.vDaily = 1
             chrome.storage.sync.set({ options })
         }
-    }
 
-    try {
-        // 增加 sov2ex 右键菜单
-        chrome.contextMenus.create({
-            id: "vplus.sov2ex",
-            title: "使用 sov2ex 搜索 '%s'",
-            contexts: ["selection"],
-        })
-    } catch (error) {
-        console.log('此错误可忽略')
-        console.error(error)
+        // 2.0.4 新增加功能
+        if (!data.options.searchShortcut) {
+            let options = data.options
+            options.searchShortcut = 1
+            chrome.storage.sync.set({ options })
+        }
     }
 })
 
