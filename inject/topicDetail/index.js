@@ -96,7 +96,7 @@ chrome.storage.sync.get("options", async (data) => {
     })
 
     // 感谢爱心颜色
-    document.querySelectorAll('.small.fade').forEach((el) => {
+    document.querySelectorAll('.cell .small.fade').forEach((el) => {
         el.style.color = data.options.thankColor
     })
 
