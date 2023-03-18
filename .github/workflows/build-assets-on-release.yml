@@ -1,0 +1,138 @@
+# On release published:
+# - if no built extension.zip asset attached to release, does that
+# - builds and attaches signed crx asset to release
+# - builds and attaches signed xpi asset to release
+name: Build release assets
+
+on:
+  release:
+    # Creating draft releases will not trigger it
+    types: [published]
+jobs:
+  # Find out asset id of existing extension.zip asset in a release or
+  # build and attach it to the release and use its asset id
+  ensure-zip:
+    runs-on: ubuntu-latest
+    outputs:
+      zipAssetId: | 
+        ${{ steps.getZipAssetId.outputs.result || 
+            steps.uploadZipAsset.outputs.id }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: cardinalby/export-env-action@v1
+        with:
+          envFile: './.github/workflows/constants.env'
+          expand: true
+
+      - name: Find out "extension.zip" asset id from the release
+        id: getZipAssetId
+        uses: cardinalby/js-eval-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ASSETS_URL: ${{ github.event.release.assets_url }}
+          ASSET_NAME: ${{ env.ZIP_FILE_NAME }}
+        with:
+          expression: |
+            (await octokit.request("GET " + env.ASSETS_URL)).data
+              .find(asset => asset.name == env.ASSET_NAME)?.id || ''
+
+      - name: Build, test and pack
+        if: '!steps.getZipAssetId.outputs.result'
+        id: buildPack
+        uses: ./.github/workflows/actions/build-test-pack
+
+      - name: Upload "extension.zip" asset to the release
+        id: uploadZipAsset
+        if: '!steps.getZipAssetId.outputs.result'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ${{ env.ZIP_FILE_PATH }}
+          asset_name: ${{ env.ZIP_FILE_NAME }}
+          asset_content_type: application/zip
+
+  build-signed-crx-asset:
+    needs: ensure-zip
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: cardinalby/export-env-action@v1
+        with:
+          envFile: './.github/workflows/constants.env'
+          expand: true
+
+      - name: Download zip release asset
+        uses: cardinalby/download-release-asset-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          assetId: ${{ needs.ensure-zip.outputs.zipAssetId }}
+          targetPath: ${{ env.ZIP_FILE_PATH }}
+
+      - name: Build offline crx
+        id: buildOfflineCrx
+        uses: cardinalby/webext-buildtools-chrome-crx-action@v2
+        with:
+          zipFilePath: ${{ env.ZIP_FILE_PATH }}
+          crxFilePath: ${{ env.OFFLINE_CRX_FILE_PATH }}
+          privateKey: ${{ secrets.CHROME_CRX_PRIVATE_KEY }}
+
+      - name: Upload offline crx release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ${{ env.OFFLINE_CRX_FILE_PATH }}
+          asset_name: ${{ env.OFFLINE_CRX_FILE_NAME }}
+          asset_content_type: application/x-chrome-extension
+
+  build-signed-xpi-asset:
+    needs: ensure-zip
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: cardinalby/export-env-action@v1
+        with:
+          envFile: './.github/workflows/constants.env'
+          expand: true
+
+      - name: Download zip release asset
+        uses: cardinalby/download-release-asset-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          assetId: ${{ needs.ensure-zip.outputs.zipAssetId }}
+          targetPath: ${{ env.ZIP_FILE_PATH }}
+
+      - name: Sign Firefox xpi for offline distribution
+        id: ffSignXpi
+        continue-on-error: true
+        uses: cardinalby/webext-buildtools-firefox-sign-xpi-action@v1
+        with:
+          timeoutMs: 1200000
+          extensionId: ${{ secrets.FF_OFFLINE_EXT_ID }}
+          zipFilePath: ${{ env.ZIP_FILE_PATH }}
+          xpiFilePath: ${{ env.XPI_FILE_PATH }}
+          jwtIssuer: ${{ secrets.FF_JWT_ISSUER }}
+          jwtSecret: ${{ secrets.FF_JWT_SECRET }}
+
+      - name: Abort on sign error
+        if: |
+          steps.ffSignXpi.outcome == 'failure' &&
+          steps.ffSignXpi.outputs.sameVersionAlreadyUploadedError != 'true'
+        run: exit 1
+
+      - name: Upload offline xpi release asset
+        if: steps.ffSignXpi.outcome == 'success'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ${{ env.XPI_FILE_PATH }}
+          asset_name: ${{ env.XPI_FILE_NAME }}
+          asset_content_type: application/x-xpinstall
