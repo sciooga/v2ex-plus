@@ -67,13 +67,14 @@ jobs:
           token: ${{ secrets.WORKFLOWS_TOKEN }}
           wait-for-completion: false
 
-      - name: Publish on Firefox Add-ons
-        uses: benc-uk/workflow-dispatch@4c044c1613fabbe5250deadc65452d54c4ad4fc7 # pin@v1
-        if: "!contains(github.event.head_commit.message, '[skip firefox]')"
-        with:
-          workflow: publish-on-firefox-add-ons
-          token: ${{ secrets.WORKFLOWS_TOKEN }}
-          wait-for-completion: false
+      # Firefox does not fully support manifest v3, so disable firefox
+      # - name: Publish on Firefox Add-ons
+      #   uses: benc-uk/workflow-dispatch@4c044c1613fabbe5250deadc65452d54c4ad4fc7 # pin@v1
+      #   if: "!contains(github.event.head_commit.message, '[skip firefox]')"
+      #   with:
+      #     workflow: publish-on-firefox-add-ons
+      #     token: ${{ secrets.WORKFLOWS_TOKEN }}
+      #     wait-for-completion: false
 
       - name: Publish on Edge Add-ons
         uses: benc-uk/workflow-dispatch@4c044c1613fabbe5250deadc65452d54c4ad4fc7 # pin@v1
