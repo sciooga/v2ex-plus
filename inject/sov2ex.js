@@ -49,9 +49,12 @@ chrome.storage.sync.get("options", (data) => {
 
         // listen to '/' keydown event on the document
         document.addEventListener('keydown', function (e) {
+            if (document.activeElement.tagName.toLowerCase() !== 'body') {
+                return;
+            }
             if (e.keyCode === 191) {
                 // if the search input is not focused, focus on it.
-                if (document.activeElement.id !== 'search') {
+                if (document.activeElement.id !== 'search' && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey) {
                     // add class 'active' to search-container
                     searchContainer.classList.add('active');
                     slashIcon.style.display = 'none';
