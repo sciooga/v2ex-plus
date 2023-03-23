@@ -24,8 +24,8 @@ chrome.runtime.onInstalled.addListener(async (e) => {
         chrome.notifications.create({
             type: "basic",
             iconUrl: "icon/icon38_msg.png",
-            title: "更新至 2.0.4",
-            message: "增加搜索框[/]快捷键、 sov2ex 右键菜单开关，优化黑暗模式，修复部分 bug，如需反馈欢迎 @sciooga"
+            title: "更新至 2.0.5",
+            message: "增加推荐主题[更多]按钮，修复部分情况会误激活搜索框，如需反馈欢迎 @sciooga"
         });
 
         // 2.0.0 checkin typo
