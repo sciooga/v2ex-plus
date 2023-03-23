@@ -139,6 +139,7 @@ chrome.storage.sync.get("options", async (data) => {
             cell.append(a)
             a.href = `/t/${i['id']}`
             a.innerText = `${i['score']} - ${i['name']}`
+            a.target = '_blank'
             topicBox.append(cell)
         })
 
@@ -152,6 +153,7 @@ chrome.storage.sync.get("options", async (data) => {
             cell.append(a)
             a.href = `/t/${i['topicId']}?p=${i['topicPage']}#r_${i['id']}`
             a.innerHTML = `${i['thank']} - ${i['content']}`.replaceAll('<br>', ' ')
+            a.target = '_blank'
             replyBox.append(cell)
         })
     } else {
