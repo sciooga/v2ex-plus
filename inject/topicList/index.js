@@ -129,6 +129,15 @@ chrome.storage.sync.get("options", async (data) => {
         topicTitle.innerText = 'vDaily 推荐主题'
         topicBox.append(topicTitle)
 
+
+        let more = document.createElement('a')
+        more.innerText = '更多'
+        more.classList.add('vdaily')
+        more.target = '_blank'
+        more.href = 'https://vdaily.huguotao.com'
+        replyTitle.append(more)
+        topicTitle.append(more.cloneNode(1))
+
         let topicList = await fetch('https://vdaily.huguotao.com/api/topic/recommend')
         topicList = await topicList.json()
         topicList.map(i => {
