@@ -145,7 +145,9 @@ chrome.storage.sync.get("options", async (data) => {
         if (!task.url) return
         try {
             let dom = document.createElement('div')
-            dom.innerHTML = await (await get(task.url)).text()
+            let rep = await get(task.url)
+            if (rep.status != 200) throw new Error(`错误码${ rep.status }`)
+            dom.innerHTML = await rep.text()
             let topic = spider(dom, task.id, task.page)
             await postTopicInfo(topic, task.sign)
         } catch (error) {
