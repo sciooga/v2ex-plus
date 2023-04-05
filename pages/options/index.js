@@ -64,7 +64,6 @@ window.onload = async function () {
                     id: "vplus.sov2ex",
                     title: "使用 sov2ex 搜索 '%s'",
                     contexts: ["selection"],
-                    documentUrlPatterns: ['*://*.v2ex.com/*']
                 })
             } else {
                 // 移除
