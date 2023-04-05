@@ -24,8 +24,8 @@ chrome.runtime.onInstalled.addListener(async (e) => {
         chrome.notifications.create({
             type: "basic",
             iconUrl: "icon/icon38_msg.png",
-            title: "更新至 2.0.5",
-            message: "增加推荐主题[更多]按钮，修复部分情况会误激活搜索框，如需反馈欢迎 @sciooga"
+            title: "更新至 2.0.6",
+            message: "Base64 Decode 改为弹窗、启用右键 sov2ex 时在所有网页生效，如需反馈欢迎 @sciooga"
         });
 
         // 2.0.0 checkin typo
@@ -48,6 +48,14 @@ chrome.runtime.onInstalled.addListener(async (e) => {
             let options = data.options
             options.searchShortcut = 1
             chrome.storage.sync.set({ options })
+        }
+
+        // 2.0.6 新增加功能
+        if (!data.options.sov2exMenu) {
+            chrome.contextMenus.update(
+                "vplus.sov2ex", {
+                documentUrlPatterns: ['<all_urls>']
+            })
         }
     }
 })
