@@ -1,11 +1,11 @@
-![Chrome Web Store](https://img.shields.io/chrome-web-store/v/daeclijmnojoemooblcbfeeceopnkolo?style=flat-square)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/daeclijmnojoemooblcbfeeceopnkolo?style=flat-square)](https://chrome.google.com/webstore/detail/v2ex-plus/daeclijmnojoemooblcbfeeceopnkolo)
 [![Edge Add-on](https://img.shields.io/badge/dynamic/json?label=edge%20add-on&prefix=v&query=%24.version&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Foejdifclmfffbginmbgndmkjbephefgd&style=flat-square)](https://microsoftedge.microsoft.com/addons/detail/v2ex-plus/oejdifclmfffbginmbgndmkjbephefgd)
-![Mozilla Add-on](https://img.shields.io/amo/v/%7B690c1618-4b2c-4905-bf58-1fc82bdfd6e7%7D?style=flat-square)
+[![Mozilla Add-on](https://img.shields.io/amo/v/%7B690c1618-4b2c-4905-bf58-1fc82bdfd6e7%7D?style=flat-square)](https://addons.mozilla.org/zh-CN/firefox/addon/v2ex-plus9)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/sciooga/v2ex-plus/publish-on-chrome-webstore.yml?label=publish%20chrome%20webstore&logo=github&logoColor=8d97a2&style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/sciooga/v2ex-plus/publish-on-edge-add-ons.yml?label=publish%20edge%20add-on&logo=github&logoColor=8d97a2&style=flat-square)
 # V2EX PLUS
 
-## 已更新至 2.0 版本
+#### 已更新至 2.0 版本
 
 功能简介：
 * 通知功能：更新提醒、未读消息
