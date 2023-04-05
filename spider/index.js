@@ -84,15 +84,22 @@ function spider(dom, topicId, topicPage) {
     return topic
 }
 
+const SPIDER_VERSION = '1.0.0'
+
 async function get(url) {
-    return await fetch(url)
+    return await fetch(url, {
+        headers: {
+            'version': SPIDER_VERSION
+        }
+    })
 }
 
 async function post(url, data) {
     return await fetch(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'version': SPIDER_VERSION
         },
         body: JSON.stringify(data)
     })
