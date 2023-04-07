@@ -218,7 +218,14 @@ chrome.storage.sync.get("options", async (data) => {
             btn.classList.add('thank')
             btn.href = '#;'
             btn.innerText = '会话详情'
-            cell.querySelector('.thank').after(' \u00A0 \u00A0 ', btn)
+            let thankArea = cell.querySelector('.thank_area')
+            if (!thankArea) {
+                let fr = cell.querySelector('.fr')
+                thankArea = document.createElement('div')
+                thankArea.classList = 'thank_area'
+                fr.prepend(thankArea)
+            }
+            thankArea.append(' \u00A0 \u00A0 ', btn)
             btn.addEventListener('click', () => {
                 let wrapper = document.createElement('div')
                 wrapper.classList.add('wrapper')

@@ -27,6 +27,7 @@
     cursor: pointer;
     float: left;
 }
+
 /* 相关对话 */
 .wrapper {
     position: fixed;
@@ -70,6 +71,7 @@
     cursor: pointer;
     margin: 0 2px;
 }
+
 /* 表情列表 */
 ul.emoticon {
     margin: 0px;
@@ -93,7 +95,6 @@ ul.emoticon li {
 }
 
 /* 超长回复 */
-
 div[id^=r_] .reply_content.flod {
     max-height: 300px;
     overflow: hidden;
@@ -103,4 +104,10 @@ div[id^=r_] .reply_content.flod {
 div[id^=r_] .reply_content.flod:hover {
     max-height: 1000px;
     overflow: auto;
+}
+
+
+/* 已感谢样式 hook */
+.thank_area.thanked {
+    background: none;
 }
