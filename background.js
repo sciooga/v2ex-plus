@@ -57,6 +57,13 @@ chrome.runtime.onInstalled.addListener(async (e) => {
                 documentUrlPatterns: ['<all_urls>']
             })
         }
+
+        // 2.0.7 新增加功能
+        if (data.options.nestedComment === undefined) {
+            let options = data.options
+            options.nestedComment = 1
+            chrome.storage.sync.set({ options })
+        }
     }
 })
 

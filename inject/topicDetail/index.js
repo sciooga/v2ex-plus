@@ -314,6 +314,59 @@ chrome.storage.sync.get("options", async (data) => {
         })
     }
 
+    if (data.options.nestedComment) {
+        document.querySelectorAll('div[id^=r_]').forEach(el => {
+            let nestedUser = el.querySelectorAll('.reply_content a[href^="/member"]')
+            nestedUser = Array().map.call(nestedUser, i => i.innerText)
+            if (!nestedUser.length) return
+
+            let nestedComment = document.createElement('div')
+            nestedComment.classList.add('nested')
+            el.append(nestedComment)
+
+            let selfUsername = el.querySelector('.avatar').alt
+            nestedUser.unshift(selfUsername)
+
+            replies.map((i, idx) => {
+                let sign = nestedUser.indexOf(i['member']['username'])
+                if (sign == -1) return
+                // 有 @ 用户但不是 @ 相关用户
+                if (i['content_rendered'].indexOf('@<a') != -1) {
+                    let sign = false
+                    nestedUser.forEach(username => {
+                        sign = i['content_rendered'].indexOf(username) != -1
+                    })
+                    if (!sign) return
+                }
+
+                let comment = document.createElement('div')
+                comment.classList.add('comment', `comment_${i['member']['username']}`)
+                comment.innerHTML = `
+                    <div>
+                        <img class="avatar" src="${i['member']['avatar_large']}">
+                    </div>
+                    <div class='comment_content'>
+                        <p>${i['member']['username']}<span class="no">${idx + 1}</span></p>
+                        <div class='reply_content'>${i['content_rendered']}</div>
+                    </div>
+                `
+                nestedComment.append(comment)
+
+                comment.addEventListener('mouseenter', () => {
+                    el.querySelectorAll(`.comment_${i['member']['username']} .avatar`).forEach(el => {
+                        el.style.outline = '2px solid OrangeRed'
+                    })
+                })
+
+                comment.addEventListener('mouseleave', () => {
+                    el.querySelectorAll(`.comment_${i['member']['username']} .avatar`).forEach(el => {
+                        el.style.outline = '0px solid OrangeRed'
+                    })
+                })
+            })
+        })
+    }
+
     if (data.options.weekNewuser) {
         replies.map(i => {
             let monthAgo = +new Date / 1000 - 30 * 24 * 60 * 60

@@ -17,6 +17,7 @@ let options = {
     // 回复    
     replyUserNum: 1, // 回复时增加楼层号 默认开启
     relateReply: 1, // 快速查看相关回复 默认开启
+    nestedComment: 1, // 快速查看相关回复 默认开启
     imageParsing: 1, // 图片解析 默认开启并隐藏原回复
     replyColor: "#fff94d", // 楼主回复背景色
     replyA: 0.4, // 楼主回复背景色透明度
