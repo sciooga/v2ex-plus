@@ -104,6 +104,7 @@ div[id^=r_] .reply_content.flod {
 div[id^=r_] .reply_content.flod:hover {
     max-height: 1000px;
     overflow: auto;
+    transition: max-height .3s .2s;
 }
 
 
