@@ -75,6 +75,11 @@ window.onload = async function () {
         }
     })
 
+    // 样式市场
+    document.getElementById("cssMall").onclick = function () {
+        chrome.tabs.create({ url: "https://vdaily.huguotao.com/mall" })
+    }
+
     // 设置快捷键
     document.getElementById("shortcuts").onclick = function () {
         chrome.tabs.create({ url: "chrome://extensions/shortcuts" })
