@@ -330,13 +330,16 @@ chrome.storage.sync.get("options", async (data) => {
             replies.map((i, idx) => {
                 let sign = nestedUser.indexOf(i['member']['username'])
                 if (sign == -1) return
-                // 有 @ 用户但不是 @ 相关用户
+
+                // 判断所有 @ 用户是否相关
                 if (i['content_rendered'].indexOf('@<a') != -1) {
                     let sign = false
                     nestedUser.forEach(username => {
                         sign = i['content_rendered'].indexOf(username) != -1
                     })
-                    if (!sign) return
+                    // 所有被 @ 用户都不相关且一开始就 @ 其他用户
+                    let username = RegExp(`^@<a href="/member/(.+)"`).exec(i['content_rendered'])
+                    if (!sign && username) return
                 }
 
                 let comment = document.createElement('div')
