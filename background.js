@@ -37,14 +37,14 @@ chrome.runtime.onInstalled.addListener(async (e) => {
         }
 
         // 2.0.3 增加新功能
-        if (!data.options.vDaily) {
+        if (data.options.vDaily === undefined) {
             let options = data.options
             options.vDaily = 1
             chrome.storage.sync.set({ options })
         }
 
         // 2.0.4 新增加功能
-        if (!data.options.searchShortcut) {
+        if (data.options.searchShortcut === undefined) {
             let options = data.options
             options.searchShortcut = 1
             chrome.storage.sync.set({ options })
