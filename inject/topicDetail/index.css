@@ -116,6 +116,7 @@ div[id^=r_] .reply_content.flod:hover {
 /* 楼中楼 */
 .nested {
     max-height: 0px;
+    opacity: 0;
     overflow: hidden;
     background-color: var(--box-background-color);
     margin-left: 60px;
@@ -127,6 +128,7 @@ div[id^=r_] .reply_content.flod:hover {
 }
 
 .cell:hover .nested {
+    opacity: 1;
     max-height: 3600px;
     padding: 10px;
     overflow: auto;
