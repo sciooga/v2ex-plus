@@ -76,8 +76,8 @@ window.onload = async function () {
     })
 
     // 样式市场
-    document.getElementById("cssMall").onclick = function () {
-        chrome.tabs.create({ url: "https://vdaily.huguotao.com/mall" })
+    document.getElementById("cssStore").onclick = function () {
+        chrome.tabs.create({ url: "https://vdaily.huguotao.com/store" })
     }
 
     // 设置快捷键
