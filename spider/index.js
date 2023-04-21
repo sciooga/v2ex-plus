@@ -86,8 +86,17 @@ function spider(dom, topicId, topicPage) {
 
 const SPIDER_VERSION = '1.0.0'
 
+// fetch 自动重试一次
+async function request(url, options) {
+    try {
+        return await fetch(url, options)
+    } catch (error) {
+        return await fetch(url, options)
+    }
+}
+
 async function get(url) {
-    return await fetch(url, {
+    return await request(url, {
         headers: {
             'version': SPIDER_VERSION
         }
@@ -95,7 +104,7 @@ async function get(url) {
 }
 
 async function post(url, data) {
-    return await fetch(url, {
+    return await request(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -153,7 +162,7 @@ chrome.storage.sync.get("options", async (data) => {
         try {
             let dom = document.createElement('div')
             let rep = await get(task.url)
-            if (rep.status != 200) throw new Error(`错误码${ rep.status }`)
+            if (rep.status != 200) throw new Error(`错误码${rep.status}`)
             dom.innerHTML = await rep.text()
             let topic = spider(dom, task.id, task.page)
             await postTopicInfo(topic, task.sign)
