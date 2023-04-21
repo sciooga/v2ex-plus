@@ -84,7 +84,9 @@ function spider(dom, topicId, topicPage) {
     return topic
 }
 
-const SPIDER_VERSION = '1.0.0'
+const SPIDER_VERSION = '1.0.1'
+// 1.0.0 首个记录版本
+// 1.0.1 请求失败自动重试
 
 // fetch 自动重试一次
 async function request(url, options) {
