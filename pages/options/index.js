@@ -39,7 +39,7 @@ let options = {
 window.onload = async function () {
     let data = await chrome.storage.sync.get("options");
     if (data.options) {
-        options = data.options
+        let options = data.options
     } else {
         chrome.storage.sync.set({ options })
     }
@@ -52,7 +52,10 @@ window.onload = async function () {
         }
         el.disabled = false
 
-        el.onchange = (e) => {
+        el.onchange = async (e) => {
+
+            let data = await chrome.storage.sync.get("options");
+            options = data.options
             options[el.name] = el.type == "checkbox" ? el.checked : el.value
             chrome.storage.sync.set({ options })
         }
