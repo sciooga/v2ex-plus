@@ -91,7 +91,7 @@ chrome.storage.sync.get("options", async (data) => {
     // 高亮被标记用户
     data.options.userMarkList.map((item) => {
         document.querySelectorAll(`img[alt="${item}"]`).forEach(el => {
-            el.style.outline = '3px solid red'
+            el.style.outline = `3px solid ${data.options.markColor}`
         })
     })
 

@@ -27,6 +27,7 @@ let options = {
     // 其他
     vDaily: 1, // 启用 vDaily 默认打开
     userinfo: 1, // 查看用户信息 默认打开
+    markColor: '#ff0000', // 标记用户颜色
     userMarkList: [], // 标记用户列表
     sov2ex: 0, // 使用sov2ex搜索 默认关闭
     sov2exMenu: 0, // 右键 sov2ex 搜索 默认关闭
