@@ -33,6 +33,22 @@ chrome.storage.sync.get("options", (data) => {
                     let popDiv = document.createElement('div')
                     popDiv.innerText = result
                     document.body.append(popDiv)
+                    let copyBtn = document.createElement('span')
+                    copyBtn.innerText = '复制'
+                    copyBtn.style.cssText = `
+                    border: 1px solid #ccc;
+                    border-radius: 3px;
+                    padding: 2px;
+                    margin-left: 8px;
+                    cursor: pointer;
+                    `
+                    if (navigator.clipboard) {
+                        popDiv.append(copyBtn)
+                        copyBtn.addEventListener('click', (e) => {
+                            navigator.clipboard.writeText(result)
+                            copyBtn.innerText = '✅'
+                        })
+                    }
                     popDiv.style.cssText = `
                     max-width: 602px;
                     border-radius: 10px;
