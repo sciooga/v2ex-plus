@@ -24,34 +24,33 @@ chrome.runtime.onInstalled.addListener(async (e) => {
         chrome.notifications.create({
             type: "basic",
             iconUrl: "icon/icon38_msg.png",
-            title: "更新至 2.0.6",
-            message: "Base64 Decode 改为弹窗、启用右键 sov2ex 时在所有网页生效，如需反馈欢迎 @sciooga"
-        });
+            title: "更新至 2.0.7",
+            message: "增加楼中楼模式、增加自定义样式市场（选项页进入）、增加 base64 复制按钮、增加高亮用户颜色自定、修复最近回复部分情况不显示的 BUG，如需反馈欢迎 @sciooga"
+        })
 
         // 2.0.0 checkin typo
         let data = await chrome.storage.sync.get("options")
-        if (data.options.chickin) {
-            let options = data.options
+        let options = data.options
+
+        if (options.chickin) {
             options.checkin = options.chickin
             chrome.storage.sync.set({ options })
         }
 
         // 2.0.3 增加新功能
-        if (data.options.vDaily === undefined) {
-            let options = data.options
+        if (options.vDaily === undefined) {
             options.vDaily = 1
             chrome.storage.sync.set({ options })
         }
 
         // 2.0.4 新增加功能
-        if (data.options.searchShortcut === undefined) {
-            let options = data.options
+        if (options.searchShortcut === undefined) {
             options.searchShortcut = 1
             chrome.storage.sync.set({ options })
         }
 
         // 2.0.6 新增加功能
-        if (!data.options.sov2exMenu) {
+        if (!options.sov2exMenu) {
             chrome.contextMenus.update(
                 "vplus.sov2ex", {
                 documentUrlPatterns: ['<all_urls>']
@@ -59,9 +58,12 @@ chrome.runtime.onInstalled.addListener(async (e) => {
         }
 
         // 2.0.7 新增加功能
-        if (data.options.nestedComment === undefined) {
-            let options = data.options
+        if (options.nestedComment === undefined) {
             options.nestedComment = 1
+            chrome.storage.sync.set({ options })
+        }
+        if (options.markColor === undefined) {
+            options.markColor = '#ff0000'
             chrome.storage.sync.set({ options })
         }
     }
