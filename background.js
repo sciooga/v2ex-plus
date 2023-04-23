@@ -24,8 +24,8 @@ chrome.runtime.onInstalled.addListener(async (e) => {
         chrome.notifications.create({
             type: "basic",
             iconUrl: "icon/icon38_msg.png",
-            title: "更新至 2.0.7",
-            message: "增加楼中楼模式、增加自定义样式市场（选项页进入）、增加 base64 复制按钮、增加高亮用户颜色自定、修复最近回复部分情况不显示的 BUG，如需反馈欢迎 @sciooga"
+            title: "更新至 2.0.8",
+            message: "修复选项页无法保存的 BUG，修复部分浏览器无法自动签到的 BUG，如需反馈欢迎 @sciooga"
         })
 
         // 2.0.0 checkin typo

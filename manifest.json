@@ -1,6 +1,6 @@
 {
   "name": "v2ex plus",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "manifest_version": 3,
   "description": "优雅便捷的 V2EX 扩展",
   "background": {
