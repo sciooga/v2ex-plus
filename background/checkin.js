@@ -30,7 +30,11 @@ async function checkin() {
     }
 
     console.log('开始签到')
-    let rep = await fetch('https://www.v2ex.com/mission/daily/redeem')
+    let rep = await fetch('https://www.v2ex.com/mission/daily/redeem', {
+        headers: {
+          "Referer": "https://www.v2ex.com"
+        }
+      })
     let text = await rep.text()
     let sign = text.match("/signout(\\?once=[0-9]+)")
     sign = sign != null && sign[1] || "未登录"
