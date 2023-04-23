@@ -39,7 +39,7 @@ let options = {
 window.onload = async function () {
     let data = await chrome.storage.sync.get("options");
     if (data.options) {
-        let options = data.options
+        options = data.options
     } else {
         chrome.storage.sync.set({ options })
     }
