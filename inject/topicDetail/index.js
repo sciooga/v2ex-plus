@@ -322,6 +322,9 @@ chrome.storage.sync.get("options", async (data) => {
 
             let nestedComment = document.createElement('div')
             nestedComment.classList.add('nested')
+            if (data.options.autoNestedComment) {
+                nestedComment.classList.add('auto-nested')
+            }
             el.append(nestedComment)
 
             let selfUsername = el.querySelector('.avatar').alt

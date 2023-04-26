@@ -127,7 +127,7 @@ div[id^=r_] .reply_content.flod:hover {
     transition: all .3s;
 }
 
-.cell:hover .nested {
+.cell:hover .nested, .auto-nested {
     opacity: 1;
     max-height: 3600px;
     padding: 10px;
