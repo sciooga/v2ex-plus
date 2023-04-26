@@ -24,8 +24,8 @@ chrome.runtime.onInstalled.addListener(async (e) => {
         chrome.notifications.create({
             type: "basic",
             iconUrl: "icon/icon38_msg.png",
-            title: "更新至 2.0.8",
-            message: "修复选项页无法保存的 BUG，修复部分浏览器无法自动签到的 BUG，如需反馈欢迎 @sciooga"
+            title: "更新至 2.0.9",
+            message: "增加楼中楼自动展开选项（默认关闭），如需反馈欢迎 @sciooga"
         })
 
         // 2.0.0 checkin typo
