@@ -336,12 +336,15 @@ chrome.storage.sync.get("options", async (data) => {
 
                 // 判断所有 @ 用户是否相关
                 if (i['content_rendered'].indexOf('@<a') != -1) {
+                    // 相关用户是否至少一位被 @
                     let sign = false
                     nestedUser.forEach(username => {
-                        sign = i['content_rendered'].indexOf(username) != -1
+                        sign = sign || i['content_rendered'].indexOf(username) != -1
                     })
-                    // 所有被 @ 用户都不相关且一开始就 @ 其他用户
+                    // 判断是否一开始就 @ 其他用户
                     let username = RegExp(`^@<a href="/member/(.+)"`).exec(i['content_rendered'])
+
+                    // 所有被 @ 用户都不相关且一开始就 @ 其他用户
                     if (!sign && username) return
                 }
 
