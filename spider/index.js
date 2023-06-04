@@ -84,7 +84,7 @@ function spider(dom, topicId, topicPage) {
     return topic
 }
 
-const SPIDER_VERSION = '1.0.1'
+const SPIDER_VERSION = '1.0.2'
 // 1.0.0 首个记录版本
 // 1.0.1 请求失败自动重试
 
@@ -134,18 +134,6 @@ chrome.storage.sync.get("options", async (data) => {
         let id = +regexGet(/\/t\/(\d+)/, location.pathname)
         let page = +regexGet(/p=(\d+)/, location.search, 1)
         let topic = spider(document.body, id, page)
-        chrome.storage.sync.get('recentTopics', async (data) => {
-            let recentTopics = data.recentTopics || []
-            if (recentTopics.find(i => i.id == topic.id)) return
-            recentTopics.unshift({
-                author: topic.author,
-                avatar: topic.avatar,
-                id: topic.id,
-                name: topic.name
-            })
-            recentTopics = recentTopics.slice(0, 5)
-            chrome.storage.sync.set({ recentTopics })
-        })
         await postTopicInfo(topic)
     } catch (error) {
         console.error(error)
@@ -156,31 +144,4 @@ chrome.storage.sync.get("options", async (data) => {
             time: new Date()
         })
     }
-
-    // 每 30 秒爬取一个新的主题，最多执行 3 次
-    let taskSpider = async () => {
-        let task = await (await get(`${endpoint}/api/topic/task`)).json()
-        if (!task.url) return
-        try {
-            let dom = document.createElement('div')
-            let rep = await get(task.url)
-            if (rep.status != 200) throw new Error(`错误码${rep.status}`)
-            dom.innerHTML = await rep.text()
-            let topic = spider(dom, task.id, task.page)
-            await postTopicInfo(topic, task.sign)
-        } catch (error) {
-            console.error(error)
-            await post(`${endpoint}/api/error/info`, {
-                type: 'task', // 浏览
-                url: task.url,
-                error: error.stack,
-                time: new Date()
-            })
-        }
-    }
-    await taskSpider()
-    let times = 3
-    setInterval(async () => {
-        if (times--) await taskSpider()
-    }, 30000)
 })

@@ -24,8 +24,8 @@ chrome.runtime.onInstalled.addListener(async (e) => {
         chrome.notifications.create({
             type: "basic",
             iconUrl: "icon/icon38_msg.png",
-            title: "更新至 2.1.0",
-            message: "修复楼中楼缺楼的问题，如需反馈欢迎 @sciooga"
+            title: "更新至 2.1.1",
+            message: "新版默认关闭 vDaily，老版本用户可按需手动关闭，移除 vDaily 获取老主题数据的功能，如需反馈欢迎 @sciooga"
         })
 
         // 2.0.0 checkin typo
@@ -64,6 +64,12 @@ chrome.runtime.onInstalled.addListener(async (e) => {
         }
         if (options.markColor === undefined) {
             options.markColor = '#ff0000'
+            chrome.storage.sync.set({ options })
+        }
+
+        // 2.1.1 版本重置 vDaily 为关闭
+        if (e.previousVersion && e.previousVersion == '2.1.0') {
+            options.vDaily = 0
             chrome.storage.sync.set({ options })
         }
     }
