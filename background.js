@@ -25,7 +25,7 @@ chrome.runtime.onInstalled.addListener(async (e) => {
             type: "basic",
             iconUrl: "icon/icon38_msg.png",
             title: "更新至 2.1.1",
-            message: "新版默认关闭 vDaily，老版本用户可按需手动关闭，移除 vDaily 获取老主题数据的功能，如需反馈欢迎 @sciooga"
+            message: "新版默认关闭 vDaily，老版本同时关闭可按需手动开启，移除 vDaily 获取老主题数据的功能，如需反馈欢迎 @sciooga"
         })
 
         // 2.0.0 checkin typo
