@@ -24,7 +24,7 @@ async function checkMsg() {
     console.log('开始检查未读消息')
     let rep = await fetch('https://www.v2ex.com/mission')
     let text = await rep.text()
-    let sign = RegExp("([0-9]*?) (条未读提醒|unread)").exec(text)
+    let sign = RegExp("([0-9]*?) (未读提醒|unread)").exec(text)
     sign = sign != null && sign[1] || "未登录"
     if (sign == "未登录") {
         chrome.action.setIcon({ path: "icon/icon38_nologin.png" })
