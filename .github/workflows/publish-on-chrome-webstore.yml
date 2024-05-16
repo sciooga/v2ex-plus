@@ -38,7 +38,7 @@ jobs:
               return attempt < max ? attempt + 1 : '';
             }
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - uses: cardinalby/export-env-action@v1
         with:
@@ -109,7 +109,7 @@ jobs:
     if: needs.publish-on-webstore.outputs.result == 'success'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - uses: cardinalby/export-env-action@v1
         with:
