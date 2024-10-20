@@ -21,7 +21,7 @@ let options = {
     autoNestedComment: 0, // 自动展开楼中楼 默认关闭
     imageParsing: 1, // 图片解析 默认开启并隐藏原回复
     replyColor: "#fff94d", // 楼主回复背景色
-    replyA: 0.4, // 楼主回复背景色透明度
+    replyA: 0.4, // 楼主回复背景色不透明度
     thankColor: "#cccccc", // 感谢爱心颜色
     weekNewuser: 0, // 淡化新用户回复
 
