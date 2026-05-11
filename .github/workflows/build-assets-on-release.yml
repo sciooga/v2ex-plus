@@ -8,15 +8,15 @@ on:
   release:
     # Creating draft releases will not trigger it
     types: [published]
+
+permissions:
+  contents: write
+  
 jobs:
   # Find out asset id of existing extension.zip asset in a release or
   # build and attach it to the release and use its asset id
   ensure-zip:
     runs-on: ubuntu-latest
-    outputs:
-      zipAssetId: | 
-        ${{ steps.getZipAssetId.outputs.result || 
-            steps.uploadZipAsset.outputs.id }}
     steps:
       - uses: actions/checkout@v6
 
@@ -42,17 +42,11 @@ jobs:
         id: buildPack
         uses: ./.github/workflows/actions/build-test-pack
 
-      - name: Upload "extension.zip" asset to the release
-        id: uploadZipAsset
+      - name: Publish release
         if: '!steps.getZipAssetId.outputs.result'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v3
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ${{ env.ZIP_FILE_PATH }}
-          asset_name: ${{ env.ZIP_FILE_NAME }}
-          asset_content_type: application/zip
+          files: ${{ env.ZIP_FILE_PATH }}
 
   build-signed-crx-asset:
     needs: ensure-zip
@@ -80,15 +74,10 @@ jobs:
           crxFilePath: ${{ env.OFFLINE_CRX_FILE_PATH }}
           privateKey: ${{ secrets.CHROME_CRX_PRIVATE_KEY }}
 
-      - name: Upload offline crx release asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload crx release asset
+        uses: softprops/action-gh-release@v3
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ${{ env.OFFLINE_CRX_FILE_PATH }}
-          asset_name: ${{ env.OFFLINE_CRX_FILE_NAME }}
-          asset_content_type: application/x-chrome-extension
+          files: ${{ env.OFFLINE_CRX_FILE_PATH }}
 
   build-signed-xpi-asset:
     needs: ensure-zip

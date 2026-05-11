@@ -1,10 +1,15 @@
 # Actions Workflows from https://cardinalby.github.io/blog/post/github-actions/webext/1-introduction/
 name: Release and publish on tag
+
 on:
   push:
     tags:
       - '*.*.*'
   workflow_dispatch:
+
+permissions:
+  contents: write
+
 jobs:
   build-release-publish:
     if: github.ref_type == 'tag'
@@ -31,33 +36,11 @@ jobs:
         if: steps.getRelease.outcome != 'success'
         uses: ./.github/workflows/actions/build-test-pack
 
-      - name: Create Release
-        id: createRelease
-        if: steps.getRelease.outcome != 'success'
-        uses: ncipollo/release-action@58ae73b360456532aafd58ee170c045abbeaee37 # pin@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          draft: 'true'
-
-      - name: Upload zip asset to the release
-        if: steps.getRelease.outcome != 'success'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.createRelease.outputs.upload_url }}
-          asset_path: ${{ env.ZIP_FILE_PATH }}
-          asset_name: ${{ env.ZIP_FILE_NAME }}
-          asset_content_type: application/zip
-
-      # Should trigger build-assets-on-release.yml
       - name: Publish release
         if: steps.getRelease.outcome != 'success'
-        uses: eregon/publish-release@c2c0552ef2dd8209aea2a95c940a156eb8f6e9c1 # pin@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOWS_TOKEN }}
+        uses: softprops/action-gh-release@v3
         with:
-          release_id: ${{ steps.createRelease.outputs.id }}
+          files: ${{ env.ZIP_FILE_PATH }}
 
       - name: Publish on Chrome Webstore
         uses: benc-uk/workflow-dispatch@4c044c1613fabbe5250deadc65452d54c4ad4fc7 # pin@v1
