@@ -45,20 +45,24 @@ function regexGet(reg, text, _) {
 function spider(dom, topicId, topicPage) {
     let spiderTime = new Date()
 
+    // 统计信息区域（点击数、收藏数、感谢数）- .topic_buttons 或按钮行的父元素
+    let topicButtons = dom.querySelector('.topic_buttons') || dom.querySelector('#Main .box .inner')
+    let topicButtonsText = topicButtons ? topicButtons.innerText : ''
+
     let topic = {
         spiderTime: spiderTime,
         id: topicId,
         name: dom.querySelector('h1').innerText,
-        node: dom.querySelector('.header > a[href^="/go"]').innerText,
+        node: dom.querySelector('.header a[href^="/go"]').innerText,
         author: dom.querySelector('div.header small a[href^="/member"]').innerText,
         avatar: dom.querySelector('.header .avatar').src,
         date: new Date(dom.querySelector('div.header small span[title^="20"]').title),
-        reply: +regexGet(/(\d+) 条回复/, dom.querySelector('span.gray').innerText, 0), // 可空
-        vote: +dom.querySelector('.votes a').innerText, // 可空
-        click: +regexGet(/(\d+) 次点击/, dom.querySelector('.topic_buttons').innerText, 0),
-        collect: +regexGet(/(\d+) 人收藏/, dom.querySelector('.topic_buttons').innerText, 0),
-        thank: +regexGet(/(\d+) 人感谢/, dom.querySelector('.topic_buttons').innerText, 0),
-        score: 0, //评分
+        reply: +regexGet(/(\d+) 条回复/, dom.querySelector('span.gray').innerText, 0),
+        vote: +dom.querySelector('.votes a').innerText,
+        click: +regexGet(/(\d+) 次点击/, topicButtonsText, 0),
+        collect: +regexGet(/(\d+) 人收藏/, topicButtonsText, 0),
+        thank: +regexGet(/(\d+) 人感谢/, topicButtonsText, 0),
+        score: 0,
 
         content: dom.querySelector('.topic_content') ? dom.querySelector('.topic_content').innerHTML : '',
         append: Array.prototype.map.call(dom.querySelectorAll('.subtle'), el => el.innerHTML),
@@ -75,7 +79,7 @@ function spider(dom, topicId, topicPage) {
                 thank: +el.nextSibling.nodeValue,
                 content: cell.querySelector('.reply_content').innerHTML
             }
-        }), // 点赞回复
+        }),
     }
 
     // 点击数 + 回复数 * 10 + 点赞回复数 * 30 + 收藏数 * 30 + 感谢数 * 100 + 投票数 * 300
@@ -84,9 +88,11 @@ function spider(dom, topicId, topicPage) {
     return topic
 }
 
-const SPIDER_VERSION = '1.0.2'
+const SPIDER_VERSION = '1.0.3'
 // 1.0.0 首个记录版本
 // 1.0.1 请求失败自动重试
+// 1.0.2 ...
+// 1.0.3 修复 V2EX 页面结构变化导致的选择器失效问题
 
 // fetch 自动重试一次
 async function request(url, options) {
@@ -128,7 +134,8 @@ let endpoint = 'https://vdaily.huguotao.com'
 chrome.storage.sync.get("options", async (data) => {
 
     if (!data.options.vDaily) return
-    if (document.querySelector('.tools [href="/notes"]').innerHTML != '记事本') return // 非中文语言、未登录
+    let notesLink = document.querySelector('.tools [href="/notes"]')
+    if (!notesLink || notesLink.innerHTML != '记事本') return // 非中文语言、未登录
 
     try {
         let id = +regexGet(/\/t\/(\d+)/, location.pathname)
