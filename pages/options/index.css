@@ -119,6 +119,32 @@ h2.title {
   text-overflow: ellipsis;
 }
 
+.item.keyword-filter {
+  align-items: stretch;
+  flex-direction: column;
+  padding-bottom: .8rem;
+  cursor: default;
+}
+
+.keyword-filter textarea {
+  min-height: 5.5rem;
+  margin: 0 1rem;
+  padding: .6rem;
+  resize: vertical;
+  border: 1px solid #d0d0d0;
+  border-radius: 3px;
+  outline: none;
+  background-color: #fff;
+  font: inherit;
+  line-height: 1.5;
+  user-select: text;
+}
+
+.keyword-filter textarea:focus {
+  border-color: #3367D6;
+  box-shadow: 0 0 0 1px #3367D6;
+}
+
 .toggle {
   display: inline-block;
   height: 1.4rem;

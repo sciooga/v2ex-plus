@@ -10,6 +10,7 @@ let options = {
     // 浏览
     preview: 1, // 主题预览 默认开启
     ignore: 1, // 主题忽略 默认开启
+    topicBlockKeywords: "", // 标题关键词屏蔽，每行一个关键词
     fold: 1, // 自动折叠 默认开启
     jump: 1, // 跳过主题 默认开启
     newWindow: 0, // 新标签页浏览主题 默认关闭
@@ -40,11 +41,12 @@ let options = {
 window.onload = async function () {
     let data = await chrome.storage.sync.get("options");
     if (data.options) {
-        options = data.options
+        options = { ...options, ...data.options }
+        chrome.storage.sync.set({ options })
     } else {
         chrome.storage.sync.set({ options })
     }
-    document.querySelectorAll('input').forEach((el) => {
+    document.querySelectorAll('input, textarea').forEach((el) => {
         // 加载保存的配置
         if (el.type == "checkbox") {
             el.checked = options[el.name]
@@ -56,7 +58,7 @@ window.onload = async function () {
         el.onchange = async (e) => {
 
             let data = await chrome.storage.sync.get("options");
-            options = data.options
+            options = { ...options, ...(data.options || {}) }
             options[el.name] = el.type == "checkbox" ? el.checked : el.value
             chrome.storage.sync.set({ options })
         }

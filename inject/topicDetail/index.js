@@ -306,7 +306,8 @@ chrome.storage.sync.get("options", async (data) => {
             function hidePopup() {
                 el.dataset.hidePopup = setTimeout(() => {
                     delete el.dataset.isPopup
-                    document.querySelector('.relateReply').remove()
+                    const popup = document.querySelector('.relateReply')
+                    if (popup) popup.remove()
                 }, 100)
             }
 
