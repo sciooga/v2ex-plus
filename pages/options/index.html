@@ -91,11 +91,17 @@
           </label>
         </li>
         <li>
-          <label class="item keyword-filter">
+          <div class="item keyword-filter">
             <div class="item-content">标题关键词屏蔽<div class="item-content-tip">隐藏标题中包含指定关键词的主题，每行输入一个关键词</div>
             </div>
-            <textarea name="topicBlockKeywords" rows="4" placeholder="例如：&#10;招聘&#10;推广"></textarea>
-          </label>
+            <div class="keyword-filter-controls">
+              <textarea disabled name="topicBlockKeywords" rows="4" placeholder="例如：&#10;招聘&#10;推广"></textarea>
+              <div class="keyword-filter-actions">
+                <span class="keyword-filter-status" id="topicBlockKeywordsStatus" aria-live="polite"></span>
+                <button disabled id="saveTopicBlockKeywords" type="button">保存关键词</button>
+              </div>
+            </div>
+          </div>
         </li>
         <li>
           <label class="item">

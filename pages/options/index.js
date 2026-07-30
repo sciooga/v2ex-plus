@@ -56,11 +56,57 @@ window.onload = async function () {
         el.disabled = false
 
         el.onchange = async (e) => {
+            if (el.name == 'topicBlockKeywords') return
 
             let data = await chrome.storage.sync.get("options");
             options = { ...options, ...(data.options || {}) }
             options[el.name] = el.type == "checkbox" ? el.checked : el.value
             chrome.storage.sync.set({ options })
+        }
+    })
+
+    const topicBlockKeywordsInput = document.querySelector('textarea[name=topicBlockKeywords]')
+    const saveTopicBlockKeywordsButton = document.getElementById('saveTopicBlockKeywords')
+    const topicBlockKeywordsStatus = document.getElementById('topicBlockKeywordsStatus')
+    let topicBlockKeywordsSavedValue = topicBlockKeywordsInput.value
+    let savedKeywordCount = topicBlockKeywordsSavedValue
+        .split(/\r?\n/)
+        .map(keyword => keyword.trim())
+        .filter(Boolean)
+        .length
+    topicBlockKeywordsStatus.textContent = `已保存 ${savedKeywordCount} 个关键词`
+
+    function updateTopicBlockKeywordsStatus() {
+        const changed = topicBlockKeywordsInput.value != topicBlockKeywordsSavedValue
+        saveTopicBlockKeywordsButton.disabled = !changed
+        topicBlockKeywordsStatus.textContent = changed ? '未保存的更改' : `已保存 ${savedKeywordCount} 个关键词`
+    }
+
+    topicBlockKeywordsInput.addEventListener('input', updateTopicBlockKeywordsStatus)
+    saveTopicBlockKeywordsButton.addEventListener('click', async () => {
+        const keywords = topicBlockKeywordsInput.value
+            .split(/\r?\n/)
+            .map(keyword => keyword.trim())
+            .filter(Boolean)
+        const value = keywords.join('\n')
+
+        saveTopicBlockKeywordsButton.disabled = true
+        topicBlockKeywordsInput.disabled = true
+        topicBlockKeywordsStatus.textContent = '正在保存...'
+        try {
+            const data = await chrome.storage.sync.get("options")
+            options = { ...options, ...(data.options || {}), topicBlockKeywords: value }
+            await chrome.storage.sync.set({ options })
+            topicBlockKeywordsInput.value = value
+            topicBlockKeywordsSavedValue = value
+            savedKeywordCount = keywords.length
+            topicBlockKeywordsStatus.textContent = `已保存 ${keywords.length} 个关键词`
+        } catch (error) {
+            console.error('保存标题关键词失败', error)
+            topicBlockKeywordsStatus.textContent = '保存失败，请重试'
+            saveTopicBlockKeywordsButton.disabled = topicBlockKeywordsInput.value == topicBlockKeywordsSavedValue
+        } finally {
+            topicBlockKeywordsInput.disabled = false
         }
     })
 
