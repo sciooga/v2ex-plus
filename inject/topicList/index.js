@@ -1,5 +1,24 @@
 
 chrome.storage.sync.get("options", async (data) => {
+    const topicBlockKeywords = (data.options.topicBlockKeywords || '')
+        .split(/\r?\n/)
+        .map(keyword => keyword.trim().toLocaleLowerCase())
+        .filter(Boolean)
+
+    function hideBlockedTopics(root = document) {
+        if (!topicBlockKeywords.length) return
+
+        root.querySelectorAll('.item_title a, .item_hot_topic_title').forEach(el => {
+            const title = el.textContent.trim().toLocaleLowerCase()
+            if (!topicBlockKeywords.some(keyword => title.includes(keyword))) return
+
+            const cell = el.closest('.cell')
+            if (cell) cell.style.display = 'none'
+        })
+    }
+
+    hideBlockedTopics()
+
     // 高亮被标记用户
     data.options.userMarkList.map((item) => {
         document.querySelectorAll(`img[alt="${item}"]`).forEach(el => {
@@ -122,6 +141,7 @@ chrome.storage.sync.get("options", async (data) => {
             a.target = '_blank'
             topicBox.append(cell)
         })
+        hideBlockedTopics(topicBox)
 
         let replyList = await fetch('https://vdaily.huguotao.com/api/reply/recommend')
         replyList = await replyList.json()
